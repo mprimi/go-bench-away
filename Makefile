@@ -1,4 +1,4 @@
-projectname?=golang-cli-template
+projectname?=go-bench-away
 
 default: build
 

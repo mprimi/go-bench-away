@@ -8,8 +8,8 @@ before:
 
 builds:
   -
-    binary: golang-cli-template
-    ldflags: -s -w -X main.version={{ .Version }}
+    binary: go-bench-away
+    ldflags: -s -w -X main.version={{ .Version }} -X main.sha={{ .ShortCommit }} -X main.buildDate={{ .Date }}
     goos:
       - linux
       - darwin
@@ -20,7 +20,7 @@ builds:
 archives:
   -
     builds:
-      - golang-cli-template
+      - go-bench-away
     replacements:
       darwin: Darwin
       linux: Linux

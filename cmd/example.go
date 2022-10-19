@@ -7,8 +7,8 @@ import (
 	"os"
 
 	"github.com/google/subcommands"
-	"github.com/mprimi/golang-cli-template/internal/convert"
-	"github.com/mprimi/golang-cli-template/pkg/example"
+	"github.com/mprimi/go-bench-away/internal/convert"
+	"github.com/mprimi/go-bench-away/pkg/example"
 )
 
 type exampleCmd struct {

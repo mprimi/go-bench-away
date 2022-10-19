@@ -1,4 +1,4 @@
-module github.com/mprimi/golang-cli-template
+module github.com/mprimi/go-bench-away
 
 go 1.18
 

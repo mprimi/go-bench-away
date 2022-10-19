@@ -1,6 +1,6 @@
  > This is Marco's fork of:
 
-# [golang-cli-template](https://github.com/mprimi/golang-cli-template)
+# [go-bench-away](https://github.com/mprimi/go-bench-away)
 A general purpose project template for golang CLI applications
 
 The upstream version has a lot of nice features. This is a stripped down version for personal use.
@@ -31,10 +31,10 @@ Loose ends:
 # Install from source:
 
 ```
-go install github.com/mprimi/golang-cli-template@vX.Y.Z
+go install github.com/mprimi/go-bench-away@vX.Y.Z
 ```
 
 Assuming `$GOPATH/bin` is in `$PATH`, run with
 ```
-golang-cli-template
+go-bench-away
 ```
