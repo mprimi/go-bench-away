@@ -1,0 +1,8 @@
+golang-cli-template
+.DS_Store
+*.test
+coverage.out
+*.out
+# goreleaser
+/dist
+.envrc
