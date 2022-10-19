@@ -13,14 +13,13 @@ func TestRun(t *testing.T) {
 		// Usage errors
 		{[]string{}, 2},
 		{[]string{"blergh"}, 2},
+		{[]string{"help", "foo"}, 2},
 		// Valid
 		{[]string{"commands"}, 0},
 		{[]string{"flags"}, 0},
 		{[]string{"help"}, 0},
 		{[]string{"help", "version"}, 0},
-		{[]string{"help", "example"}, 0},
 		{[]string{"-v", "version"}, 0},
-		{[]string{"example", "-m", "0", "0"}, 0},
 	}
 
 	for i, tc := range testCases {

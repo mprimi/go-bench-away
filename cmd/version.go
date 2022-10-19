@@ -8,14 +8,14 @@ import (
 )
 
 type versionCmd struct {
-	metaCommand
+	baseCommand
 }
 
 func versionCommand() subcommands.Command {
 	return &versionCmd{
-		metaCommand: metaCommand{
+		baseCommand: baseCommand{
 			name:     "version",
-			synopsis: "print version",
+			synopsis: "prints version information",
 			usage:    "version",
 			setFlags: func(_ *flag.FlagSet) {},
 			execute: func(rootOpts *rootOptions, f *flag.FlagSet) error {

@@ -17,10 +17,12 @@ type rootOptions struct {
 	buildDate string
 
 	// Top-level options
-	verbose bool
+	verbose       bool
+	natsServerUrl string
+	credentials   string
 }
 
-type metaCommand struct {
+type baseCommand struct {
 	name     string
 	synopsis string
 	usage    string
@@ -28,29 +30,33 @@ type metaCommand struct {
 	execute  func(*rootOptions, *flag.FlagSet) error
 }
 
-func (mc *metaCommand) Name() string { return mc.name }
+func (bCmd *baseCommand) Name() string { return bCmd.name }
 
-func (mc *metaCommand) Synopsis() string { return mc.synopsis }
+func (bCmd *baseCommand) Synopsis() string { return bCmd.synopsis }
 
-func (mc *metaCommand) Usage() string { return mc.usage }
+func (bCmd *baseCommand) Usage() string { return bCmd.usage }
 
-func (mc *metaCommand) SetFlags(f *flag.FlagSet) {
-	if mc.setFlags != nil {
-		mc.setFlags(f)
+func (bCmd *baseCommand) SetFlags(f *flag.FlagSet) {
+	if bCmd.setFlags != nil {
+		bCmd.setFlags(f)
 	}
 }
 
-func (mc *metaCommand) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
-	if mc.execute == nil {
+func (bCmd *baseCommand) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
+	if bCmd.execute == nil {
 		fmt.Fprintf(os.Stderr, "Not implemented")
 		return subcommands.ExitFailure
 	}
 
 	var rootOpts *rootOptions = args[0].(*rootOptions)
 
-	err := mc.execute(rootOpts, f)
+	if rootOpts.verbose {
+		fmt.Printf("%s args: %v\n", bCmd.name, f.Args())
+	}
+
+	err := bCmd.execute(rootOpts, f)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Command %s failed: %v", mc.name, err)
+		fmt.Fprintf(os.Stderr, "Command %s failed: %v\n", bCmd.name, err)
 		return subcommands.ExitFailure
 	}
 
@@ -66,14 +72,32 @@ func Run(name, version, sha, buildDate string, args []string) int {
 		buildDate: buildDate,
 	}
 
-	rootFs := flag.NewFlagSet("", flag.ExitOnError)
-	rootFs.BoolVar(&rootOps.verbose, "v", false, "verbose")
+	rootFlagSet := flag.NewFlagSet("", flag.ExitOnError)
+	rootFlagSet.BoolVar(&rootOps.verbose, "v", false, "verbose")
+	rootFlagSet.StringVar(&rootOps.natsServerUrl, "server", "nats://localhost:4222", "NATS server URL")
+	rootFlagSet.StringVar(&rootOps.credentials, "creds", "", "Path to credentials file")
 
-	cmdr := subcommands.NewCommander(rootFs, name)
+	cmdr := subcommands.NewCommander(rootFlagSet, name)
+	cmdr.ImportantFlag("server")
+	cmdr.ImportantFlag("v")
+	cmdr.ImportantFlag("creds")
 
 	commandsMap := map[string][]subcommands.Command{
-		"example": {
-			exampleCommand(),
+		"maintenance": {
+			initCommand(),
+			wipeCommand(),
+		},
+		"submit, monitor, find jobs": {
+			submitCommand(),
+			waitCommand(),
+			listCommand(),
+		},
+		"reporting, analysis & graphs": {
+			compareSpeedCommand(),
+			downloadCommand(),
+		},
+		"worker": {
+			workerCommand(),
 		},
 		"help": {
 			versionCommand(),
@@ -89,7 +113,7 @@ func Run(name, version, sha, buildDate string, args []string) int {
 		}
 	}
 
-	err := rootFs.Parse(args)
+	err := rootFlagSet.Parse(args)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to parse arguments: %v\n", err)
 		return 1

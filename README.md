@@ -1,40 +1,21 @@
- > This is Marco's fork of:
+# Go Bench Away!
+### Utility to benchmark any Golang project and visualize results
 
-# [go-bench-away](https://github.com/mprimi/go-bench-away)
-A general purpose project template for golang CLI applications
+As of this writing, the project is maturing from "proof of concept" to "open-source utility".
+Some things may be broken, some are going to break. Also no documentations and no tests.
 
-The upstream version has a lot of nice features. This is a stripped down version for personal use.
 
-Removed in this fork:
-
- * A well-written README, including live badges
- * GH Pages with Jekyll theme and assets
- * GitLab CI
- * Install script
- * GH Semantic Releaser
- * Docker
- * `deb`, `rpm`, `apk`
- * Pre-commit checks
- * Codecov
- * Dropped `testify` dependency
- * Replace `cobra` (~300 indirect dependencies!), with [`subcommands`](https://pkg.go.dev/github.com/google/subcommands)
-
-Modified:
-
- * Makefile
- * Subcommands and tests
-
-Loose ends:
- * Dig into linting and coverage settings
- * Move main from top-level directory into `cmd/<name>`, [example](https://github.com/golangci/golangci-lint/tree/master/cmd/golangci-lint)
-
-# Install from source:
-
-```
-go install github.com/mprimi/go-bench-away@vX.Y.Z
-```
-
-Assuming `$GOPATH/bin` is in `$PATH`, run with
-```
-go-bench-away
-```
+Before V1.0:
+ * Worker tee job output with MultiWriter
+ * Cleanup log vs printf
+ * Namespacing
+ * Wait on multiple jobs
+ * Submit and wait
+ * Single result set report
+ * Trend (n>2) report
+ * Documentation and examples
+ * Tests
+ * Less code repetition in commands
+ - Spin loop in worker when server is down
+ - Use template for bash script and maybe save it as artifact
+ - Allow worker customization of tempdir root (where jobs directories are created)
