@@ -76,6 +76,15 @@ func loadJob(data []byte) *JobRecord {
 	return &job
 }
 
+func LoadJob(data []byte) (*JobRecord, error) {
+	job := JobRecord{}
+	err := json.Unmarshal(data, &job)
+	if err != nil {
+		return nil, err
+	}
+	return &job, nil
+}
+
 func (this *JobRecord) bytes() []byte {
 	bytes, err := json.Marshal(this)
 	if err != nil {

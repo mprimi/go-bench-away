@@ -21,7 +21,7 @@ Before V1.0:
  - Spin loop in worker when server is down
  - Use template for bash script and maybe save it as artifact
  - Allow worker customization of tempdir root (where jobs directories are created)
-
+ - Add user@host to client name
 ---
 
 # Installation
