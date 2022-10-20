@@ -17,7 +17,7 @@ const artifactsStoreName = Namespace + "-artifacts"
 const consumerName = Namespace + "-worker"
 
 // Subject used when submitting job
-const jobSubmitSubjectTemplate = "jobs.submit.%s"
+const jobSubmitSubjectTemplate = Namespace + "jobs.submit.%s"
 
 // KV key containing job record
 const jobRecordKeyTemplate = "jobs/%s"
