@@ -2,7 +2,7 @@ projectname?=go-bench-away
 
 default: build
 
-.PHONY: build install run test clean cover fmt lint mod check
+.PHONY: build install run test clean cover vet fmt lint mod check
 
 build:
 	@go build -ldflags "-X main.version=dev" -o $(projectname)
@@ -14,7 +14,7 @@ run:
 	@go run -ldflags "-X main.version=dev"  main.go
 
 test:
-	@go test -v -count=1 ./...
+	@go test -v -failfast -count=1 ./...
 
 clean:
 	@rm -rf coverage.out dist/ $(projectname)
@@ -22,6 +22,10 @@ clean:
 cover:
 	@go test -race $(shell go list ./... | grep -v /vendor/) -v -coverprofile=coverage.out
 	@go tool cover -func=coverage.out
+	@go tool cover -html coverage.out -o coverage.html
+
+vet:
+	@go vet ./...
 
 fmt:
 	@gofmt -w -s  .
@@ -32,4 +36,4 @@ lint: # Depends on https://github.com/golangci/golangci-lint
 mod:
 	@go mod tidy
 
-check: mod fmt test lint cover
+check: mod fmt test lint cover vet
