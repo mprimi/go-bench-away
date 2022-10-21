@@ -1,8 +1,16 @@
+# Executable
 go-bench-away
+
+# macOS
 .DS_Store
+
+# Tests
 *.test
+
+# Coverage
 coverage.out
-*.out
-# goreleaser
+coverage.html
+
+# Goreleaser
 /dist
 .envrc
