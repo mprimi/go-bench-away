@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <style>
+          div.chart {
+            border: 2px dotted black;
+            padding: 3px;
+            margin: 3px;
+          }
+          table {
+            border: 2px dotted black;
+            padding: 3px;
+            margin: 3px;
+          }
+          td {
+            padding: 4px;
+            border: 1px solid gray;
+          }
+        </style>
+    </head>
+    <body>
+      <h1>NATS Server - Fanout performance trend</h1>
+
+      <details>
+        <summary>Job Details</summary>
+        <table>
+          <tr>
+            <th>Ref</th>
+            <th>Source</th>
+            <th>Filter</th>
+            <th>Repetitions</th>
+            <th>Go</th>
+            <th>Job</th>
+          </tr>
+          
+          <tr>
+            <th>v2.0.4</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.0.4<br>(c8ca58efb4b319ad3f01a4208f9dabfe9953837c)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>b3d041bd-0f8a-4feb-bd4d-c560b8e2f239<br>2022-10-26 04:40:06.57001754 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.1.9</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.1.9<br>(7c7662603115c1f53a9bacfa0115893c8ebe6fd4)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>63701d4d-8116-481d-8b52-5cdfb2720c3b<br>2022-10-26 04:41:12.782483729 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.2.6</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.2.6<br>(cf433ae0077a9aab7deb94adc423741079f4a1f8)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>4d7f7f00-e7a7-4d10-b882-ab3cf541f6be<br>2022-10-26 04:42:18.214780664 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.3.4</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.3.4<br>(7112ae06a54899471910c82a7edaf068040f6dae)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>7a046209-f8d1-4d9b-8a0e-6cef9ae7d1f4<br>2022-10-26 04:43:21.4819583 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.4.0</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.4.0<br>(e49eb66438951d6034bc94cf5a89f5e124ce0ce4)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>a40081a8-6f92-438e-817f-8a0d749f1ad4<br>2022-10-26 04:44:24.95106865 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.5.0</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.5.0<br>(b3c19b9dd19171b58da5b5135491848cf72da599)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>afbff57f-e0c5-475f-ad8b-e27a85140435<br>2022-10-26 04:45:31.94672091 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.6.6</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.6.6<br>(878afadcf066bc79ebba7ac49d5753b9cef5a3d5)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>3461865e-0633-40a5-b781-cdc5cdc0983f<br>2022-10-26 04:46:34.853439625 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.7.4</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.7.4<br>(a86b84a9f35168973d910f462b8d03f77699b34f)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>919bebff-5941-4271-b1dc-57e4bdbacaa2<br>2022-10-26 04:47:39.715851684 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.8.4</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.8.4<br>(66524ed715a72db192ec93465bf24391f7696f3f)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>4c16a9a1-e1dc-4c71-92bf-386d2afee95d<br>2022-10-26 04:48:44.63305115 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.9.0</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.9.0<br>(517d9b382dc6439ae385d509f456680bcb5cefdd)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>8548b8fe-bbdf-49ed-bebc-917e241a4bd8<br>2022-10-26 04:49:54.546339485 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <th>v2.9.3</th>
+            <td>https://github.com/nats-io/nats-server.git@v2.9.3<br>(25e82d7d99b1fa30bceeccb51a41ac833faee9e8)</td>
+            <td>Benchmark_RFanOut.*</td>
+            <td>5 x 2s</td>
+            <td>go version go1.18.6 linux/amd64</td>
+            <td>6f15d73b-e488-489d-be4f-6dd3b00336a4<br>2022-10-26 04:51:01.187814904 &#43;0000 UTC</td>
+          </tr>
+          
+        </table>
+      </details>
+
+      
+      <h2>Time/op trend (lower is better)</h2>
+
+      <div id="time_op" class="chart"></div>
+
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.0.4</th>
+          
+          <th>v2.1.9</th>
+          
+          <th>v2.2.6</th>
+          
+          <th>v2.3.4</th>
+          
+          <th>v2.4.0</th>
+          
+          <th>v2.5.0</th>
+          
+          <th>v2.6.6</th>
+          
+          <th>v2.7.4</th>
+          
+          <th>v2.8.4</th>
+          
+          <th>v2.9.0</th>
+          
+          <th>v2.9.3</th>
+          
+        </tr>
+
+        
+        <tr>
+          <th>_RFanOut_8x100x1000-16</th>
+          
+          <td>5.08ms</td>
+          
+          <td>5.35ms</td>
+          
+          <td>5.96ms</td>
+          
+          <td>6.02ms</td>
+          
+          <td>6.01ms</td>
+          
+          <td>6.02ms</td>
+          
+          <td>6.06ms</td>
+          
+          <td>6.00ms</td>
+          
+          <td>6.11ms</td>
+          
+          <td>6.84ms</td>
+          
+          <td>5.38ms</td>
+          
+        </tr>
+        
+        <tr>
+          <th>_RFanOut_8x10x10000-16</th>
+          
+          <td>5.15ms</td>
+          
+          <td>5.77ms</td>
+          
+          <td>6.05ms</td>
+          
+          <td>6.11ms</td>
+          
+          <td>6.10ms</td>
+          
+          <td>6.09ms</td>
+          
+          <td>6.14ms</td>
+          
+          <td>6.09ms</td>
+          
+          <td>6.18ms</td>
+          
+          <td>6.98ms</td>
+          
+          <td>5.46ms</td>
+          
+        </tr>
+        
+        <tr>
+          <th>_RFanOut_1kx10x1000-16</th>
+          
+          <td>2.47ms</td>
+          
+          <td>2.79ms</td>
+          
+          <td>2.97ms</td>
+          
+          <td>2.82ms</td>
+          
+          <td>2.81ms</td>
+          
+          <td>2.74ms</td>
+          
+          <td>2.85ms</td>
+          
+          <td>2.75ms</td>
+          
+          <td>2.54ms</td>
+          
+          <td>3.10ms</td>
+          
+          <td>2.68ms</td>
+          
+        </tr>
+        
+      </table>
+
+      
+      <h2>Throghput trend (higher is better)</h2>
+
+      <div id="speed" class="chart"></div>
+
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.0.4</th>
+          
+          <th>v2.1.9</th>
+          
+          <th>v2.2.6</th>
+          
+          <th>v2.3.4</th>
+          
+          <th>v2.4.0</th>
+          
+          <th>v2.5.0</th>
+          
+          <th>v2.6.6</th>
+          
+          <th>v2.7.4</th>
+          
+          <th>v2.8.4</th>
+          
+          <th>v2.9.0</th>
+          
+          <th>v2.9.3</th>
+          
+        </tr>
+
+        
+        <tr>
+          <th>_RFanOut_8x100x1000-16</th>
+          
+          <td>473MB/s</td>
+          
+          <td>449MB/s</td>
+          
+          <td>402MB/s</td>
+          
+          <td>399MB/s</td>
+          
+          <td>399MB/s</td>
+          
+          <td>398MB/s</td>
+          
+          <td>396MB/s</td>
+          
+          <td>400MB/s</td>
+          
+          <td>393MB/s</td>
+          
+          <td>351MB/s</td>
+          
+          <td>446MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>_RFanOut_8x10x10000-16</th>
+          
+          <td>485MB/s</td>
+          
+          <td>433MB/s</td>
+          
+          <td>413MB/s</td>
+          
+          <td>409MB/s</td>
+          
+          <td>410MB/s</td>
+          
+          <td>410MB/s</td>
+          
+          <td>407MB/s</td>
+          
+          <td>411MB/s</td>
+          
+          <td>404MB/s</td>
+          
+          <td>358MB/s</td>
+          
+          <td>458MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>_RFanOut_1kx10x1000-16</th>
+          
+          <td>4.26GB/s</td>
+          
+          <td>3.79GB/s</td>
+          
+          <td>3.52GB/s</td>
+          
+          <td>3.78GB/s</td>
+          
+          <td>3.75GB/s</td>
+          
+          <td>3.83GB/s</td>
+          
+          <td>3.68GB/s</td>
+          
+          <td>3.81GB/s</td>
+          
+          <td>4.13GB/s</td>
+          
+          <td>3.37GB/s</td>
+          
+          <td>3.93GB/s</td>
+          
+        </tr>
+        
+      </table>
+
+      
+
+    </body>
+    <script>
+      
+      var time_op_data = [
+        {
+          "name": "_RFanOut_8x100x1000-16",
+          "x": [
+            "v2.0.4",
+            "v2.1.9",
+            "v2.2.6",
+            "v2.3.4",
+            "v2.4.0",
+            "v2.5.0",
+            "v2.6.6",
+            "v2.7.4",
+            "v2.8.4",
+            "v2.9.0",
+            "v2.9.3"
+          ],
+          "y": [
+            5075464.2,
+            5345407.2,
+            5963565.199999999,
+            6020150,
+            6010289.6,
+            6023772.799999999,
+            6055048.600000001,
+            6001951.999999999,
+            6113315.8,
+            6835720.400000001,
+            5380583.399999999
+          ],
+          "mode": "lines+markers",
+          "type": "scatter",
+          "error_y": {
+            "type": "data",
+            "array": [
+              25336.799999999814,
+              15607.799999999814,
+              43052.800000000745,
+              8324,
+              28159.400000000373,
+              15011.200000001118,
+              24013.39999999944,
+              16569.00000000093,
+              13496.200000000186,
+              19445.599999998696,
+              10021.600000000559
+            ],
+            "arrayminus": [
+              12076.200000000186,
+              16316.200000000186,
+              35934.199999999255,
+              8692,
+              24330.599999999627,
+              15529.799999998882,
+              20156.60000000056,
+              25738.99999999907,
+              12477.799999999814,
+              21698.400000001304,
+              19140.39999999944
+            ],
+            "visible": true,
+            "symmetric": false
+          }
+        },
+        {
+          "name": "_RFanOut_8x10x10000-16",
+          "x": [
+            "v2.0.4",
+            "v2.1.9",
+            "v2.2.6",
+            "v2.3.4",
+            "v2.4.0",
+            "v2.5.0",
+            "v2.6.6",
+            "v2.7.4",
+            "v2.8.4",
+            "v2.9.0",
+            "v2.9.3"
+          ],
+          "y": [
+            5152655,
+            5772573.8,
+            6048454.8,
+            6107893.800000001,
+            6104108.8,
+            6091446.6,
+            6136600.8,
+            6086192.4,
+            6181498.2,
+            6975595,
+            5458899.2
+          ],
+          "mode": "lines+markers",
+          "type": "scatter",
+          "error_y": {
+            "type": "data",
+            "array": [
+              11919,
+              38944.200000000186,
+              15127.200000000186,
+              15461.199999999255,
+              21287.200000000186,
+              20896.400000000373,
+              16952.200000000186,
+              19345.599999999627,
+              22855.799999999814,
+              35621,
+              40812.799999999814
+            ],
+            "arrayminus": [
+              15213,
+              30725.799999999814,
+              15224.799999999814,
+              14946.800000000745,
+              18547.799999999814,
+              23473.599999999627,
+              30327.799999999814,
+              12160.400000000373,
+              16029.200000000186,
+              44478,
+              17943.200000000186
+            ],
+            "visible": true,
+            "symmetric": false
+          }
+        },
+        {
+          "name": "_RFanOut_1kx10x1000-16",
+          "x": [
+            "v2.0.4",
+            "v2.1.9",
+            "v2.2.6",
+            "v2.3.4",
+            "v2.4.0",
+            "v2.5.0",
+            "v2.6.6",
+            "v2.7.4",
+            "v2.8.4",
+            "v2.9.0",
+            "v2.9.3"
+          ],
+          "y": [
+            2471741.8,
+            2790843.1999999997,
+            2972327.2000000007,
+            2817705.2000000007,
+            2808662.6,
+            2742486.6,
+            2845309.6,
+            2754057.8,
+            2542302.7999999993,
+            3104845.4,
+            2679380.8
+          ],
+          "mode": "lines+markers",
+          "type": "scatter",
+          "error_y": {
+            "type": "data",
+            "array": [
+              373039.2000000002,
+              354253.8000000003,
+              157952.79999999935,
+              586057.7999999993,
+              423839.3999999999,
+              359052.3999999999,
+              209629.3999999999,
+              339500.2000000002,
+              331929.20000000065,
+              244904.6000000001,
+              255950.2000000002
+            ],
+            "arrayminus": [
+              344374.7999999998,
+              427389.1999999997,
+              240261.20000000065,
+              642011.2000000007,
+              306927.6000000001,
+              330432.6000000001,
+              267337.6000000001,
+              293589.7999999998,
+              283159.79999999935,
+              186980.3999999999,
+              480411.7999999998
+            ],
+            "visible": true,
+            "symmetric": false
+          }
+        }
+      ]
+      var time_op_layout = {
+        yaxis: {
+          title: "ns/op",
+        }
+      };
+      Plotly.newPlot('time_op', time_op_data, time_op_layout);
+      
+      var speed_data = [
+        {
+          "name": "_RFanOut_8x100x1000-16",
+          "x": [
+            "v2.0.4",
+            "v2.1.9",
+            "v2.2.6",
+            "v2.3.4",
+            "v2.4.0",
+            "v2.5.0",
+            "v2.6.6",
+            "v2.7.4",
+            "v2.8.4",
+            "v2.9.0",
+            "v2.9.3"
+          ],
+          "y": [
+            472.87000000000006,
+            448.98800000000006,
+            402.4560000000001,
+            398.66400000000004,
+            399.32199999999995,
+            398.426,
+            396.368,
+            399.87600000000003,
+            392.59000000000003,
+            351.10200000000003,
+            446.052
+          ],
+          "mode": "lines+markers",
+          "type": "scatter",
+          "error_y": {
+            "type": "data",
+            "array": [
+              1.1199999999999477,
+              1.3719999999999573,
+              2.4339999999999122,
+              0.575999999999965,
+              1.6180000000000518,
+              1.024000000000001,
+              1.3220000000000027,
+              1.7239999999999895,
+              0.7999999999999545,
+              1.117999999999995,
+              1.5879999999999654
+            ],
+            "arrayminus": [
+              2.3500000000000796,
+              1.3080000000000496,
+              2.896000000000072,
+              0.5540000000000305,
+              1.8619999999999663,
+              0.9959999999999809,
+              1.5679999999999836,
+              1.1060000000000514,
+              0.8700000000000045,
+              1.0020000000000095,
+              0.8319999999999936
+            ],
+            "visible": true,
+            "symmetric": false
+          }
+        },
+        {
+          "name": "_RFanOut_8x10x10000-16",
+          "x": [
+            "v2.0.4",
+            "v2.1.9",
+            "v2.2.6",
+            "v2.3.4",
+            "v2.4.0",
+            "v2.5.0",
+            "v2.6.6",
+            "v2.7.4",
+            "v2.8.4",
+            "v2.9.0",
+            "v2.9.3"
+          ],
+          "y": [
+            485.19200000000006,
+            433.09000000000003,
+            413.332,
+            409.31,
+            409.566,
+            410.41799999999995,
+            407.396,
+            410.77199999999993,
+            404.438,
+            358.3979999999999,
+            457.97599999999994
+          ],
+          "mode": "lines+markers",
+          "type": "scatter",
+          "error_y": {
+            "type": "data",
+            "array": [
+              1.4379999999999313,
+              2.3099999999999454,
+              1.038000000000011,
+              1,
+              1.2440000000000282,
+              1.5820000000000505,
+              2.024000000000001,
+              0.8180000000000405,
+              1.052000000000021,
+              2.292000000000087,
+              1.504000000000076
+            ],
+            "arrayminus": [
+              1.122000000000071,
+              2.910000000000025,
+              1.0319999999999823,
+              1.0300000000000296,
+              1.4259999999999877,
+              1.4079999999999586,
+              1.1260000000000332,
+              1.3019999999999072,
+              1.4879999999999995,
+              1.8279999999999177,
+              3.405999999999949
+            ],
+            "visible": true,
+            "symmetric": false
+          }
+        },
+        {
+          "name": "_RFanOut_1kx10x1000-16",
+          "x": [
+            "v2.0.4",
+            "v2.1.9",
+            "v2.2.6",
+            "v2.3.4",
+            "v2.4.0",
+            "v2.5.0",
+            "v2.6.6",
+            "v2.7.4",
+            "v2.8.4",
+            "v2.9.0",
+            "v2.9.3"
+          ],
+          "y": [
+            4259.18,
+            3788.052,
+            3518.862,
+            3779.09,
+            3748.432,
+            3829.2639999999997,
+            3678.2060000000006,
+            3814.182,
+            4127.634,
+            3369.2740000000003,
+            3934.392
+          ],
+          "mode": "lines+markers",
+          "type": "scatter",
+          "error_y": {
+            "type": "data",
+            "array": [
+              644.0799999999999,
+              625.4180000000001,
+              299.1379999999999,
+              1015.2600000000002,
+              421.08800000000065,
+              495.2860000000005,
+              368.0139999999992,
+              425.26800000000003,
+              489.616,
+              205.61599999999953,
+              809.2080000000005
+            ],
+            "arrayminus": [
+              592.4500000000003,
+              471.4520000000002,
+              186.5619999999999,
+              714.5300000000002,
+              521.5119999999997,
+              466.08399999999983,
+              263.72600000000057,
+              442.32199999999966,
+              498.47400000000016,
+              255.30400000000054,
+              380.77199999999993
+            ],
+            "visible": true,
+            "symmetric": false
+          }
+        }
+      ]
+      var speed_layout = {
+        yaxis: {
+          title: "MB/s",
+        }
+      };
+      Plotly.newPlot('speed', speed_data, speed_layout);
+      
+    </script>
+</html>

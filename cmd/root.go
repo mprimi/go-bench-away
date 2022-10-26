@@ -96,6 +96,7 @@ func Run(name, version, sha, buildDate string, args []string) int {
 		},
 		"reporting, analysis & graphs": {
 			compareSpeedReportCommand(),
+			trendReportCommand(),
 			downloadCommand(),
 		},
 		"worker": {

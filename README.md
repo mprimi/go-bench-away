@@ -13,7 +13,6 @@ Before V1.0:
  * Wait on multiple jobs
  * Submit and wait
  * Single result set report
- * Trend (n>2) report
  * Documentation and examples
  * Tests
  * Less code repetition in commands
