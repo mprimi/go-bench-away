@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/google/subcommands"
+	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
 )
 
@@ -21,7 +22,7 @@ func submitCommand() subcommands.Command {
 		baseCommand: baseCommand{
 			name:     "submit",
 			synopsis: "Submit a job",
-			usage:    "submit [options]",
+			usage:    "submit [options]\n",
 		},
 	}
 }
@@ -44,18 +45,27 @@ func (cmd *submitCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interf
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	nc, js, connErr := core.Connect(rootOpts.natsServerUrl, "go-bench-away CLI")
-	if connErr != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", connErr)
-		return subcommands.ExitFailure
-	}
-	defer nc.Close()
+	client, err := client.NewClient(
+		rootOpts.natsServerUrl,
+		rootOpts.credentials,
+		rootOpts.namespace,
+		client.InitJobsQueue(),
+		client.InitJobsRepository(),
+		client.Verbose(rootOpts.verbose),
+	)
 
-	err := core.SubmitJob(js, cmd.params)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Command %s failed: %v", cmd.name, err)
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		return subcommands.ExitFailure
+	}
+	defer client.Close()
+
+	job, err := client.SubmitJob(cmd.params)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
 
+	fmt.Printf("jobId: %s\n", job.Id)
 	return subcommands.ExitSuccess
 }

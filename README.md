@@ -10,7 +10,6 @@ Before V1.0:
  * Host info
  * Worker tee job output with MultiWriter
  * Cleanup log vs printf
- * Namespacing
  * Wait on multiple jobs
  * Submit and wait
  * Single result set report

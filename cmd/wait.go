@@ -5,8 +5,10 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/google/subcommands"
+	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
 )
 
@@ -19,7 +21,7 @@ func waitCommand() subcommands.Command {
 		baseCommand: baseCommand{
 			name:     "wait",
 			synopsis: "Waits for a given job completion",
-			usage:    "wait <jobId>",
+			usage:    "wait <jobId>\n",
 		},
 	}
 }
@@ -39,17 +41,44 @@ func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interfac
 		return subcommands.ExitUsageError
 	}
 
-	nc, js, connErr := core.Connect(rootOpts.natsServerUrl, "go-bench-away CLI")
-	if connErr != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", connErr)
+	jobId := f.Args()[0]
+
+	client, err := client.NewClient(
+		rootOpts.natsServerUrl,
+		rootOpts.credentials,
+		rootOpts.namespace,
+		client.InitJobsRepository(),
+		client.Verbose(rootOpts.verbose),
+	)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer nc.Close()
+	defer client.Close()
 
-	err := core.WaitJob(js, f.Args()[0])
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Command %s failed: %v", cmd.name, err)
-		return subcommands.ExitFailure
+	fmt.Printf("Waiting for job %s\n", jobId)
+
+	previousRevision := uint64(0)
+
+pollLoop:
+	for {
+		job, revision, err := client.LoadJob(jobId)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			return subcommands.ExitFailure
+		}
+
+		if revision != previousRevision {
+			fmt.Printf("%s\n", job.Status)
+		}
+
+		if job.Status == core.Failed || job.Status == core.Succeeded {
+			break pollLoop
+		}
+
+		previousRevision = revision
+		time.Sleep(1 * time.Second)
 	}
 
 	return subcommands.ExitSuccess

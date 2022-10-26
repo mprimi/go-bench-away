@@ -14,3 +14,6 @@ coverage.html
 # Goreleaser
 /dist
 .envrc
+
+# HTML reports
+*.html

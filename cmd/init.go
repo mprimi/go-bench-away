@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/core"
+	"github.com/mprimi/go-bench-away/internal/client"
 )
 
 type initCmd struct {
@@ -19,7 +19,7 @@ func initCommand() subcommands.Command {
 		baseCommand: baseCommand{
 			name:     "init",
 			synopsis: "Initializes server schemas (Stream, KV store, Object store)",
-			usage:    "init",
+			usage:    "init\n",
 		},
 	}
 }
@@ -31,17 +31,30 @@ func (cmd *initCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interfac
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	nc, js, connErr := core.Connect(rootOpts.natsServerUrl, "go-bench-away CLI")
-	if connErr != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", connErr)
+	client, err := client.NewClient(
+		rootOpts.natsServerUrl,
+		rootOpts.credentials,
+		rootOpts.namespace,
+		client.Verbose(rootOpts.verbose),
+	)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer nc.Close()
+	defer client.Close()
 
-	err := core.InitSchema(js)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Command %s failed: %v", cmd.name, err)
-		return subcommands.ExitFailure
+	initFuncs := []func() error{
+		client.CreateJobsQueue,
+		client.CreateJobsRepository,
+		client.CreateArtifactsStore,
+	}
+
+	for _, fun := range initFuncs {
+		if err := fun(); err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			return subcommands.ExitFailure
+		}
 	}
 
 	return subcommands.ExitSuccess

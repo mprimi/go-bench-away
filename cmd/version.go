@@ -16,7 +16,7 @@ func versionCommand() subcommands.Command {
 		baseCommand: baseCommand{
 			name:     "version",
 			synopsis: "prints version information",
-			usage:    "version",
+			usage:    "version\n",
 			setFlags: func(_ *flag.FlagSet) {},
 			execute: func(rootOpts *rootOptions, f *flag.FlagSet) error {
 				if rootOpts.verbose {

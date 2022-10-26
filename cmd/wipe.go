@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/core"
+	"github.com/mprimi/go-bench-away/internal/client"
 )
 
 type wipeCmd struct {
@@ -17,9 +17,9 @@ type wipeCmd struct {
 func wipeCommand() subcommands.Command {
 	return &wipeCmd{
 		baseCommand: baseCommand{
-			name:     "init",
-			synopsis: "Initializes server schemas (Stream, KV store, Object store)",
-			usage:    "init",
+			name:     "wipe",
+			synopsis: "Deletes server schemas (Stream, KV store, Object store)",
+			usage:    "wipe\n",
 		},
 	}
 }
@@ -31,17 +31,30 @@ func (cmd *wipeCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interfac
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	nc, js, connErr := core.Connect(rootOpts.natsServerUrl, "go-bench-away CLI")
-	if connErr != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", connErr)
+	client, err := client.NewClient(
+		rootOpts.natsServerUrl,
+		rootOpts.credentials,
+		rootOpts.namespace,
+		client.Verbose(rootOpts.verbose),
+	)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer nc.Close()
+	defer client.Close()
 
-	err := core.WipeSchema(js)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Command %s failed: %v", cmd.name, err)
-		return subcommands.ExitFailure
+	initFuncs := []func() error{
+		client.DeleteJobsQueue,
+		client.DeleteJobsRepository,
+		client.DeleteArtifactsStore,
+	}
+
+	for _, fun := range initFuncs {
+		if err := fun(); err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			return subcommands.ExitFailure
+		}
 	}
 
 	return subcommands.ExitSuccess

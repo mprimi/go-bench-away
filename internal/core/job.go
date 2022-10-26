@@ -57,7 +57,22 @@ func (this JobStatus) String() string {
 	}
 }
 
-func newJob(params JobParameters) *JobRecord {
+func (this JobStatus) Icon() string {
+	switch this {
+	case Submitted:
+		return "⚪️"
+	case Running:
+		return "🟣"
+	case Failed:
+		return "🔴"
+	case Succeeded:
+		return "🟢"
+	default:
+		return "❓"
+	}
+}
+
+func NewJob(params JobParameters) *JobRecord {
 	jobId := uuid.New().String()
 	return &JobRecord{
 		Id:         jobId,
@@ -65,15 +80,6 @@ func newJob(params JobParameters) *JobRecord {
 		Parameters: params,
 		Created:    time.Now(),
 	}
-}
-
-func loadJob(data []byte) *JobRecord {
-	job := JobRecord{}
-	err := json.Unmarshal(data, &job)
-	if err != nil {
-		panic(fmt.Sprintf("Failed to load job: %v", err))
-	}
-	return &job
 }
 
 func LoadJob(data []byte) (*JobRecord, error) {
@@ -85,27 +91,10 @@ func LoadJob(data []byte) (*JobRecord, error) {
 	return &job, nil
 }
 
-func (this *JobRecord) bytes() []byte {
+func (this *JobRecord) Bytes() []byte {
 	bytes, err := json.Marshal(this)
 	if err != nil {
 		panic(fmt.Sprintf("Failed to serialize job: %v", err))
 	}
 	return bytes
-}
-
-func jobSubmitSubject(jobId string) string {
-	return fmt.Sprintf(jobSubmitSubjectTemplate, jobId)
-}
-
-func jobRecordKey(jobId string) string {
-	return fmt.Sprintf(jobRecordKeyTemplate, jobId)
-}
-
-type CompareSpeedParameters struct {
-	Title      string
-	OldJobId   string
-	NewJobId   string
-	OldJobName string
-	NewJobName string
-	OutputPath string
 }

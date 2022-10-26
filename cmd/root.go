@@ -20,6 +20,7 @@ type rootOptions struct {
 	verbose       bool
 	natsServerUrl string
 	credentials   string
+	namespace     string
 }
 
 type baseCommand struct {
@@ -44,7 +45,7 @@ func (bCmd *baseCommand) SetFlags(f *flag.FlagSet) {
 
 func (bCmd *baseCommand) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
 	if bCmd.execute == nil {
-		fmt.Fprintf(os.Stderr, "Not implemented")
+		fmt.Fprintf(os.Stderr, "Not implemented\n")
 		return subcommands.ExitFailure
 	}
 
@@ -76,6 +77,7 @@ func Run(name, version, sha, buildDate string, args []string) int {
 	rootFlagSet.BoolVar(&rootOps.verbose, "v", false, "verbose")
 	rootFlagSet.StringVar(&rootOps.natsServerUrl, "server", "nats://localhost:4222", "NATS server URL")
 	rootFlagSet.StringVar(&rootOps.credentials, "creds", "", "Path to credentials file")
+	rootFlagSet.StringVar(&rootOps.namespace, "namespace", "default", "Namespace (allows isolated sets of jobs to share a NATS server)")
 
 	cmdr := subcommands.NewCommander(rootFlagSet, name)
 	cmdr.ImportantFlag("server")
@@ -93,7 +95,7 @@ func Run(name, version, sha, buildDate string, args []string) int {
 			listCommand(),
 		},
 		"reporting, analysis & graphs": {
-			compareSpeedCommand(),
+			compareSpeedReportCommand(),
 			downloadCommand(),
 		},
 		"worker": {
