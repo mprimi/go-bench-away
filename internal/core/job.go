@@ -27,6 +27,12 @@ type JobParameters struct {
 	SkipCleanup     bool
 }
 
+type WorkerInfo struct {
+	Hostname string
+	Uname    string
+	Version  string
+}
+
 type JobRecord struct {
 	Id         string
 	Status     JobStatus
@@ -40,6 +46,8 @@ type JobRecord struct {
 	GoVersion string
 	Log       string
 	Results   string
+
+	WorkerInfo WorkerInfo
 }
 
 func (this JobStatus) String() string {
