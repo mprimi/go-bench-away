@@ -13,6 +13,7 @@ import (
 
 type workerCmd struct {
 	baseCommand
+	jobsDir string
 }
 
 func workerCommand() subcommands.Command {
@@ -24,6 +25,10 @@ func workerCommand() subcommands.Command {
 			setFlags: func(_ *flag.FlagSet) {},
 		},
 	}
+}
+
+func (cmd *workerCmd) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&cmd.jobsDir, "jobs_dir", "", "Directory where jobs are staged (defaults to os.MkdirTemp)")
 }
 
 func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
@@ -49,7 +54,15 @@ func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, args ...inte
 	}
 	defer client.Close()
 
-	w, err := worker.NewWorker(client)
+	if cmd.jobsDir != "" {
+		err := os.MkdirAll(cmd.jobsDir, 0750)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error creating jobs directory: %v\n", err)
+			return subcommands.ExitFailure
+		}
+	}
+
+	w, err := worker.NewWorker(client, cmd.jobsDir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure

@@ -31,12 +31,14 @@ type Worker interface {
 }
 
 type workerImpl struct {
-	c client.Client
+	c       client.Client
+	jobsDir string
 }
 
-func NewWorker(c client.Client) (Worker, error) {
+func NewWorker(c client.Client, jobsDir string) (Worker, error) {
 	return &workerImpl{
-		c: c,
+		c:       c,
+		jobsDir: jobsDir,
 	}, nil
 }
 
@@ -99,7 +101,7 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 
 func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 
-	jobTempDir, err := os.MkdirTemp("", fmt.Sprintf("go-bench-away-job-%s-", job.Id))
+	jobTempDir, err := os.MkdirTemp(w.jobsDir, fmt.Sprintf("go-bench-away-job-%s-", job.Id))
 	if err != nil {
 		return "", fmt.Errorf("Failed to create job directory: %v", err)
 	}
