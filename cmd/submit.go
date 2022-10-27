@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/user"
 	"time"
 
 	"github.com/google/subcommands"
@@ -57,6 +58,14 @@ func (cmd *submitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface
 		return subcommands.ExitFailure
 	}
 	defer client.Close()
+
+	u, err := user.Current()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		return subcommands.ExitFailure
+	}
+
+	cmd.params.Username = u.Username
 
 	job, err := client.SubmitJob(cmd.params)
 	if err != nil {
