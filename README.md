@@ -8,7 +8,6 @@ Some things may be broken, some are going to break. Also no documentations and n
 Before V1.0:
  * Make --speed an option for compare
  * Host info
- * Worker tee job output with MultiWriter
  * Cleanup log vs printf
  * Wait on multiple jobs
  * Submit and wait

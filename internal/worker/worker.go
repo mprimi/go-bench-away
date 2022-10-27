@@ -4,6 +4,7 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -44,6 +45,7 @@ func (w *workerImpl) Run(ctx context.Context) error {
 	handleJob := func(jr *core.JobRecord, revision uint64) (bool, error) {
 		return w.processJob(jr, revision)
 	}
+	fmt.Printf("⚙️  Ready for work\n")
 	return w.c.DispatchJobs(ctx, handleJob)
 }
 
@@ -62,7 +64,7 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 		return false, fmt.Errorf("Failed to update job %s: %v", job.Id, err)
 	}
 
-	fmt.Printf("Processing job %s\n", job.Id)
+	fmt.Printf("⚙️  Processing job %s\n", job.Id)
 
 	jobTempDir, runErr := w.runJob(job)
 
@@ -85,7 +87,7 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 		defer os.RemoveAll(jobTempDir)
 	}
 
-	fmt.Printf("Completed job %s, updating status to: %s\n", job.Id, job.Status)
+	fmt.Printf("⚙️  Completed job %s, updating status to: %s\n", job.Id, job.Status)
 	_, finalUpdateErr := w.c.UpdateJob(job, newRevision)
 	if finalUpdateErr != nil {
 		// TODO: retry if error is transitional
@@ -144,10 +146,13 @@ func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 		fmt.Sprintf("%v", job.Parameters.Timeout),        //$11
 	}
 
+	// Tee output to logfile and worker stdout
+	mw := io.MultiWriter(logFile, os.Stdout)
+
 	cmd := exec.CommandContext(context.Background(), scriptPath, arguments...)
 
-	cmd.Stdout = logFile
-	cmd.Stderr = logFile
+	cmd.Stdout = mw
+	cmd.Stderr = mw
 
 	err = cmd.Start()
 	if err != nil {
