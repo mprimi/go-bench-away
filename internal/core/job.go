@@ -25,6 +25,7 @@ type JobParameters struct {
 	TestMinRuntime  time.Duration
 	Timeout         time.Duration
 	SkipCleanup     bool
+	Username        string
 }
 
 type WorkerInfo struct {

@@ -62,7 +62,7 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 
 		fmt.Printf(
 			" %s %s [%v]\n"+
-				"     - Submitted: %v ago\n"+
+				"     - Submitted: %v ago by %s\n"+
 				"     - Remote: %s Ref: %s\n"+
 				"     - Filter: '%s'\n"+
 				"",
@@ -70,6 +70,7 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 			job.Id,
 			job.Status,
 			time.Since(job.Created).Truncate(time.Minute),
+			job.Parameters.Username,
 			job.Parameters.GitRemote,
 			job.Parameters.GitRef,
 			job.Parameters.TestsFilterExpr,
