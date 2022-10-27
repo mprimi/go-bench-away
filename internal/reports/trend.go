@@ -42,7 +42,7 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 
 	jobRefs := make([]string, len(jobs))
 	for i, j := range jobs {
-		jobRefs[i] = j.Parameters.GitRef
+		jobRefs[i] = fmt.Sprintf("%s [%s]", j.Parameters.GitRef, j.SHA[0:7])
 	}
 
 	for _, t := range c.Tables() {
