@@ -62,7 +62,7 @@ func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, args ...inte
 		}
 	}
 
-	w, err := worker.NewWorker(client, cmd.jobsDir)
+	w, err := worker.NewWorker(client, cmd.jobsDir, rootOpts.version)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure

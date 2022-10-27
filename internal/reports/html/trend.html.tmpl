@@ -32,6 +32,7 @@
             <th>Filter</th>
             <th>Repetitions</th>
             <th>Go</th>
+            <th>Worker</th>
             <th>Job</th>
           </tr>
           {{range .Jobs}}
@@ -41,6 +42,7 @@
             <td>{{.Parameters.TestsFilterExpr}}</td>
             <td>{{.Parameters.Reps}} x {{.Parameters.TestMinRuntime}}</td>
             <td>{{.GoVersion}}</td>
+            <td>{{.WorkerInfo.Version}}<br>{{.WorkerInfo.Hostname}}<br>{{.WorkerInfo.Uname}}</td>
             <td>{{.Id}}<br>{{.Completed}}</td>
           </tr>
           {{end}}

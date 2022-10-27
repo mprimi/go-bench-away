@@ -4,6 +4,7 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
+	"golang.org/x/sys/unix"
 	"io"
 	"os"
 	"os/exec"
@@ -31,14 +32,34 @@ type Worker interface {
 }
 
 type workerImpl struct {
-	c       client.Client
-	jobsDir string
+	c          client.Client
+	jobsDir    string
+	workerInfo core.WorkerInfo
 }
 
-func NewWorker(c client.Client, jobsDir string) (Worker, error) {
+func NewWorker(c client.Client, jobsDir, version string) (Worker, error) {
+	// Utsname byte arrays are filled with string termination characters,
+	// and naive string conversion preserves them.
+	bts := func(buf []byte) string {
+		stringWithNullChars := string(buf[:])
+		trimmedString := strings.ReplaceAll(stringWithNullChars, "\x00", "")
+		utf8String := strings.ToValidUTF8(trimmedString, "")
+		return strings.TrimSpace(utf8String)
+	}
+
+	buf := unix.Utsname{}
+	if err := unix.Uname(&buf); err != nil {
+		return nil, err
+	}
+
 	return &workerImpl{
 		c:       c,
 		jobsDir: jobsDir,
+		workerInfo: core.WorkerInfo{
+			Hostname: bts(buf.Nodename[:]),
+			Uname:    fmt.Sprintf("%s_%s-%s", bts(buf.Sysname[:]), bts(buf.Release[:]), bts(buf.Machine[:])),
+			Version:  version,
+		},
 	}, nil
 }
 
@@ -59,6 +80,7 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 
 	job.Status = core.Running
 	job.Started = time.Now()
+	job.WorkerInfo = w.workerInfo
 
 	newRevision, err := w.c.UpdateJob(job, revision)
 	if err != nil {
