@@ -24,18 +24,16 @@ func initCommand() subcommands.Command {
 	}
 }
 
-func (cmd *initCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
-	var rootOpts *rootOptions = args[0].(*rootOptions)
-
-	if rootOpts.verbose {
+func (cmd *initCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
 	client, err := client.NewClient(
-		rootOpts.natsServerUrl,
-		rootOpts.credentials,
-		rootOpts.namespace,
-		client.Verbose(rootOpts.verbose),
+		rootOptions.natsServerUrl,
+		rootOptions.credentials,
+		rootOptions.namespace,
+		client.Verbose(rootOptions.verbose),
 	)
 
 	if err != nil {

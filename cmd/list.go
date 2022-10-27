@@ -31,20 +31,18 @@ func (cmd *listCmd) SetFlags(f *flag.FlagSet) {
 	f.IntVar(&cmd.limit, "n", 10, "Maximum number of recent jobs to show (0 for unlimited)")
 }
 
-func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
-	var rootOpts *rootOptions = args[0].(*rootOptions)
-
-	if rootOpts.verbose {
+func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
 	client, err := client.NewClient(
-		rootOpts.natsServerUrl,
-		rootOpts.credentials,
-		rootOpts.namespace,
+		rootOptions.natsServerUrl,
+		rootOptions.credentials,
+		rootOptions.namespace,
 		client.InitJobsQueue(),
 		client.InitJobsRepository(),
-		client.Verbose(rootOpts.verbose),
+		client.Verbose(rootOptions.verbose),
 	)
 
 	if err != nil {

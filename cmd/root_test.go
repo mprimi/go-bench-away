@@ -23,7 +23,7 @@ func TestRun(t *testing.T) {
 	}
 
 	for i, tc := range testCases {
-		exitCode := Run("test", "v", "sha", "date", tc.arguments)
+		exitCode := Run(tc.arguments)
 		if exitCode != tc.expectedExitCode {
 			t.Errorf(
 				"[%d] Args: %v expected: %d, got: %d",
