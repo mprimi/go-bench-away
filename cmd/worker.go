@@ -31,18 +31,16 @@ func (cmd *workerCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.jobsDir, "jobs_dir", "", "Directory where jobs are staged (defaults to os.MkdirTemp)")
 }
 
-func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
-	var rootOpts *rootOptions = args[0].(*rootOptions)
-
-	if rootOpts.verbose {
+func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
 	client, err := client.NewClient(
-		rootOpts.natsServerUrl,
-		rootOpts.credentials,
-		rootOpts.namespace,
-		client.Verbose(rootOpts.verbose),
+		rootOptions.natsServerUrl,
+		rootOptions.credentials,
+		rootOptions.namespace,
+		client.Verbose(rootOptions.verbose),
 		client.InitJobsQueue(),
 		client.InitJobsRepository(),
 		client.InitArtifactsStore(),
@@ -62,7 +60,7 @@ func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, args ...inte
 		}
 	}
 
-	w, err := worker.NewWorker(client, cmd.jobsDir, rootOpts.version)
+	w, err := worker.NewWorker(client, cmd.jobsDir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure

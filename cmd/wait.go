@@ -29,10 +29,8 @@ func waitCommand() subcommands.Command {
 func (cmd *waitCmd) SetFlags(f *flag.FlagSet) {
 }
 
-func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
-	var rootOpts *rootOptions = args[0].(*rootOptions)
-
-	if rootOpts.verbose {
+func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
@@ -44,11 +42,11 @@ func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interfac
 	jobId := f.Args()[0]
 
 	client, err := client.NewClient(
-		rootOpts.natsServerUrl,
-		rootOpts.credentials,
-		rootOpts.namespace,
+		rootOptions.natsServerUrl,
+		rootOptions.credentials,
+		rootOptions.namespace,
 		client.InitJobsRepository(),
-		client.Verbose(rootOpts.verbose),
+		client.Verbose(rootOptions.verbose),
 	)
 
 	if err != nil {

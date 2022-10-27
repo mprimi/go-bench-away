@@ -30,10 +30,8 @@ func (cmd *downloadCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.outputDirPath, "output", ".", "Output directory")
 }
 
-func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
-	var rootOpts *rootOptions = args[0].(*rootOptions)
-
-	if rootOpts.verbose {
+func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
@@ -62,12 +60,12 @@ func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, args ...inte
 	outputDir.Close()
 
 	client, err := client.NewClient(
-		rootOpts.natsServerUrl,
-		rootOpts.credentials,
-		rootOpts.namespace,
+		rootOptions.natsServerUrl,
+		rootOptions.credentials,
+		rootOptions.namespace,
 		client.InitJobsRepository(),
 		client.InitArtifactsStore(),
-		client.Verbose(rootOpts.verbose),
+		client.Verbose(rootOptions.verbose),
 	)
 
 	if err != nil {

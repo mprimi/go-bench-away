@@ -31,10 +31,8 @@ func (cmd *trendReportCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.reportCfg.Title, "title", "Trend", "Title of the report")
 }
 
-func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
-	var rootOpts *rootOptions = args[0].(*rootOptions)
-
-	if rootOpts.verbose {
+func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
@@ -45,12 +43,12 @@ func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, args ...i
 	cmd.reportCfg.JobIds = f.Args()
 
 	client, err := client.NewClient(
-		rootOpts.natsServerUrl,
-		rootOpts.credentials,
-		rootOpts.namespace,
+		rootOptions.natsServerUrl,
+		rootOptions.credentials,
+		rootOptions.namespace,
 		client.InitJobsRepository(),
 		client.InitArtifactsStore(),
-		client.Verbose(rootOpts.verbose),
+		client.Verbose(rootOptions.verbose),
 	)
 
 	if err != nil {

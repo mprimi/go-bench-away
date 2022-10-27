@@ -37,7 +37,7 @@ type workerImpl struct {
 	workerInfo core.WorkerInfo
 }
 
-func NewWorker(c client.Client, jobsDir, version string) (Worker, error) {
+func NewWorker(c client.Client, jobsDir string) (Worker, error) {
 	// Utsname byte arrays are filled with string termination characters,
 	// and naive string conversion preserves them.
 	bts := func(buf []byte) string {
@@ -58,7 +58,7 @@ func NewWorker(c client.Client, jobsDir, version string) (Worker, error) {
 		workerInfo: core.WorkerInfo{
 			Hostname: bts(buf.Nodename[:]),
 			Uname:    fmt.Sprintf("%s_%s-%s", bts(buf.Sysname[:]), bts(buf.Release[:]), bts(buf.Machine[:])),
-			Version:  version,
+			Version:  fmt.Sprintf("%s (%s)", core.Version, core.SHA),
 		},
 	}, nil
 }

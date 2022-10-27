@@ -7,15 +7,10 @@ import (
 	"os"
 
 	"github.com/google/subcommands"
+	"github.com/mprimi/go-bench-away/internal/core"
 )
 
-type rootOptions struct {
-	// Build-time properties
-	name      string
-	version   string
-	sha       string
-	buildDate string
-
+var rootOptions struct {
 	// Top-level options
 	verbose       bool
 	natsServerUrl string
@@ -28,7 +23,7 @@ type baseCommand struct {
 	synopsis string
 	usage    string
 	setFlags func(*flag.FlagSet)
-	execute  func(*rootOptions, *flag.FlagSet) error
+	execute  func(*flag.FlagSet) error
 }
 
 func (bCmd *baseCommand) Name() string { return bCmd.name }
@@ -43,19 +38,17 @@ func (bCmd *baseCommand) SetFlags(f *flag.FlagSet) {
 	}
 }
 
-func (bCmd *baseCommand) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
+func (bCmd *baseCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 	if bCmd.execute == nil {
 		fmt.Fprintf(os.Stderr, "Not implemented\n")
 		return subcommands.ExitFailure
 	}
 
-	var rootOpts *rootOptions = args[0].(*rootOptions)
-
-	if rootOpts.verbose {
+	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", bCmd.name, f.Args())
 	}
 
-	err := bCmd.execute(rootOpts, f)
+	err := bCmd.execute(f)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Command %s failed: %v\n", bCmd.name, err)
 		return subcommands.ExitFailure
@@ -65,21 +58,15 @@ func (bCmd *baseCommand) Execute(_ context.Context, f *flag.FlagSet, args ...int
 }
 
 // Entry point
-func Run(name, version, sha, buildDate string, args []string) int {
-	var rootOps = rootOptions{
-		name:      name,
-		version:   version,
-		sha:       sha,
-		buildDate: buildDate,
-	}
+func Run(args []string) int {
 
 	rootFlagSet := flag.NewFlagSet("", flag.ExitOnError)
-	rootFlagSet.BoolVar(&rootOps.verbose, "v", false, "verbose")
-	rootFlagSet.StringVar(&rootOps.natsServerUrl, "server", "nats://localhost:4222", "NATS server URL")
-	rootFlagSet.StringVar(&rootOps.credentials, "creds", "", "Path to credentials file")
-	rootFlagSet.StringVar(&rootOps.namespace, "namespace", "default", "Namespace (allows isolated sets of jobs to share a NATS server)")
+	rootFlagSet.BoolVar(&rootOptions.verbose, "v", false, "verbose")
+	rootFlagSet.StringVar(&rootOptions.natsServerUrl, "server", "nats://localhost:4222", "NATS server URL")
+	rootFlagSet.StringVar(&rootOptions.credentials, "creds", "", "Path to credentials file")
+	rootFlagSet.StringVar(&rootOptions.namespace, "namespace", "default", "Namespace (allows isolated sets of jobs to share a NATS server)")
 
-	cmdr := subcommands.NewCommander(rootFlagSet, name)
+	cmdr := subcommands.NewCommander(rootFlagSet, core.Name)
 	cmdr.ImportantFlag("server")
 	cmdr.ImportantFlag("v")
 	cmdr.ImportantFlag("creds")
@@ -121,5 +108,5 @@ func Run(name, version, sha, buildDate string, args []string) int {
 		fmt.Fprintf(os.Stderr, "Failed to parse arguments: %v\n", err)
 		return 1
 	}
-	return int(cmdr.Execute(context.Background(), &rootOps))
+	return int(cmdr.Execute(context.Background()))
 }

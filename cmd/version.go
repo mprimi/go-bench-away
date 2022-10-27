@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/subcommands"
+	"github.com/mprimi/go-bench-away/internal/core"
 )
 
 type versionCmd struct {
@@ -18,20 +19,13 @@ func versionCommand() subcommands.Command {
 			synopsis: "prints version information",
 			usage:    "version\n",
 			setFlags: func(_ *flag.FlagSet) {},
-			execute: func(rootOpts *rootOptions, f *flag.FlagSet) error {
-				if rootOpts.verbose {
-					fmt.Printf("Printing version string: %s\n", rootOpts.version)
-				}
-				if rootOpts.version == "" {
-					return fmt.Errorf("Version not set")
-				}
-
+			execute: func(f *flag.FlagSet) error {
 				fmt.Printf(
 					"%s version:%s (%s) (built: %s)\n",
-					rootOpts.name,
-					rootOpts.version,
-					rootOpts.sha,
-					rootOpts.buildDate,
+					core.Name,
+					core.Version,
+					core.SHA,
+					core.BuildDate,
 				)
 				return nil
 			},
