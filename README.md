@@ -6,9 +6,8 @@ Some things may be broken, some are going to break. Also no documentations and n
 
 
 Before V1.0:
+ - Add user@host to client name
  * Make --speed an option for compare
- * Host info
- * Cleanup log vs printf
  * Wait on multiple jobs
  * Submit and wait
  * Single result set report
@@ -17,7 +16,7 @@ Before V1.0:
  * Less code repetition in commands
  - Spin loop in worker when server is down
  - Use template for bash script and maybe save it as artifact
- - Add user@host to client name
+ - Use template for jobs table (shared by all reports)
 ---
 
 # Installation
