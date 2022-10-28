@@ -6,18 +6,42 @@ Some things may be broken, some are going to break. Also no documentations and n
 
 
 Before V1.0:
- - Add user@host to client name
- * Make --speed an option for compare
- * Wait on multiple jobs
- * Submit and wait
+ * Run with custom Go
+ * Add ranges to trend report table
+ * Ensure uniqueness of refs in graph (e.g. same SHA, different GO)
  * Single result set report
+ * Add time/op to compare report
+ * Rename compare-speed to compare report
+ * Handle re-delivery (call InProgress() ?)
+ * Wait on multiple jobs
+ * Add wait option to submit
+ * Submit multiple
  * Documentation and examples
+ * Split template to reuse style and other common elements
  * Tests
  * Less code repetition in commands
  - Spin loop in worker when server is down
  - Use template for bash script and maybe save it as artifact
  - Use template for jobs table (shared by all reports)
+
+Future/Wishlist:
+ * Embedded mode - run server and worker in-process
+ * Expose `internal` as packages so parts can be used as library
+ * Web UI (browse jobs)
+ * Search jobs
+
 ---
+
+# What is this?
+
+`go-bench-away` (GBA) is a utility to orchestrate and automate execution and analysis of benchmarks. It is inspired by tools such as [Jenkins](https://www.jenkins.io) and [Genie](https://github.com/Netflix/genie).
+
+Unlike those generic tools, GBA does just one thing: run benchmarks, produce results visual reports.
+
+GBA works with **any Golang repository** that implements [`testing.Benchmark`](https://pkg.go.dev/testing#hdr-Benchmarks), without any change to the target repository.
+
+It is also similar to [gobenchdata](https://github.com/bobheadxi/gobenchdata), except is designed to natively run benchmarks *elsewhere* (i.e., not on your laptop, but on a dedicated bare metal host somewhere in the cloud), hence the name go-bench-*away*.
+
 
 # Installation
 
