@@ -45,8 +45,11 @@ type JobRecord struct {
 
 	SHA       string
 	GoVersion string
-	Log       string
-	Results   string
+
+	// Artifacts from job execution
+	Log     string
+	Results string
+	Script  string
 
 	WorkerInfo WorkerInfo
 }

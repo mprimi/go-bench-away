@@ -16,6 +16,7 @@ const (
 	kJobIdHeader               = "x-job-id"
 	logArtifactKeyTemplate     = "jobs/%s/log.txt"
 	resultsArtifactKeyTemplate = "jobs/%s/results.txt"
+	scriptArtifactKeyTemplate  = "jobs/%s/run.sh"
 )
 
 type Options struct {
@@ -52,8 +53,10 @@ type Client interface {
 	UpdateJob(*core.JobRecord, uint64) (uint64, error)
 	UploadLogArtifact(string, string) (string, error)
 	UploadResultsArtifact(string, string) (string, error)
+	UploadScriptArtifact(string, string) (string, error)
 	DownloadLogArtifact(*core.JobRecord, string) error
 	DownloadResultsArtifact(*core.JobRecord, string) error
+	DownloadScriptArtifact(*core.JobRecord, string) error
 	LoadResultsArtifact(*core.JobRecord) ([]byte, error)
 }
 
@@ -365,10 +368,18 @@ func (c *clientImpl) UploadLogArtifact(jobId, logFilePath string) (string, error
 	err := c.uploadArtifact(key, description, logFilePath)
 	return key, err
 }
+
 func (c *clientImpl) UploadResultsArtifact(jobId, resultsFilePath string) (string, error) {
 	key := fmt.Sprintf(resultsArtifactKeyTemplate, jobId)
 	description := fmt.Sprintf("Job %s results file", jobId)
 	err := c.uploadArtifact(key, description, resultsFilePath)
+	return key, err
+}
+
+func (c *clientImpl) UploadScriptArtifact(jobId, scriptFilePath string) (string, error) {
+	key := fmt.Sprintf(scriptArtifactKeyTemplate, jobId)
+	description := fmt.Sprintf("Job %s run script file", jobId)
+	err := c.uploadArtifact(key, description, scriptFilePath)
 	return key, err
 }
 
@@ -394,11 +405,19 @@ func (c *clientImpl) DownloadLogArtifact(job *core.JobRecord, filePath string) e
 	}
 	return c.artifactsStore.GetFile(job.Log, filePath)
 }
+
 func (c *clientImpl) DownloadResultsArtifact(job *core.JobRecord, filePath string) error {
 	if job.Results == "" {
 		return fmt.Errorf("Job %s has no results artifact", job.Id)
 	}
 	return c.artifactsStore.GetFile(job.Results, filePath)
+}
+
+func (c *clientImpl) DownloadScriptArtifact(job *core.JobRecord, filePath string) error {
+	if job.Script == "" {
+		return fmt.Errorf("Job %s has no script artifact", job.Id)
+	}
+	return c.artifactsStore.GetFile(job.Script, filePath)
 }
 
 func (c *clientImpl) LoadResultsArtifact(job *core.JobRecord) ([]byte, error) {
