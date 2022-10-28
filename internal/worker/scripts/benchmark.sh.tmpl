@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 # This script is invoked by the worker.
+# It is job-specific, variables are filled in using template.
 #
-# 1. Clone the project from a specified origin
+# Overview:
+# 1. Clone the project, checkout the specific revision
 #    - Shallow checkout (no history, small and fast)
 # 2. Run go benchmarks
 #    - Place the output at a conventional location
@@ -12,53 +14,40 @@ set -e
 # Uncomment next line to debug this script, prints every step evaluated
 # set -x
 
-# This is invoked progragmatically, not by humans.
-# It expect a long and exact series of command-line arguments.
-#
-# Example:
-# $ ./benchmark.sh \
-#   /tmp/go-bench-away/job-1234567890 \
-#   /tmp/go-bench-away/job-1234567890/results.txt \
-#   /tmp/go-bench-away/job-1234567890/sha.txt \
-#   /tmp/go-bench-away/job-1234567890/go_version.txt \
-#   https://github.com/nats-io/nats-server.git \
-#   v2.9.2 \
-#   server \
-#   BenchmarkJetStreamPublish* \
-#   5 \
-#   3s \
-#   180m \
-#
+
 # Path (absolute) to an (existing) temporary folder under which all work is done
-ROOT_DIR="${1}"
+ROOT_DIR="{{.JobDirPath}}"
 # Path (absolute) of the file where to write benchmark results
-OUTPUT_FILE="${2}"
+OUTPUT_FILE="{{.ResultsPath}}"
 # Path (absolute) of the file where to write the checkout commit hash
 # (i.e. the SHA that GIT_REF resolves to)
-SHA_FILE="${3}"
+SHA_FILE="{{.ShaPath}}"
 # Path (absolute) of the file where to write the go version used
-GO_VERSION_FILE="${4}"
+GO_VERSION_FILE="{{.GoVersionPath}}"
 # Git remote URL to clone code from
-GIT_REMOTE="${5}"
+GIT_REMOTE="{{.GitRemote}}"
 # Name of the git reference to checkout (branch, tag, SHA, ...)
-GIT_REF="${6}"
+GIT_REF="{{.GitRef}}"
 # Name of the sub-directory of the projects where to run tests from
 # (Use . to run tests in the source root directory)
-TESTS_DIR="${7}"
+TESTS_DIR="{{.TestsSubDir}}"
 # Expression to filter which benchmark tests to run (passed to `go test`)
-BENCHMARKS_FILTER="${8}"
+BENCHMARKS_FILTER="{{.TestsFilterExpr}}"
 # Number of times each benchmark tests is repeated (passed to `go test`)
-BENCHMARK_REPETITIONS="${9}"
+BENCHMARK_REPETITIONS="{{.Reps}}"
 # Minimum runtime of each of the benchmark tests (passed to `go test`)
-BENCHMARK_MIN_RUN_TIME="${10}"
+BENCHMARK_MIN_RUN_TIME="{{.MinRuntime}}"
 # Maximum amount of time for all benchmarks to run before timing out (passed to `go test`)
-MAX_RUN_TIME="${11}"
+MAX_RUN_TIME="{{.Timeout}}"
+# Go executable path (optional)
+GO="{{.GoPath}}"
 
-# The following variables are hard-coded, but some of them are good candidates
-# to become parameters (or allow environment-based overrides) in the future
+# If a custom go path is not given, look for go in PATH
+if [[ "${GO}" == "" ]]; then
+  # This causes the script to fail if go is not in PATH
+  GO=`which go`
+fi
 
-# The go executable, must be in PATH
-GO=`which go`
 # The git executable, must be in PATH
 GIT=`which git`
 # Extra options passed to `git clone`

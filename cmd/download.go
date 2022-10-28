@@ -106,6 +106,19 @@ func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 			}
 			fmt.Printf("Downloaded %s\n", filePath)
 		}
+
+		if job.Script == "" {
+			fmt.Printf("No script artifact for job %s\n", job.Id)
+		} else {
+			fileName := fmt.Sprintf("%s_run.sh", jobId)
+			filePath := filepath.Join(cmd.outputDirPath, fileName)
+			err := client.DownloadScriptArtifact(job, filePath)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Download failed: %v\n", err)
+				return subcommands.ExitFailure
+			}
+			fmt.Printf("Downloaded %s\n", filePath)
+		}
 	}
 
 	return subcommands.ExitSuccess

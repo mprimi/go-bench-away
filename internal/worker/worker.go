@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"text/template"
 	"time"
 
 	"github.com/mprimi/go-bench-away/internal/client"
@@ -24,17 +25,18 @@ const (
 	kGoversionFilename = "go_version.txt"
 )
 
-//go:embed scripts/benchmark.sh
-var runScriptContents string
+//go:embed scripts/benchmark.sh.tmpl
+var runScriptTmpl string
 
 type Worker interface {
 	Run(context.Context) error
 }
 
 type workerImpl struct {
-	c          client.Client
-	jobsDir    string
-	workerInfo core.WorkerInfo
+	c              client.Client
+	jobsDir        string
+	workerInfo     core.WorkerInfo
+	scriptTemplate *template.Template
 }
 
 func NewWorker(c client.Client, jobsDir string) (Worker, error) {
@@ -60,6 +62,7 @@ func NewWorker(c client.Client, jobsDir string) (Worker, error) {
 			Uname:    fmt.Sprintf("%s_%s-%s", bts(buf.Sysname[:]), bts(buf.Release[:]), bts(buf.Machine[:])),
 			Version:  fmt.Sprintf("%s (%s)", core.Version, core.SHA),
 		},
+		scriptTemplate: template.Must(template.New("benchmark_script").Parse(runScriptTmpl)),
 	}, nil
 }
 
@@ -138,7 +141,34 @@ func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 	if err != nil {
 		return jobTempDir, fmt.Errorf("Failed to create script: %v", err)
 	}
-	_, err = scriptFile.WriteString(runScriptContents)
+
+	scriptTemplateValues := struct {
+		JobDirPath      string
+		ResultsPath     string
+		ShaPath         string
+		GoVersionPath   string
+		GitRemote       string
+		GitRef          string
+		TestsSubDir     string
+		TestsFilterExpr string
+		Reps            string
+		MinRuntime      string
+		Timeout         string
+	}{
+		JobDirPath:      jobTempDir,
+		ResultsPath:     resultsPath,
+		ShaPath:         shaPath,
+		GoVersionPath:   goVersionPath,
+		GitRemote:       job.Parameters.GitRemote,
+		GitRef:          job.Parameters.GitRef,
+		TestsSubDir:     job.Parameters.TestsSubDir,
+		TestsFilterExpr: job.Parameters.TestsFilterExpr,
+		Reps:            fmt.Sprintf("%d", job.Parameters.Reps),
+		MinRuntime:      fmt.Sprintf("%v", job.Parameters.TestMinRuntime),
+		Timeout:         fmt.Sprintf("%v", job.Parameters.Timeout),
+	}
+
+	err = w.scriptTemplate.Execute(scriptFile, scriptTemplateValues)
 	if err != nil {
 		return jobTempDir, fmt.Errorf("Failed to write job script: %v", err)
 	}
@@ -155,25 +185,10 @@ func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 	}
 	defer logFile.Close()
 
-	// Arguments for benchmark script
-	arguments := []string{
-		jobTempDir,                             //$1
-		resultsPath,                            //$2
-		shaPath,                                //$3
-		goVersionPath,                          //$4
-		job.Parameters.GitRemote,               //$5
-		job.Parameters.GitRef,                  //$6
-		job.Parameters.TestsSubDir,             //$7
-		job.Parameters.TestsFilterExpr,         //$8
-		fmt.Sprintf("%d", job.Parameters.Reps), //$9
-		fmt.Sprintf("%v", job.Parameters.TestMinRuntime), //$10
-		fmt.Sprintf("%v", job.Parameters.Timeout),        //$11
-	}
-
 	// Tee output to logfile and worker stdout
 	mw := io.MultiWriter(logFile, os.Stdout)
 
-	cmd := exec.CommandContext(context.Background(), scriptPath, arguments...)
+	cmd := exec.CommandContext(context.Background(), scriptPath)
 
 	cmd.Stdout = mw
 	cmd.Stderr = mw
@@ -227,7 +242,15 @@ func (w *workerImpl) uploadArtifacts(job *core.JobRecord, jobDirPath string) err
 		job.Results = resultsArtifactKey
 	}
 
-	if logErr != nil || resultsErr != nil {
+	scriptPath := filepath.Join(jobDirPath, kScriptFilename)
+	scriptArtifactKey, scriptErr := w.c.UploadScriptArtifact(job.Id, scriptPath)
+	if scriptErr != nil {
+		fmt.Printf("Script artifact upload error: %v\n", scriptErr)
+	} else {
+		job.Script = scriptArtifactKey
+	}
+
+	if logErr != nil || resultsErr != nil || scriptErr != nil {
 		return fmt.Errorf("Artifacts upload error")
 	}
 
