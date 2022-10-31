@@ -26,6 +26,7 @@ type JobParameters struct {
 	Timeout         time.Duration
 	SkipCleanup     bool
 	Username        string
+	GoPath          string
 }
 
 type WorkerInfo struct {
