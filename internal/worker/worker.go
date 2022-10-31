@@ -154,6 +154,7 @@ func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 		Reps            string
 		MinRuntime      string
 		Timeout         string
+		GoPath          string
 	}{
 		JobDirPath:      jobTempDir,
 		ResultsPath:     resultsPath,
@@ -166,6 +167,7 @@ func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 		Reps:            fmt.Sprintf("%d", job.Parameters.Reps),
 		MinRuntime:      fmt.Sprintf("%v", job.Parameters.TestMinRuntime),
 		Timeout:         fmt.Sprintf("%v", job.Parameters.Timeout),
+		GoPath:          job.Parameters.GoPath,
 	}
 
 	err = w.scriptTemplate.Execute(scriptFile, scriptTemplateValues)

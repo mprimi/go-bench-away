@@ -6,7 +6,6 @@ Some things may be broken, some are going to break. Also no documentations and n
 
 
 Before V1.0:
- * Run with custom Go
  * Add ranges to trend report table
  * Ensure uniqueness of refs in graph (e.g. same SHA, different GO)
  * Single result set report
