@@ -76,3 +76,52 @@ Run this from anywhere: your laptop, a GitHub action, a Jenkins job, etc.
 ```
 $ go-bench-away -server nats://${TOKEN}@${SERVER_IP}:4222 submit -remote https://github.com/nats-io/nats-server.git -ref v2.9.3 -reps 3 -tests_dir server -filter 'BenchmarkJetStreamPublish/.*/Sync'
 ```
+
+## Reference
+
+### Testing different Go versions
+
+It is possible to test the same source using different Go versions by passing different `-go_path` flag to the `submit` command. Example:
+
+```sh
+# Helper function to simplify installation
+# (may need to run as root depending on install location )
+function install_go () {
+  local goversion="${1}"
+  local goos="${2}"
+  local goarch="${3}"
+  local install_dir="${4}/go${goversion}"
+
+  local archive_name="go${goversion}.${goos}-${goarch}.tar.gz"
+  local download_url="https://go.dev/dl/${archive_name}"
+  local tempdir="/tmp/go${goversion}"
+
+  echo "Installing: Go ${goversion} (${goos} ${goarch}) in ${install_dir}"
+
+  mkdir "${tempdir}"
+  curl --silent -L "${download_url}" -o "${tempdir}/${archive_name}"
+  tar -xf "${tempdir}/${archive_name}" -C ${tempdir}
+  mv ${tempdir}/go ${install_dir}
+
+  echo "Installed: ${install_dir}/bin/go"
+  "${install_dir}/bin/go" version
+}
+
+# Install some set of versions
+for go_version in 1.19.3 1.18.8 1.17.13 1.16.15 1.15.15 1.14.15;
+do
+  install_go ${go_version} linux amd64 /usr/local
+done
+```
+
+Then submit jobs (from anywhere):
+```sh
+for go_version in 1.19.3 1.18.8;
+do
+  go-bench-away -server [...] submit [...] -go_path "/usr/local/go${go_version}"
+done
+```
+
+
+
+```
