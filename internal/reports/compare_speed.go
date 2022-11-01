@@ -136,20 +136,20 @@ func CreateCompareSpeedReport(client client.Client, cfg *CompareSpeedConfig) err
 
 		oldSpeedErrs[i] = 0
 		if len(row.Metrics[0].RValues) > 1 {
-			oldVariance, err := stats.SampleVariance(row.Metrics[0].RValues)
+			centile, err := stats.Percentile(row.Metrics[0].RValues, kCentilePercent)
 			if err != nil {
 				return err
 			}
-			oldSpeedErrs[i] = oldVariance
+			oldSpeedErrs[i] = centile - row.Metrics[0].Mean
 		}
 
 		newSpeedErrs[i] = 0
 		if len(row.Metrics[1].RValues) > 1 {
-			newVariance, err := stats.SampleVariance(row.Metrics[1].RValues)
+			centile, err := stats.Percentile(row.Metrics[1].RValues, kCentilePercent)
 			if err != nil {
 				return err
 			}
-			newSpeedErrs[i] = newVariance
+			newSpeedErrs[i] = centile - row.Metrics[1].Mean
 		}
 
 		oldSpeedLabels[i] = fmt.Sprintf("%.1fMB/s", oldSpeeds[i])
