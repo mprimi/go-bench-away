@@ -3,6 +3,7 @@ package reports
 import (
 	_ "embed"
 	"fmt"
+	"github.com/montanaflynn/stats"
 	"golang.org/x/perf/benchstat"
 	"html/template"
 	"os"
@@ -19,6 +20,10 @@ type TrendConfig struct {
 	JobIds     []string
 	OutputPath string
 }
+
+const (
+	kCentilePercent = 90.0
+)
 
 func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 
@@ -42,21 +47,11 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 		c.AddConfig(jobId, results)
 	}
 
-	jobLabels := createUniqueLabels(jobs)
-
-	// jobRefs := make([]string, len(jobs))
-	// for i, j := range jobs {
-	// 	jobRefs[i] = fmt.Sprintf("%s [%s]", j.Parameters.GitRef, j.SHA[0:7])
-	// }
-
-	for _, t := range c.Tables() {
-		fmt.Printf("Table: %s\n", t.Metric)
-	}
+	jobLabels := createJobLabels(jobs)
 
 	type SerieVariance struct {
 		Type      string    `json:"type"`
-		MaxValues []float64 `json:"array"`
-		MinValues []float64 `json:"arrayminus"`
+		Values    []float64 `json:"array"`
 		Visible   bool      `json:"visible"`
 		Symmetric bool      `json:"symmetric"`
 	}
@@ -83,8 +78,8 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 
 			averages := make([]float64, len(jobs))
 			formattedValues := make([]string, len(jobs))
-			maxes := make([]float64, len(jobs))
-			mins := make([]float64, len(jobs))
+			variances := make([]float64, len(jobs))
+
 			if len(row.Metrics) != len(jobs) {
 				return nil, nil, fmt.Errorf("Unexpected number of values %d for %d jobs", len(row.Metrics), len(jobs))
 			}
@@ -94,10 +89,18 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 					return nil, nil, fmt.Errorf("Unexpected unit: %s", metric.Unit)
 				}
 				averages[j] = metric.Mean
-				maxes[j] = metric.Max - metric.Mean
-				mins[j] = metric.Mean - metric.Min
 
-				formattedValues[j] = benchstat.NewScaler(metric.Mean, metric.Unit)(metric.Mean)
+				variances[j] = 0
+				if len(metric.RValues) > 1 {
+					centile, err := stats.Percentile(metric.RValues, kCentilePercent)
+					if err != nil {
+						return nil, nil, fmt.Errorf("Failed to calculate %.0f%% centile: %v", kCentilePercent, err)
+					}
+					variances[j] = centile - metric.Mean
+				}
+
+				scaler := benchstat.NewScaler(metric.Mean, metric.Unit)
+				formattedValues[j] = fmt.Sprintf("%s ± %s", scaler(metric.Mean), scaler(variances[j]))
 			}
 
 			timeOpSeries[i] = ExperimentSerie{
@@ -108,10 +111,9 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 				Type:   "scatter",
 				Variances: SerieVariance{
 					Type:      "data",
-					MaxValues: maxes,
-					MinValues: mins,
+					Values:    variances,
 					Visible:   true,
-					Symmetric: false,
+					Symmetric: true,
 				},
 			}
 
