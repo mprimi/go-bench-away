@@ -21,15 +21,11 @@ type TrendConfig struct {
 	OutputPath string
 }
 
-const (
-	kCentilePercent = 90.0
-)
-
 func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 
 	// Create collection of results
 	c := &benchstat.Collection{
-		Alpha:      0.1,
+		Alpha:      kDeltaTestAlpha,
 		AddGeoMean: false,
 		DeltaTest:  benchstat.UTest,
 		Order:      nil, // Preserve file add order
@@ -149,12 +145,12 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 		unit := ""
 		chartId := ""
 		switch table.Metric {
-		case "time/op":
+		case kTimeOpTable:
 			skip = false
 			title = "Time/op trend (lower is better)"
 			unit = "ns/op"
 			chartId = "time_op"
-		case "speed":
+		case kSpeedTable:
 			skip = false
 			title = "Throghput trend (higher is better)"
 			unit = "MB/s"

@@ -27,7 +27,7 @@ func CreateCompareSpeedReport(client client.Client, cfg *CompareSpeedConfig) err
 
 	// Create collection of results
 	c := &benchstat.Collection{
-		Alpha:      0.1,
+		Alpha:      kDeltaTestAlpha,
 		AddGeoMean: false,
 		DeltaTest:  benchstat.UTest,
 		Order:      nil, // Preserve file add order
@@ -51,7 +51,7 @@ func CreateCompareSpeedReport(client client.Client, cfg *CompareSpeedConfig) err
 	tables := c.Tables()
 	if len(tables) == 0 {
 		return fmt.Errorf("No comparison tables, the jobs may not overlap in tests executed")
-	} else if len(tables) < 2 || tables[1].Metric != "speed" {
+	} else if len(tables) < 2 || tables[1].Metric != kSpeedTable {
 		// Benchmarks must report speed using https://pkg.go.dev/testing#B.SetBytes
 		// For this report to generate
 		return fmt.Errorf("Speed table not found, the benchmarks may not be reporting throughput")
