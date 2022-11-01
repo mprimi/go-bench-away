@@ -258,12 +258,14 @@ dispatchLoop:
 
 func (c *clientImpl) LoadJob(jobId string) (*core.JobRecord, uint64, error) {
 
-	c.logDebug("Loading job %s", jobId)
+	c.logDebug("Loading job '%s'", jobId)
 
 	jobRecordKey := fmt.Sprintf(kJobRecordKeyTmpl, jobId)
 
 	kve, err := c.jobsRepository.Get(jobRecordKey)
-	if err != nil {
+	if err == nats.ErrKeyNotFound {
+		return nil, 0, fmt.Errorf("Job not found: '%s'", jobId)
+	} else if err != nil {
 		return nil, 0, err
 	}
 
