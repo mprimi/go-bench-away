@@ -57,8 +57,8 @@
       <table>
         <tr>
           <th></th>
-          {{range .Jobs}}
-          <th>{{.Parameters.GitRef}}</th>
+          {{range .JobLabels}}
+          <th>{{.}}</th>
           {{end}}
         </tr>
 
@@ -77,10 +77,14 @@
     </body>
     <script>
       {{range .Views}}
-      var {{.ChartId}}_data = {{.Series}}
+      var {{.ChartId}}_data = {{.Data}}
       var {{.ChartId}}_layout = {
         yaxis: {
           title: {{.AxisLabel}},
+        },
+        xaxis: {
+          tickvals: [{{range .Jobs}}{{.Id}},{{end}}],
+          ticktext : [{{range .JobLabels}}{{.}}, {{end}},]
         }
       };
       Plotly.newPlot('{{.ChartId}}', {{.ChartId}}_data, {{.ChartId}}_layout);

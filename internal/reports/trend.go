@@ -30,8 +30,10 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 		Order:      nil, // Preserve file add order
 	}
 
-	jobs := make([]*core.JobRecord, len(cfg.JobIds))
-	for i, jobId := range cfg.JobIds {
+	jobIds := filterDuplicates(cfg.JobIds)
+
+	jobs := make([]*core.JobRecord, len(jobIds))
+	for i, jobId := range jobIds {
 		job, results, err := loadJobAndResults(client, jobId)
 		if err != nil {
 			return err
@@ -40,10 +42,12 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 		c.AddConfig(jobId, results)
 	}
 
-	jobRefs := make([]string, len(jobs))
-	for i, j := range jobs {
-		jobRefs[i] = fmt.Sprintf("%s [%s]", j.Parameters.GitRef, j.SHA[0:7])
-	}
+	jobLabels := createUniqueLabels(jobs)
+
+	// jobRefs := make([]string, len(jobs))
+	// for i, j := range jobs {
+	// 	jobRefs[i] = fmt.Sprintf("%s [%s]", j.Parameters.GitRef, j.SHA[0:7])
+	// }
 
 	for _, t := range c.Tables() {
 		fmt.Printf("Table: %s\n", t.Metric)
@@ -59,7 +63,7 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 
 	type ExperimentSerie struct {
 		Name      string        `json:"name"`
-		RefNames  []string      `json:"x"`
+		JobIds    []string      `json:"x"`
 		Values    []float64     `json:"y"`
 		Mode      string        `json:"mode"`
 		Type      string        `json:"type"`
@@ -97,11 +101,11 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 			}
 
 			timeOpSeries[i] = ExperimentSerie{
-				Name:     row.Benchmark,
-				RefNames: jobRefs,
-				Values:   averages,
-				Mode:     "lines+markers",
-				Type:     "scatter",
+				Name:   row.Benchmark,
+				JobIds: jobIds,
+				Values: averages,
+				Mode:   "lines+markers",
+				Type:   "scatter",
 				Variances: SerieVariance{
 					Type:      "data",
 					MaxValues: maxes,
@@ -129,7 +133,8 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 		ChartId   template.JS
 		Jobs      []*core.JobRecord
 		AxisLabel string
-		Series    template.JS
+		Data      template.JS
+		JobLabels []string
 		Summary   []SummaryRow
 	}
 
@@ -167,7 +172,8 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 				ChartId:   template.JS(chartId),
 				Jobs:      jobs,
 				AxisLabel: unit,
-				Series:    mustMarshalIndent(series, 2, 6),
+				Data:      mustMarshalIndent(series, 2, 6),
+				JobLabels: jobLabels,
 				Summary:   summary,
 			}
 
@@ -199,4 +205,63 @@ func CreateTrendReport(client client.Client, cfg *TrendConfig) error {
 	}
 
 	return nil
+}
+
+func filterDuplicates(jobIds []string) []string {
+	counts := make(map[string]struct{}, len(jobIds))
+	for _, jobId := range jobIds {
+		if _, present := counts[jobId]; present {
+			fmt.Printf("Warning, duplicate job: %s\n", jobId)
+		} else {
+			counts[jobId] = struct{}{}
+		}
+	}
+	uniqueJobIds := make([]string, 0, len(counts))
+	for jobId := range counts {
+		uniqueJobIds = append(uniqueJobIds, jobId)
+	}
+	return uniqueJobIds
+}
+
+// Multiple jobs may use the same GitRef (e.g. when comparing two versions of go)
+// This makes graphs and table hard to read, since the same ref appears.
+// Try to compose a minimum label for each job that makes it unique
+func createUniqueLabels(jobs []*core.JobRecord) []string {
+
+	containsDuplicates := func(labels []string) bool {
+		m := make(map[string]struct{}, len(labels))
+		for _, l := range labels {
+			if _, present := m[l]; present {
+				return true
+			}
+			m[l] = struct{}{}
+		}
+		return false
+	}
+
+	// Function that creates a label from a job
+	type LabelFunc func(*core.JobRecord) string
+
+	labelFunctions := []LabelFunc{
+		// Try GitRef
+		func(job *core.JobRecord) string { return job.Parameters.GitRef },
+		// Try GitRef + SHA
+		func(job *core.JobRecord) string { return fmt.Sprintf("%s [%s]", job.Parameters.GitRef, job.SHA[0:7]) },
+		// Try GitRef + Go version
+		func(job *core.JobRecord) string { return fmt.Sprintf("%s [%s]", job.Parameters.GitRef, job.GoVersion) },
+		// Last resort.. use job ID
+		func(job *core.JobRecord) string { return job.Id },
+	}
+
+	for _, f := range labelFunctions {
+		labels := make([]string, len(jobs))
+		for i, job := range jobs {
+			labels[i] = f(job)
+		}
+		if !containsDuplicates(labels) {
+			return labels
+		}
+	}
+
+	panic("Could not construct a set of unique labels")
 }
