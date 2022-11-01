@@ -57,6 +57,11 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		return subcommands.ExitFailure
 	}
 
+	if len(jobs) == 0 {
+		fmt.Printf("No jobs found\n")
+		return subcommands.ExitSuccess
+	}
+
 	fmt.Printf("Recent jobs:\n")
 	for _, job := range jobs {
 

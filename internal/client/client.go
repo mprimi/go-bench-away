@@ -288,7 +288,9 @@ func (c *clientImpl) LoadRecentJobs(limit int) ([]*core.JobRecord, error) {
 	jobs := []*core.JobRecord{}
 
 	lastSubmitMsg, err := c.js.GetLastMsg(c.options.jobsQueueName, c.options.jobsSubmitSubject)
-	if err != nil {
+	if err == nats.ErrMsgNotFound {
+		return []*core.JobRecord{}, nil
+	} else if err != nil {
 		return nil, err
 	}
 
