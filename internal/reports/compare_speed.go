@@ -134,10 +134,23 @@ func CreateCompareSpeedReport(client client.Client, cfg *CompareSpeedConfig) err
 		oldSpeeds[i] = row.Metrics[0].Mean
 		newSpeeds[i] = row.Metrics[1].Mean
 
-		oldVariance, _ := stats.SampleVariance(row.Metrics[0].RValues)
-		newVariance, _ := stats.SampleVariance(row.Metrics[1].RValues)
-		oldSpeedErrs[i] = oldVariance
-		newSpeedErrs[i] = newVariance
+		oldSpeedErrs[i] = 0
+		if len(row.Metrics[0].RValues) > 1 {
+			oldVariance, err := stats.SampleVariance(row.Metrics[0].RValues)
+			if err != nil {
+				return err
+			}
+			oldSpeedErrs[i] = oldVariance
+		}
+
+		newSpeedErrs[i] = 0
+		if len(row.Metrics[1].RValues) > 1 {
+			newVariance, err := stats.SampleVariance(row.Metrics[1].RValues)
+			if err != nil {
+				return err
+			}
+			newSpeedErrs[i] = newVariance
+		}
 
 		oldSpeedLabels[i] = fmt.Sprintf("%.1fMB/s", oldSpeeds[i])
 		newSpeedLabels[i] = fmt.Sprintf("%.1fMB/s", newSpeeds[i])
@@ -151,8 +164,8 @@ func CreateCompareSpeedReport(client client.Client, cfg *CompareSpeedConfig) err
 
 		experimentRows[i] = ExperimentRow{
 			ExperimentName: testNames[i],
-			OldSpeed:       fmt.Sprintf("%.1fMB/s ± %.1f", oldSpeeds[i], oldVariance),
-			NewSpeed:       fmt.Sprintf("%.1fMB/s ± %.1f", newSpeeds[i], newVariance),
+			OldSpeed:       fmt.Sprintf("%.1fMB/s ± %.1f", oldSpeeds[i], oldSpeedErrs[i]),
+			NewSpeed:       fmt.Sprintf("%.1fMB/s ± %.1f", newSpeeds[i], newSpeedErrs[i]),
 			Delta:          row.Delta,
 		}
 
