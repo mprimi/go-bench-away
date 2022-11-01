@@ -10,7 +10,6 @@ Before V1.0:
  * Add time/op to compare report
  * Rename compare-speed to compare report
  * Handle re-delivery (call InProgress() ?)
- * Wait on multiple jobs
  * Add wait option to submit
  * Submit multiple
  * Documentation and examples

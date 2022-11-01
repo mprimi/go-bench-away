@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"time"
+	"sync"
 
 	"github.com/google/subcommands"
 	"github.com/mprimi/go-bench-away/internal/client"
@@ -20,8 +21,8 @@ func waitCommand() subcommands.Command {
 	return &waitCmd{
 		baseCommand: baseCommand{
 			name:     "wait",
-			synopsis: "Waits for a given job completion",
-			usage:    "wait <jobId>\n",
+			synopsis: "Waits for a set of jobs to complete",
+			usage:    "wait <jobId> [jobId [...]]\n",
 		},
 	}
 }
@@ -34,12 +35,12 @@ func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	if len(f.Args()) != 1 {
-		fmt.Fprintf(os.Stderr, "Missing job ID argument\n")
+	if len(f.Args()) < 1 {
+		fmt.Fprintf(os.Stderr, "Missing job ID arguments\n")
 		return subcommands.ExitUsageError
 	}
 
-	jobId := f.Args()[0]
+	jobIds := f.Args()
 
 	client, err := client.NewClient(
 		rootOptions.natsServerUrl,
@@ -55,29 +56,43 @@ func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 	}
 	defer client.Close()
 
-	fmt.Printf("Waiting for job %s\n", jobId)
+	wg := sync.WaitGroup{}
 
-	previousRevision := uint64(0)
+	const kStatusPollInterval = 3 * time.Second
 
-pollLoop:
-	for {
-		job, revision, err := client.LoadJob(jobId)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return subcommands.ExitFailure
+	waitJob := func(jobId string) {
+		defer wg.Done()
+
+		fmt.Printf("Waiting for job %s\n", jobId)
+
+		previousRevision := uint64(0)
+
+		for {
+			job, revision, err := client.LoadJob(jobId)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Failed to wait on job %s: %v\n", jobId, err)
+				return
+			}
+
+			if revision != previousRevision {
+				fmt.Printf("%s: %s\n", jobId, job.Status)
+			}
+
+			if job.Status == core.Failed || job.Status == core.Succeeded {
+				return
+			}
+
+			previousRevision = revision
+			time.Sleep(kStatusPollInterval)
 		}
-
-		if revision != previousRevision {
-			fmt.Printf("%s\n", job.Status)
-		}
-
-		if job.Status == core.Failed || job.Status == core.Succeeded {
-			break pollLoop
-		}
-
-		previousRevision = revision
-		time.Sleep(1 * time.Second)
 	}
+
+	for _, jobId := range jobIds {
+		wg.Add(1)
+		go waitJob(jobId)
+	}
+
+	wg.Wait()
 
 	return subcommands.ExitSuccess
 }
