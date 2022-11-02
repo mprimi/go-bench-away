@@ -1,10 +1,9 @@
 package reports
 
 import (
-	"encoding/json"
 	"fmt"
-	"html/template"
-	"strings"
+	"github.com/montanaflynn/stats"
+	"golang.org/x/perf/benchstat"
 
 	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
@@ -29,39 +28,13 @@ func loadJobAndResults(client client.Client, jobId string) (*core.JobRecord, []b
 	return job, results, nil
 }
 
-func mustMarshal(v any) template.JS {
-	encoded, err := json.Marshal(v)
-	if err != nil {
-		panic(fmt.Sprintf("Failed to encode %v: %v", v, err))
+// Count the unique string in the slice
+func countUnique(elements []string) int {
+	set := make(map[string]struct{}, len(elements))
+	for _, element := range elements {
+		set[element] = struct{}{}
 	}
-	return template.JS(encoded)
-}
-
-func mustMarshalIndent(v any, indentSpaces, leftMarginSpaces int) template.JS {
-	prefix := strings.Repeat(" ", leftMarginSpaces)
-	indent := strings.Repeat(" ", indentSpaces)
-	encoded, err := json.MarshalIndent(v, prefix, indent)
-	if err != nil {
-		panic(fmt.Sprintf("Failed to encode %v: %v", v, err))
-	}
-	return template.JS(encoded)
-}
-
-// Given a list of job Ids, return a list with duplicate removed (maintaining order)
-func filterDuplicates(jobIds []string) []string {
-	counts := make(map[string]struct{}, len(jobIds))
-	for _, jobId := range jobIds {
-		if _, present := counts[jobId]; present {
-			fmt.Printf("Warning, duplicate job: %s\n", jobId)
-		} else {
-			counts[jobId] = struct{}{}
-		}
-	}
-	uniqueJobIds := make([]string, 0, len(counts))
-	for jobId := range counts {
-		uniqueJobIds = append(uniqueJobIds, jobId)
-	}
-	return uniqueJobIds
+	return len(set)
 }
 
 // Multiple jobs may use the same GitRef (e.g. when comparing two versions of go)
@@ -105,4 +78,24 @@ func createJobLabels(jobs []*core.JobRecord) []string {
 	}
 
 	panic("Could not construct a set of unique labels")
+}
+
+// Return a new unique name for a chart div
+var chartCounter int
+
+func uniqueChartName() string {
+	chartCounter += 1
+	return fmt.Sprintf("chart_%d", chartCounter)
+}
+
+func valueDeviationAndScaledString(m *benchstat.Metrics) (float64, float64, string) {
+	mean := m.Mean
+	scaler := benchstat.NewScaler(mean, m.Unit)
+	centile, err := stats.Percentile(m.RValues, kCentilePercent)
+	if err != nil {
+		panic(fmt.Sprintf("Failed to calculate percentile for %T %+v: %v", m, m, err))
+	}
+	deviation := centile - mean
+	scaledString := fmt.Sprintf("%s ± %s", scaler(mean), scaler(deviation))
+	return mean, deviation, scaledString
 }
