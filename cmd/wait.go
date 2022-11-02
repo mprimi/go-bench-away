@@ -5,8 +5,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"time"
 	"sync"
+	"time"
 
 	"github.com/google/subcommands"
 	"github.com/mprimi/go-bench-away/internal/client"
