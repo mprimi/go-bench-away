@@ -84,6 +84,7 @@ func Run(args []string) int {
 		"reporting, analysis & graphs": {
 			compareSpeedReportCommand(),
 			trendReportCommand(),
+			basicReportCommand(),
 			downloadCommand(),
 		},
 		"worker": {

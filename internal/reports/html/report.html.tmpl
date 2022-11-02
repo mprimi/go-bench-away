@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <style>
+          div.chart {
+            border: 2px dotted black;
+            padding: 3px;
+            margin: 3px;
+          }
+          table {
+            border: 2px dotted black;
+            padding: 3px;
+            margin: 3px;
+          }
+          td {
+            padding: 4px;
+            border: 1px solid gray;
+          }
+        </style>
+    </head>
+    <body>
+      <h1>{{.Title}}</h1>
+      {{range .Sections}}
+      {{if eq .Type "jobs_table"}}
+      {{template "jobs_table" .}}
+      {{else if eq .Type "horizontal_bar_chart"}}
+      {{template "horizontal_bar_chart" .}}
+      {{else if eq .Type "results_table"}}
+      {{template "results_table" .}}
+      {{end}}
+      {{end}}
+    </body>
+</html>
+
+{{define "jobs_table"}}
+      <details>
+        <summary>Show jobs details</summary>
+        <table>
+          <tr>
+            <th>Job</th>
+            <th>Source</th>
+            <th>Filter</th>
+            <th>Repetitions</th>
+            <th>Go</th>
+            <th>Worker</th>
+            <th>Job Info</th>
+          </tr>
+          {{range .Jobs}}
+          <tr>
+            <td>{{.Id}}</td>
+            <td>{{.Parameters.GitRef}}<br>{{.Parameters.GitRemote}}<br>({{.SHA}})</td>
+            <td>{{.Parameters.TestsFilterExpr}}</td>
+            <td>{{.Parameters.Reps}} x {{.Parameters.TestMinRuntime}}</td>
+            <td>{{.GoVersion}}<br>({{.Parameters.GoPath}})</td>
+            <td>{{.WorkerInfo.Version}}<br>{{.WorkerInfo.Hostname}}<br>{{.WorkerInfo.Uname}}</td>
+            <td>Submitted by {{.Parameters.Username}} at {{.Created}}</td>
+          </tr>
+          {{end}}
+        </table>
+      </details>
+{{end}}
+
+{{define "horizontal_bar_chart"}}
+      <h2>{{.Title}} ({{.Metric}})</h2>
+      <small>{{.SubText}}</small>
+      <div id={{.ChartId}} class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          {{.ChartId}},
+          [
+            {{range .Groups}}
+            {
+              name: {{.Name}},
+              y: {{.ExperimentNames}},
+              x: {{.Averages}},
+              text: {{.BarLabels}},
+              hoverinfo: "name+text",
+              hovertext: {{.HoverLabels}},
+              error_x: {
+                type: 'data',
+                array: {{.Deviation}},
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            {{end}}
+          ],
+          {
+            barmode: 'group',
+            yaxis: {
+              title: {{.YTitle}},
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: {{.XTitle}},
+            },
+            autosize: true,
+            height: ({{len .Groups}} * 15) + ({{.NumBenchmarks}} * 80),
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        )
+      </script>
+{{end}}
+
+{{define "results_table"}}
+      <h2></h2>
+      <table>
+        <tr>
+          <th></th>
+          {{range .JobLabels}}
+          <th>{{.}}</th>
+          {{end}}
+        </tr>
+        {{range .ResultsRows}}
+        <tr>
+          <th>{{.BenchmarkName}}</th>
+          {{range .Values}}
+          <td>{{.}}</td>
+          {{end}}
+        </tr>
+        {{end}}
+      </table>
+{{end}}

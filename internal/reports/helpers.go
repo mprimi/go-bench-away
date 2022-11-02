@@ -64,6 +64,15 @@ func filterDuplicates(jobIds []string) []string {
 	return uniqueJobIds
 }
 
+// Count the unique string in the slice
+func countUnique(elements []string) int {
+	set := make(map[string]struct{}, len(elements))
+	for _, element := range elements {
+		set[element] = struct{}{}
+	}
+	return len(set)
+}
+
 // Multiple jobs may use the same GitRef (e.g. when comparing two versions of go)
 // This makes graphs and table hard to read, since the same ref appears.
 // Try to compose a minimum label for each job that makes it unique
@@ -105,4 +114,12 @@ func createJobLabels(jobs []*core.JobRecord) []string {
 	}
 
 	panic("Could not construct a set of unique labels")
+}
+
+// Return a new unique name for a chart div
+var chartCounter int
+
+func uniqueChartName() string {
+	chartCounter += 1
+	return fmt.Sprintf("chart_%d", chartCounter)
 }
