@@ -6,9 +6,6 @@ Some things may be broken, some are going to break. Also no documentations and n
 
 
 Before V1.0:
- * Single result set report
- * Add time/op to compare report
- * Rename compare-speed to compare report
  * Handle re-delivery (call InProgress() ?)
  * Add wait option to submit
  * Submit multiple
@@ -18,7 +15,6 @@ Before V1.0:
  * Less code repetition in commands
  - Spin loop in worker when server is down
  - Use template for bash script and maybe save it as artifact
- - Use template for jobs table (shared by all reports)
 
 Future/Wishlist:
  * Embedded mode - run server and worker in-process

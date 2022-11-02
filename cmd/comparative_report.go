@@ -11,38 +11,38 @@ import (
 	"github.com/mprimi/go-bench-away/internal/reports"
 )
 
-type trendReportCmd struct {
+type comparativeReportCmd struct {
 	baseCommand
 	skipTimeOp bool
 	skipSpeed  bool
 	reportCfg  reports.ReportConfig
 }
 
-func trendReportCommand() subcommands.Command {
-	return &trendReportCmd{
+func comparativeReportCommand() subcommands.Command {
+	return &comparativeReportCmd{
 		baseCommand: baseCommand{
-			name:     "trend",
-			synopsis: "Creates a report trends of benchmark results over time",
-			usage:    "report [options] jobId1 jobId2 ... jobIdN\n",
+			name:     "compare",
+			synopsis: "Creates a report comparing two sets of results (i.e. jobs)",
+			usage:    "report [options] jobId1 jobId2\n",
 		},
 	}
 }
 
-func (cmd *trendReportCmd) SetFlags(f *flag.FlagSet) {
+func (cmd *comparativeReportCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.reportCfg.OutputPath, "output", "report.html", "Output report (HTML)")
 	f.StringVar(&cmd.reportCfg.Title, "title", "", "Title of the report (auto-generated if empty)")
 	f.BoolVar(&cmd.skipTimeOp, "no_timeop", false, "Do not include time/op graph and table")
 	f.BoolVar(&cmd.skipSpeed, "no_speed", false, "Do not include speed graph and table")
 }
 
-func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+func (cmd *comparativeReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
 	jobIds := f.Args()
-	if len(jobIds) < 2 {
-		fmt.Fprintf(os.Stderr, "Need at least two job Id arguments\n")
+	if len(jobIds) != 2 {
+		fmt.Fprintf(os.Stderr, "Pass two job Id argument\n")
 		return subcommands.ExitUsageError
 	}
 
@@ -77,15 +77,17 @@ func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...inte
 
 	if !cmd.skipTimeOp {
 		cmd.reportCfg.AddSections(
-			reports.TrendChart(reports.TimeOp),
-			reports.ResultsTable(reports.TimeOp),
+			reports.HorizontalBarChart(reports.TimeOp),
+			reports.HorizontalDeltaChart(reports.TimeOp),
+			reports.ResultsDeltaTable(reports.TimeOp),
 		)
 	}
 
 	if dataTable.HasSpeed() && !cmd.skipSpeed {
 		cmd.reportCfg.AddSections(
-			reports.TrendChart(reports.Speed),
-			reports.ResultsTable(reports.Speed),
+			reports.HorizontalBarChart(reports.Speed),
+			reports.HorizontalDeltaChart(reports.Speed),
+			reports.ResultsDeltaTable(reports.Speed),
 		)
 	}
 
