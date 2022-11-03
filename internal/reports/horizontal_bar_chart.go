@@ -76,7 +76,7 @@ func HorizontalBarChart(metric Metric) SectionConfig {
 	return &horizontalBarChartSection{
 		baseSection: baseSection{
 			Type:  "horizontal_bar_chart",
-			Title: "Side by side",
+			Title: "Grouped by benchmark",
 		},
 		Metric:  metric,
 		ChartId: uniqueChartName(),
