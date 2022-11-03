@@ -29,6 +29,10 @@
       {{template "horizontal_bar_chart" .}}
       {{else if eq .Type "results_table"}}
       {{template "results_table" .}}
+      {{else if eq .Type "horizontal_delta_chart"}}
+      {{template "horizontal_delta_chart" .}}
+      {{else if eq .Type "results_delta_table"}}
+      {{template "results_delta_table" .}}
       {{end}}
       {{end}}
     </body>
@@ -65,7 +69,7 @@
 {{define "horizontal_bar_chart"}}
       <h2>{{.Title}} ({{.Metric}})</h2>
       <small>{{.SubText}}</small>
-      <div id={{.ChartId}} class="chart"></div>
+      <div id="{{.ChartId}}" class="chart"></div>
       <script>
         Plotly.newPlot(
           {{.ChartId}},
@@ -99,13 +103,13 @@
               title: {{.XTitle}},
             },
             autosize: true,
-            height: ({{len .Groups}} * 15) + ({{.NumBenchmarks}} * 80),
+            height: ({{len .Groups}} * 15) + ({{.NumBenchmarks}} * 80) + 50,
             margin: {
               t: 20,
               b: 30,
             },
           }
-        )
+        );
       </script>
 {{end}}
 
@@ -117,6 +121,68 @@
           {{range .JobLabels}}
           <th>{{.}}</th>
           {{end}}
+        </tr>
+        {{range .ResultsRows}}
+        <tr>
+          <th>{{.BenchmarkName}}</th>
+          {{range .Values}}
+          <td>{{.}}</td>
+          {{end}}
+        </tr>
+        {{end}}
+      </table>
+{{end}}
+
+{{define "horizontal_delta_chart"}}
+      <h2>{{.Title}} ({{.Metric}})</h2>
+      <small>{{.SubText}}</small>
+      <div id="{{.ChartId}}" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        {{.ChartId}},
+        [{
+          type: 'bar',
+          y: {{.ExperimentNames}},
+          x: {{.Deltas}},
+          text: {{.DeltaLabels}},
+          marker: {
+            color: {{.BarColors}}
+          },
+          orientation: 'h'
+        }],
+        {
+          xaxis: {
+            title: {{.XTitle}},
+            ticksuffix: "%",
+            zeroline: true,
+            zerolinewidth: 3,
+          },
+          yaxis: {
+            ticklabelposition: "inside",
+            automargin: true,
+            dtick: 1,
+            autorange: "reversed",
+          },
+          autosize: true,
+          height: ({{ .NumBenchmarks}} * 50) + 50,
+          margin: {
+            t: 20,
+            b: 30,
+          }
+        }
+      );
+      </script>
+{{end}}
+
+{{define "results_delta_table"}}
+      <h2></h2>
+      <table>
+        <tr>
+          <th></th>
+          {{range .JobLabels}}
+          <th>{{.}}</th>
+          {{end}}
+          <th>Δ%</th>
         </tr>
         {{range .ResultsRows}}
         <tr>
