@@ -2,7 +2,6 @@ package reports
 
 import (
 	"fmt"
-	"github.com/montanaflynn/stats"
 	"golang.org/x/perf/benchstat"
 )
 
@@ -42,13 +41,7 @@ func (s *resultsDeltaTableSection) fillData(dt *dataTableImpl) error {
 		tr.BenchmarkName = row.Benchmark
 		tr.Values = make([]string, len(s.JobLabels)+1)
 		for j, m := range row.Metrics {
-			centile, err := stats.Percentile(m.RValues, kCentilePercent)
-			if err != nil {
-				return err
-			}
-			deviation := centile - m.Mean
-			scaler := benchstat.NewScaler(m.Mean, m.Unit)
-			tr.Values[j] = fmt.Sprintf("%s ± %s", scaler(m.Mean), scaler(deviation))
+			_, _, tr.Values[j] = valueDeviationAndScaledString(m)
 		}
 
 		if row.Delta == "~" {

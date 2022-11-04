@@ -2,7 +2,6 @@ package reports
 
 import (
 	"fmt"
-	"github.com/montanaflynn/stats"
 	"golang.org/x/perf/benchstat"
 )
 
@@ -58,15 +57,8 @@ func (s *horizontalBarChartSection) fillData(dt *dataTableImpl) error {
 
 		for j, row := range table.Rows {
 			m := row.Metrics[i]
-			g.Averages[j] = m.Mean
-			centile, err := stats.Percentile(m.RValues, kCentilePercent)
-			if err != nil {
-				return err
-			}
-			g.Deviation[j] = centile - m.Mean
-			scaler := benchstat.NewScaler(m.Mean, m.Unit)
-			g.BarLabels[j] = scaler(m.Mean)
-			g.HoverLabels[j] = fmt.Sprintf("%s ± %s", scaler(m.Mean), scaler(g.Deviation[j]))
+			g.Averages[j], g.Deviation[j], g.BarLabels[j] = valueDeviationAndScaledString(m)
+			g.HoverLabels[j] = g.BarLabels[j]
 		}
 	}
 	return nil

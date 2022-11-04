@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"html/template"
 	"strings"
+	"github.com/montanaflynn/stats"
+	"golang.org/x/perf/benchstat"
 
 	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
@@ -122,4 +124,16 @@ var chartCounter int
 func uniqueChartName() string {
 	chartCounter += 1
 	return fmt.Sprintf("chart_%d", chartCounter)
+}
+
+func valueDeviationAndScaledString(m *benchstat.Metrics) (float64, float64, string) {
+	mean := m.Mean
+	scaler := benchstat.NewScaler(mean, m.Unit)
+	centile, err := stats.Percentile(m.RValues, kCentilePercent)
+	if err != nil {
+		panic(fmt.Sprintf("Failed to calculate percentile for %T %+v: %v", m, m, err))
+	}
+	deviation := centile - mean
+	scaledString := fmt.Sprintf("%s ± %s", scaler(mean), scaler(deviation))
+	return mean, deviation, scaledString
 }

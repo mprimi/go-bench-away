@@ -3,7 +3,6 @@ package reports
 import (
 	"fmt"
 	"golang.org/x/perf/benchstat"
-	"github.com/montanaflynn/stats"
 	"github.com/mprimi/go-bench-away/internal/core"
 )
 
@@ -56,16 +55,7 @@ func (s *trendChartSection) fillData(dt *dataTableImpl) error {
 		sr.HoverLabels = make([]string, len(s.JobIds))
 
 		for j, m := range row.Metrics {
-
-			sr.Values[j] = m.Mean
-			centile, err := stats.Percentile(m.RValues, kCentilePercent)
-			if err != nil {
-				return err
-			}
-			sr.Deviation[j] = centile - m.Mean
-
-			scaler := benchstat.NewScaler(m.Mean, m.Unit)
-			sr.HoverLabels[j] = fmt.Sprintf("%s ± %s", scaler(m.Mean), scaler(sr.Deviation[j]))
+			sr.Values[j], sr.Deviation[j], sr.HoverLabels[j] = valueDeviationAndScaledString(m)
 		}
 	}
 
@@ -77,6 +67,7 @@ func TrendChart(metric Metric) SectionConfig {
 		baseSection: baseSection{
 			Type:  "trend_chart",
 			Title: "Trend",
+			SubText: fmt.Sprintf("Error bars represent %.0f%% confidence interval", kCentilePercent),
 		},
 		Metric:  metric,
 		ChartId: uniqueChartName(),
