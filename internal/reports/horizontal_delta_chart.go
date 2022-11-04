@@ -25,7 +25,6 @@ func (s *horizontalDeltaChartSection) fillData(dt *dataTableImpl) error {
 		s.XTitle = "Δ% time/op (lower is better)"
 	case Speed:
 		table = dt.speedTable
-		s.SubText = "Higher is better"
 		s.XTitle = "Δ% throughput (higher is better)"
 		speedupColor, slowdownColor = slowdownColor, speedupColor
 	default:

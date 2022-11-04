@@ -13,22 +13,26 @@ import (
 
 type trendReportCmd struct {
 	baseCommand
-	reportCfg reports.TrendConfig
+	skipTimeOp bool
+	skipSpeed  bool
+	reportCfg  reports.ReportConfig
 }
 
 func trendReportCommand() subcommands.Command {
 	return &trendReportCmd{
 		baseCommand: baseCommand{
-			name:     "trend-report",
-			synopsis: "Creates a report comparing N sets of results (must overlap in benchmarks executed)",
-			usage:    "compare-speed <jobId> [jobId [...]]\n",
+			name:     "trend",
+			synopsis: "Creates a report trends of benchmark results over time",
+			usage:    "report [options] jobId1 jobId2 ... jobIdN\n",
 		},
 	}
 }
 
 func (cmd *trendReportCmd) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.reportCfg.OutputPath, "output", "trend.html", "Output report (HTML)")
-	f.StringVar(&cmd.reportCfg.Title, "title", "Trend", "Title of the report")
+	f.StringVar(&cmd.reportCfg.OutputPath, "output", "report.html", "Output report (HTML)")
+	f.StringVar(&cmd.reportCfg.Title, "title", "", "Title of the report (auto-generated if empty)")
+	f.BoolVar(&cmd.skipTimeOp, "no_timeop", false, "Do not include time/op graph and table")
+	f.BoolVar(&cmd.skipSpeed, "no_speed", false, "Do not include speed graph and table")
 }
 
 func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -36,11 +40,11 @@ func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...inte
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	if len(f.Args()) < 1 {
-		fmt.Fprintf(os.Stderr, "Missing job IDs arguments\n")
+	jobIds := f.Args()
+	if len(jobIds) < 2 {
+		fmt.Fprintf(os.Stderr, "Need at least two job Id arguments\n")
 		return subcommands.ExitUsageError
 	}
-	cmd.reportCfg.JobIds = f.Args()
 
 	client, err := client.NewClient(
 		rootOptions.natsServerUrl,
@@ -57,7 +61,35 @@ func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...inte
 	}
 	defer client.Close()
 
-	reportErr := reports.CreateTrendReport(client, &cmd.reportCfg)
+	dataTable, err := reports.CreateDataTable(client, jobIds...)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		return subcommands.ExitFailure
+	}
+
+	if rootOptions.verbose {
+		cmd.reportCfg.Verbose()
+	}
+
+	cmd.reportCfg.AddSections(
+		reports.JobsTable(),
+	)
+
+	if !cmd.skipTimeOp {
+		cmd.reportCfg.AddSections(
+			reports.TrendChart(reports.TimeOp),
+			reports.ResultsTable(reports.TimeOp),
+		)
+	}
+
+	if dataTable.HasSpeed() && !cmd.skipSpeed {
+		cmd.reportCfg.AddSections(
+			reports.TrendChart(reports.Speed),
+			reports.ResultsTable(reports.Speed),
+		)
+	}
+
+	reportErr := reports.CreateReport(client, &cmd.reportCfg, dataTable)
 	if reportErr != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", reportErr)
 		return subcommands.ExitFailure

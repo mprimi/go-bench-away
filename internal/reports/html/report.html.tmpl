@@ -22,6 +22,7 @@
     </head>
     <body>
       <h1>{{.Title}}</h1>
+      <!-- TODO Ugly. there's a better way to do this -->
       {{range .Sections}}
       {{if eq .Type "jobs_table"}}
       {{template "jobs_table" .}}
@@ -33,6 +34,8 @@
       {{template "horizontal_delta_chart" .}}
       {{else if eq .Type "results_delta_table"}}
       {{template "results_delta_table" .}}
+      {{else if eq .Type "trend_chart"}}
+      {{template "trend_chart" .}}
       {{end}}
       {{end}}
     </body>
@@ -64,6 +67,48 @@
           {{end}}
         </table>
       </details>
+{{end}}
+
+{{define "results_table"}}
+      <h2></h2>
+      <table>
+        <tr>
+          <th></th>
+          {{range .JobLabels}}
+          <th>{{.}}</th>
+          {{end}}
+        </tr>
+        {{range .ResultsRows}}
+        <tr>
+          <th>{{.BenchmarkName}}</th>
+          {{range .Values}}
+          <td>{{.}}</td>
+          {{end}}
+        </tr>
+        {{end}}
+      </table>
+{{end}}
+
+
+{{define "results_delta_table"}}
+      <h2></h2>
+      <table>
+        <tr>
+          <th></th>
+          {{range .JobLabels}}
+          <th>{{.}}</th>
+          {{end}}
+          <th>Δ%</th>
+        </tr>
+        {{range .ResultsRows}}
+        <tr>
+          <th>{{.BenchmarkName}}</th>
+          {{range .Values}}
+          <td>{{.}}</td>
+          {{end}}
+        </tr>
+        {{end}}
+      </table>
 {{end}}
 
 {{define "horizontal_bar_chart"}}
@@ -113,26 +158,6 @@
       </script>
 {{end}}
 
-{{define "results_table"}}
-      <h2></h2>
-      <table>
-        <tr>
-          <th></th>
-          {{range .JobLabels}}
-          <th>{{.}}</th>
-          {{end}}
-        </tr>
-        {{range .ResultsRows}}
-        <tr>
-          <th>{{.BenchmarkName}}</th>
-          {{range .Values}}
-          <td>{{.}}</td>
-          {{end}}
-        </tr>
-        {{end}}
-      </table>
-{{end}}
-
 {{define "horizontal_delta_chart"}}
       <h2>{{.Title}} ({{.Metric}})</h2>
       <small>{{.SubText}}</small>
@@ -174,23 +199,43 @@
       </script>
 {{end}}
 
-{{define "results_delta_table"}}
-      <h2></h2>
-      <table>
-        <tr>
-          <th></th>
-          {{range .JobLabels}}
-          <th>{{.}}</th>
+{{define "trend_chart"}}
+      <h2>{{.Title}} ({{.Metric}})</h2>
+      <small>{{.SubText}}</small>
+      <div id="{{.ChartId}}" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        {{.ChartId}}, // Id of container element
+        [ // Data: each horizontal line series is a different benchmark
+          {{range .Series}}
+          {
+            "name": "{{.BenchmarkName}}",
+            "x": {{.JobIds}},
+            "y": {{.Values}},
+            "text": {{.HoverLabels}},
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": {{.Deviation}},
+              "visible": true,
+              "symmetric": true
+            }
+          },
           {{end}}
-          <th>Δ%</th>
-        </tr>
-        {{range .ResultsRows}}
-        <tr>
-          <th>{{.BenchmarkName}}</th>
-          {{range .Values}}
-          <td>{{.}}</td>
-          {{end}}
-        </tr>
-        {{end}}
-      </table>
+        ],
+      {// Layout
+        yaxis: {
+          title: {{.YTitle}},
+        },
+        xaxis: {
+          title: {{.XTitle}},
+          tickvals: {{.JobIds}},
+          ticktext : {{.JobLabels}},
+        }
+      }
+    );
+</script>
+
 {{end}}
