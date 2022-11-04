@@ -1,10 +1,7 @@
 package reports
 
 import (
-	"encoding/json"
 	"fmt"
-	"html/template"
-	"strings"
 	"github.com/montanaflynn/stats"
 	"golang.org/x/perf/benchstat"
 
@@ -29,41 +26,6 @@ func loadJobAndResults(client client.Client, jobId string) (*core.JobRecord, []b
 	}
 
 	return job, results, nil
-}
-
-func mustMarshal(v any) template.JS {
-	encoded, err := json.Marshal(v)
-	if err != nil {
-		panic(fmt.Sprintf("Failed to encode %v: %v", v, err))
-	}
-	return template.JS(encoded)
-}
-
-func mustMarshalIndent(v any, indentSpaces, leftMarginSpaces int) template.JS {
-	prefix := strings.Repeat(" ", leftMarginSpaces)
-	indent := strings.Repeat(" ", indentSpaces)
-	encoded, err := json.MarshalIndent(v, prefix, indent)
-	if err != nil {
-		panic(fmt.Sprintf("Failed to encode %v: %v", v, err))
-	}
-	return template.JS(encoded)
-}
-
-// Given a list of job Ids, return a list with duplicate removed (maintaining order)
-func filterDuplicates(jobIds []string) []string {
-	counts := make(map[string]struct{}, len(jobIds))
-	for _, jobId := range jobIds {
-		if _, present := counts[jobId]; present {
-			fmt.Printf("Warning, duplicate job: %s\n", jobId)
-		} else {
-			counts[jobId] = struct{}{}
-		}
-	}
-	uniqueJobIds := make([]string, 0, len(counts))
-	for jobId := range counts {
-		uniqueJobIds = append(uniqueJobIds, jobId)
-	}
-	return uniqueJobIds
 }
 
 // Count the unique string in the slice

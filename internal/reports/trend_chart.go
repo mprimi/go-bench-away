@@ -2,26 +2,26 @@ package reports
 
 import (
 	"fmt"
-	"golang.org/x/perf/benchstat"
 	"github.com/mprimi/go-bench-away/internal/core"
+	"golang.org/x/perf/benchstat"
 )
 
 type trendChartSeries struct {
-	BenchmarkName   string
-	JobIds          []string
-	Values          []float64
-	Deviation       []float64
-	HoverLabels     []string
+	BenchmarkName string
+	JobIds        []string
+	Values        []float64
+	Deviation     []float64
+	HoverLabels   []string
 }
 
 type trendChartSection struct {
 	baseSection
-	Metric          Metric
-	ChartId         string
-	NumBenchmarks   int
-	JobLabels       []string
-	JobIds          []string
-	Series          []trendChartSeries
+	Metric        Metric
+	ChartId       string
+	NumBenchmarks int
+	JobLabels     []string
+	JobIds        []string
+	Series        []trendChartSeries
 }
 
 func (s *trendChartSection) fillData(dt *dataTableImpl) error {
@@ -43,7 +43,7 @@ func (s *trendChartSection) fillData(dt *dataTableImpl) error {
 	s.JobLabels = dt.jobLabels
 	s.Series = make([]trendChartSeries, s.NumBenchmarks)
 
-	s.JobIds = dt.mapJobs(func (job *core.JobRecord)(string){return job.Id})
+	s.JobIds = dt.mapJobs(func(job *core.JobRecord) string { return job.Id })
 
 	for i, row := range table.Rows {
 		sr := &s.Series[i]
@@ -65,8 +65,8 @@ func (s *trendChartSection) fillData(dt *dataTableImpl) error {
 func TrendChart(metric Metric) SectionConfig {
 	return &trendChartSection{
 		baseSection: baseSection{
-			Type:  "trend_chart",
-			Title: "Trend",
+			Type:    "trend_chart",
+			Title:   "Trend",
 			SubText: fmt.Sprintf("Error bars represent %.0f%% confidence interval", kCentilePercent),
 		},
 		Metric:  metric,

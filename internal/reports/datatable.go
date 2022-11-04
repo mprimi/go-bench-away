@@ -70,7 +70,7 @@ func CreateDataTable(client client.Client, jobIds ...string) (DataTable, error) 
 	return &dataTable, nil
 }
 
-func (dt *dataTableImpl) mapJobs(f func(*core.JobRecord)(string)) []string {
+func (dt *dataTableImpl) mapJobs(f func(*core.JobRecord) string) []string {
 	mapped := make([]string, len(dt.jobs))
 	for i, job := range dt.jobs {
 		mapped[i] = f(job)
