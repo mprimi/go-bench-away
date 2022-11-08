@@ -14,6 +14,8 @@ set -e
 # Uncomment next line to debug this script, prints every step evaluated
 # set -x
 
+# HACK: cleanup after tests leaving garbage behind
+trap "rm -rf /tmp/nats-server/*" EXIT
 
 # Path (absolute) to an (existing) temporary folder under which all work is done
 ROOT_DIR="{{.JobDirPath}}"
