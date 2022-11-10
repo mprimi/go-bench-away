@@ -15,7 +15,7 @@ func loadJobAndResults(client client.Client, jobId string) (*core.JobRecord, []b
 		return nil, nil, err
 	}
 
-	if job.Status != core.Succeeded {
+	if job.Status != core.Succeeded && job.Status != core.Failed {
 		return nil, nil, fmt.Errorf("Job %s status is %v", job.Id, job.Status)
 	}
 
