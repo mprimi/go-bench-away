@@ -4,6 +4,8 @@ import (
 	"context"
 	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -133,6 +135,8 @@ func TestProcessJob(t *testing.T) {
 
 	wi := w.(*workerImpl)
 
+	cleanupHookFilePath := filepath.Join(t.TempDir(), "canary.txt")
+
 	jobParams := core.JobParameters{
 		GitRemote:       "https://github.com/mprimi/go-bench-away.git",
 		GitRef:          "main",
@@ -143,6 +147,7 @@ func TestProcessJob(t *testing.T) {
 		Timeout:         5 * time.Minute,
 		SkipCleanup:     true,
 		Username:        "test",
+		CleanupCmd:      "touch " + cleanupHookFilePath,
 	}
 
 	job := core.NewJob(jobParams)
@@ -153,4 +158,10 @@ func TestProcessJob(t *testing.T) {
 	} else if err != nil {
 		t.Fatalf("Job processing error: %v", err)
 	}
+
+	f, err := os.Open(cleanupHookFilePath)
+	if err != nil {
+		t.Fatalf("Failed to open: %v", err)
+	}
+	f.Close()
 }

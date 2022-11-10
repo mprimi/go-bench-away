@@ -27,6 +27,7 @@ type JobParameters struct {
 	SkipCleanup     bool
 	Username        string
 	GoPath          string
+	CleanupCmd      string
 }
 
 type WorkerInfo struct {

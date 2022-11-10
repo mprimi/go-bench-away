@@ -155,6 +155,7 @@ func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 		MinRuntime      string
 		Timeout         string
 		GoPath          string
+		CleanupCommand  string
 	}{
 		JobDirPath:      jobTempDir,
 		ResultsPath:     resultsPath,
@@ -168,6 +169,7 @@ func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 		MinRuntime:      fmt.Sprintf("%v", job.Parameters.TestMinRuntime),
 		Timeout:         fmt.Sprintf("%v", job.Parameters.Timeout),
 		GoPath:          job.Parameters.GoPath,
+		CleanupCommand:  job.Parameters.CleanupCmd,
 	}
 
 	err = w.scriptTemplate.Execute(scriptFile, scriptTemplateValues)

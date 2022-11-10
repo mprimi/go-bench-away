@@ -41,6 +41,11 @@ BENCHMARK_MIN_RUN_TIME="{{.MinRuntime}}"
 MAX_RUN_TIME="{{.Timeout}}"
 # Go executable path (optional)
 GO="{{.GoPath}}"
+# Command to execute on exit (useful to delete any files that tests may leave behind)
+CLEANUP="{{.CleanupCommand}}"
+
+# Set an exit trap to do any cleanup
+trap "$CLEANUP" EXIT
 
 # If a custom go path is not given, look for go in PATH
 if [[ "${GO}" == "" ]]; then
