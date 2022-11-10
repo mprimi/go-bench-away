@@ -81,11 +81,14 @@ func Run(args []string) int {
 			waitCommand(),
 			listCommand(),
 		},
+		"job debugging": {
+			downloadCommand(),
+			logCommand(),
+		},
 		"reporting, analysis & graphs": {
 			trendReportCommand(),
 			basicReportCommand(),
 			comparativeReportCommand(),
-			downloadCommand(),
 		},
 		"worker": {
 			workerCommand(),

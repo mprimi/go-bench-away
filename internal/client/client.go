@@ -58,6 +58,7 @@ type Client interface {
 	DownloadResultsArtifact(*core.JobRecord, string) error
 	DownloadScriptArtifact(*core.JobRecord, string) error
 	LoadResultsArtifact(*core.JobRecord) ([]byte, error)
+	LoadLogArtifact(*core.JobRecord) ([]byte, error)
 }
 
 type clientImpl struct {
@@ -427,6 +428,13 @@ func (c *clientImpl) LoadResultsArtifact(job *core.JobRecord) ([]byte, error) {
 		return nil, fmt.Errorf("Job %s has no results artifact", job.Results)
 	}
 	return c.artifactsStore.GetBytes(job.Results)
+}
+
+func (c *clientImpl) LoadLogArtifact(job *core.JobRecord) ([]byte, error) {
+	if job.Log == "" {
+		return nil, fmt.Errorf("Job %s has no log artifact", job.Results)
+	}
+	return c.artifactsStore.GetBytes(job.Log)
 }
 
 func NewClient(serverUrl, credentials, namespace string, opts ...Option) (Client, error) {
