@@ -28,6 +28,7 @@ type mockClient struct {
 	StubDownloadResultsArtifact func(*core.JobRecord, string) error
 	StubDownloadScriptArtifact  func(*core.JobRecord, string) error
 	StubLoadResultsArtifact     func(*core.JobRecord) ([]byte, error)
+	StubLoadLogArtifact         func(*core.JobRecord) ([]byte, error)
 }
 
 func (c *mockClient) Close() {
@@ -88,6 +89,10 @@ func (c *mockClient) LoadResultsArtifact(job *core.JobRecord) ([]byte, error) {
 	return c.StubLoadResultsArtifact(job)
 }
 
+func (c *mockClient) LoadLogArtifact(job *core.JobRecord) ([]byte, error) {
+	return c.StubLoadLogArtifact(job)
+}
+
 func newMockClient() client.Client {
 	return &mockClient{
 		StubClose:                   func() {},
@@ -109,6 +114,7 @@ func newMockClient() client.Client {
 		StubDownloadResultsArtifact: func(*core.JobRecord, string) error { return nil },
 		StubDownloadScriptArtifact:  func(*core.JobRecord, string) error { return nil },
 		StubLoadResultsArtifact:     func(*core.JobRecord) ([]byte, error) { return nil, nil },
+		StubLoadLogArtifact:         func(*core.JobRecord) ([]byte, error) { return nil, nil },
 	}
 }
 
