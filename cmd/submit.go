@@ -38,6 +38,7 @@ func (cmd *submitCmd) SetFlags(f *flag.FlagSet) {
 	f.DurationVar(&cmd.params.Timeout, "timeout", 3*time.Hour, "Max time allowed to run all tests")
 	f.BoolVar(&cmd.params.SkipCleanup, "skip_cleanup", false, "Do not remove worker temporary directory after execution")
 	f.StringVar(&cmd.params.GoPath, "go_path", "", "Run using a custom Go (default looks for `go` in $PATH)")
+	f.StringVar(&cmd.params.CleanupCmd, "cleanup_command", "", "Command to execute after tests have run")
 }
 
 func (cmd *submitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
