@@ -89,6 +89,9 @@ func uniqueChartName() string {
 }
 
 func valueDeviationAndScaledString(m *benchstat.Metrics) (float64, float64, string) {
+	if len(m.RValues) == 0 {
+		return 0, 0, "no data"
+	}
 	mean := m.Mean
 	scaler := benchstat.NewScaler(mean, m.Unit)
 	centile, err := stats.Percentile(m.RValues, kCentilePercent)
