@@ -6,6 +6,7 @@ import (
 	"github.com/mprimi/go-bench-away/internal/client"
 	"html/template"
 	"os"
+	"regexp"
 )
 
 //go:embed html/report.html.tmpl
@@ -18,11 +19,12 @@ type SectionConfig interface {
 type SectionType string
 
 type baseSection struct {
-	Type    SectionType
-	Title   string
-	SubText string
-	XTitle  string
-	YTitle  string
+	Type            SectionType
+	Title           string
+	SubText         string
+	XTitle          string
+	YTitle          string
+	BenchmarkFilter *regexp.Regexp
 }
 
 type Metric string

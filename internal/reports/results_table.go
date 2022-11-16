@@ -29,10 +29,12 @@ func (s *resultsTableSection) fillData(dt *dataTableImpl) error {
 		return fmt.Errorf("Unknow table metric: %s", s.Metric)
 	}
 
-	s.JobLabels = dt.jobLabels
-	s.ResultsRows = make([]resultsRow, len(table.Rows))
+	rows := filterByBenchmarkName(table.Rows, s.BenchmarkFilter)
 
-	for i, row := range table.Rows {
+	s.JobLabels = dt.jobLabels
+	s.ResultsRows = make([]resultsRow, len(rows))
+
+	for i, row := range rows {
 		tr := &s.ResultsRows[i]
 		tr.BenchmarkName = row.Benchmark
 		tr.Values = make([]string, len(s.JobLabels))
@@ -45,11 +47,12 @@ func (s *resultsTableSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func ResultsTable(metric Metric) SectionConfig {
+func ResultsTable(metric Metric, filterExpr string) SectionConfig {
 	return &resultsTableSection{
 		baseSection: baseSection{
-			Type:  "results_table",
-			Title: "",
+			Type:            "results_table",
+			Title:           "",
+			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric: metric,
 	}

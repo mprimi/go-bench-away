@@ -35,13 +35,15 @@ func (s *horizontalDeltaChartSection) fillData(dt *dataTableImpl) error {
 		return fmt.Errorf("Input table is not a comparison")
 	}
 
-	s.NumBenchmarks = len(table.Rows)
+	rows := filterByBenchmarkName(table.Rows, s.BenchmarkFilter)
+
+	s.NumBenchmarks = len(rows)
 	s.ExperimentNames = make([]string, s.NumBenchmarks)
 	s.Deltas = make([]float64, s.NumBenchmarks)
 	s.DeltaLabels = make([]string, s.NumBenchmarks)
 	s.BarColors = make([]string, s.NumBenchmarks)
 
-	for i, row := range table.Rows {
+	for i, row := range rows {
 		s.ExperimentNames[i] = row.Benchmark
 		if row.Delta == "~" {
 			s.Deltas[i] = 0
@@ -60,11 +62,12 @@ func (s *horizontalDeltaChartSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func HorizontalDeltaChart(metric Metric) SectionConfig {
+func HorizontalDeltaChart(metric Metric, filterExpr string) SectionConfig {
 	return &horizontalDeltaChartSection{
 		baseSection: baseSection{
-			Type:  "horizontal_delta_chart",
-			Title: "Comparison",
+			Type:            "horizontal_delta_chart",
+			Title:           "Comparison",
+			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric:  metric,
 		ChartId: uniqueChartName(),

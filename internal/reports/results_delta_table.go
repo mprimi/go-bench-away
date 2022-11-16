@@ -33,10 +33,12 @@ func (s *resultsDeltaTableSection) fillData(dt *dataTableImpl) error {
 		return fmt.Errorf("Input table is not a comparison")
 	}
 
-	s.JobLabels = dt.jobLabels
-	s.ResultsRows = make([]resultsDeltaRow, len(table.Rows))
+	rows := filterByBenchmarkName(table.Rows, s.BenchmarkFilter)
 
-	for i, row := range table.Rows {
+	s.JobLabels = dt.jobLabels
+	s.ResultsRows = make([]resultsDeltaRow, len(rows))
+
+	for i, row := range rows {
 		tr := &s.ResultsRows[i]
 		tr.BenchmarkName = row.Benchmark
 		tr.Values = make([]string, len(s.JobLabels)+1)
@@ -55,11 +57,12 @@ func (s *resultsDeltaTableSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func ResultsDeltaTable(metric Metric) SectionConfig {
+func ResultsDeltaTable(metric Metric, filterExpr string) SectionConfig {
 	return &resultsDeltaTableSection{
 		baseSection: baseSection{
-			Type:  "results_delta_table",
-			Title: "",
+			Type:            "results_delta_table",
+			Title:           "",
+			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric: metric,
 	}
