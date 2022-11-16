@@ -21,6 +21,8 @@ Future/Wishlist:
  * Expose `internal` as packages so parts can be used as library
  * Web UI (browse jobs)
  * Search jobs
+ * Missing datapoint could be `NaN` rather than zeroes (tested in Trend, probably true in other plots)
+ * Fetch job records in parallel
 
 ---
 
