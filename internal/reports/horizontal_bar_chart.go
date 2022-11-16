@@ -36,10 +36,12 @@ func (s *horizontalBarChartSection) fillData(dt *dataTableImpl) error {
 		return fmt.Errorf("Unknow table metric: %s", s.Metric)
 	}
 
-	s.NumBenchmarks = len(table.Rows)
+	rows := filterByBenchmarkName(table.Rows, s.BenchmarkFilter)
+
+	s.NumBenchmarks = len(rows)
 	experimentNames := make([]string, s.NumBenchmarks)
 
-	for i, row := range table.Rows {
+	for i, row := range rows {
 		experimentNames[i] = row.Benchmark
 	}
 
@@ -55,7 +57,7 @@ func (s *horizontalBarChartSection) fillData(dt *dataTableImpl) error {
 		g.BarLabels = make([]string, s.NumBenchmarks)
 		g.HoverLabels = make([]string, s.NumBenchmarks)
 
-		for j, row := range table.Rows {
+		for j, row := range rows {
 			m := row.Metrics[i]
 			g.Averages[j], g.Deviation[j], g.BarLabels[j] = valueDeviationAndScaledString(m)
 			g.HoverLabels[j] = g.BarLabels[j]
@@ -64,11 +66,12 @@ func (s *horizontalBarChartSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func HorizontalBarChart(metric Metric) SectionConfig {
+func HorizontalBarChart(metric Metric, filterExpr string) SectionConfig {
 	return &horizontalBarChartSection{
 		baseSection: baseSection{
-			Type:  "horizontal_bar_chart",
-			Title: "Grouped by benchmark",
+			Type:            "horizontal_bar_chart",
+			Title:           "Grouped by benchmark",
+			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric:  metric,
 		ChartId: uniqueChartName(),

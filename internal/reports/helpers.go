@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/montanaflynn/stats"
 	"golang.org/x/perf/benchstat"
+	"regexp"
 
 	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
@@ -101,4 +102,25 @@ func valueDeviationAndScaledString(m *benchstat.Metrics) (float64, float64, stri
 	deviation := centile - mean
 	scaledString := fmt.Sprintf("%s ± %s", scaler(mean), scaler(deviation))
 	return mean, deviation, scaledString
+}
+
+func filterByBenchmarkName(inputRows []*benchstat.Row, filter *regexp.Regexp) []*benchstat.Row {
+	if filter == nil {
+		return inputRows
+	}
+
+	outputRows := make([]*benchstat.Row, 0, len(inputRows))
+	for _, row := range inputRows {
+		if filter.MatchString(row.Benchmark) {
+			outputRows = append(outputRows, row)
+		}
+	}
+	return outputRows
+}
+
+func compileFilter(filterExpr string) *regexp.Regexp {
+	if filterExpr == "" {
+		return nil
+	}
+	return regexp.MustCompile(filterExpr)
 }

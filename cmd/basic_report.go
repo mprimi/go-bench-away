@@ -13,9 +13,10 @@ import (
 
 type basicReportCmd struct {
 	baseCommand
-	skipTimeOp bool
-	skipSpeed  bool
-	reportCfg  reports.ReportConfig
+	skipTimeOp          bool
+	skipSpeed           bool
+	benchmarkFilterExpr string
+	reportCfg           reports.ReportConfig
 }
 
 func basicReportCommand() subcommands.Command {
@@ -33,6 +34,7 @@ func (cmd *basicReportCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.reportCfg.Title, "title", "", "Title of the report (auto-generated if empty)")
 	f.BoolVar(&cmd.skipTimeOp, "no_timeop", false, "Do not include time/op graph and table")
 	f.BoolVar(&cmd.skipSpeed, "no_speed", false, "Do not include speed graph and table")
+	f.StringVar(&cmd.benchmarkFilterExpr, "benchmark_filter", "", "Regular expression to filter experiments based on benchmark name")
 }
 
 func (cmd *basicReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -77,15 +79,15 @@ func (cmd *basicReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...inte
 
 	if !cmd.skipTimeOp {
 		cmd.reportCfg.AddSections(
-			reports.HorizontalBarChart(reports.TimeOp),
-			reports.ResultsTable(reports.TimeOp),
+			reports.HorizontalBarChart(reports.TimeOp, cmd.benchmarkFilterExpr),
+			reports.ResultsTable(reports.TimeOp, cmd.benchmarkFilterExpr),
 		)
 	}
 
 	if dataTable.HasSpeed() && !cmd.skipSpeed {
 		cmd.reportCfg.AddSections(
-			reports.HorizontalBarChart(reports.Speed),
-			reports.ResultsTable(reports.Speed),
+			reports.HorizontalBarChart(reports.Speed, cmd.benchmarkFilterExpr),
+			reports.ResultsTable(reports.Speed, cmd.benchmarkFilterExpr),
 		)
 	}
 

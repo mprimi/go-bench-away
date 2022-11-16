@@ -39,13 +39,15 @@ func (s *trendChartSection) fillData(dt *dataTableImpl) error {
 		return fmt.Errorf("Unknow table metric: %s", s.Metric)
 	}
 
-	s.NumBenchmarks = len(table.Rows)
+	rows := filterByBenchmarkName(table.Rows, s.BenchmarkFilter)
+
+	s.NumBenchmarks = len(rows)
 	s.JobLabels = dt.jobLabels
 	s.Series = make([]trendChartSeries, s.NumBenchmarks)
 
 	s.JobIds = dt.mapJobs(func(job *core.JobRecord) string { return job.Id })
 
-	for i, row := range table.Rows {
+	for i, row := range rows {
 		sr := &s.Series[i]
 		sr.BenchmarkName = row.Benchmark
 		sr.JobIds = s.JobIds
@@ -62,12 +64,17 @@ func (s *trendChartSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func TrendChart(metric Metric) SectionConfig {
+func TrendChart(metric Metric, filterExpr string) SectionConfig {
+	subtext := fmt.Sprintf("Error bars represent %.0f%% confidence interval", kCentilePercent)
+	if filterExpr != "" {
+		subtext = fmt.Sprintf("%s, benchmarks filter: '%s'", subtext, filterExpr)
+	}
 	return &trendChartSection{
 		baseSection: baseSection{
-			Type:    "trend_chart",
-			Title:   "Trend",
-			SubText: fmt.Sprintf("Error bars represent %.0f%% confidence interval", kCentilePercent),
+			Type:            "trend_chart",
+			Title:           "Trend",
+			SubText:         subtext,
+			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric:  metric,
 		ChartId: uniqueChartName(),
