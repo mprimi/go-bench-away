@@ -1,0 +1,21 @@
+{
+  "title" : "Example report",
+  "jobs" : [
+    "ca4f82d3-9d53-4c70-b95e-0aaddcdd666f",
+    "982ace8e-3d38-486b-b355-d6f954e333fd"
+  ],
+  "sections" : [
+    {
+      "title" : "[JetStream] Publish Speed",
+      "type" : "horizontal_bar_chart",
+      "metric" : "speed",
+      "hidden_results_table": true
+    },
+    {
+      "title" : "[JetStream] Publish Speed (Relative comparison)",
+      "type" : "horizontal_delta_chart",
+      "metric" : "speed",
+      "hidden_results_table": true
+    }
+  ]
+}

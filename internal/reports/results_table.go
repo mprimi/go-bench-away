@@ -15,6 +15,7 @@ type resultsTableSection struct {
 	Metric      Metric
 	JobLabels   []string
 	ResultsRows []resultsRow
+	Hidden      bool
 }
 
 func (s *resultsTableSection) fillData(dt *dataTableImpl) error {
@@ -47,7 +48,7 @@ func (s *resultsTableSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func ResultsTable(metric Metric, filterExpr string) SectionConfig {
+func ResultsTable(metric Metric, filterExpr string, hidden bool) SectionConfig {
 	return &resultsTableSection{
 		baseSection: baseSection{
 			Type:            "results_table",
@@ -55,5 +56,6 @@ func ResultsTable(metric Metric, filterExpr string) SectionConfig {
 			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric: metric,
+		Hidden: hidden,
 	}
 }

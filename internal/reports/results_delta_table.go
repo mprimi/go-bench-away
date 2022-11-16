@@ -15,6 +15,7 @@ type resultsDeltaTableSection struct {
 	Metric      Metric
 	JobLabels   []string
 	ResultsRows []resultsDeltaRow
+	Hidden      bool
 }
 
 func (s *resultsDeltaTableSection) fillData(dt *dataTableImpl) error {
@@ -57,7 +58,7 @@ func (s *resultsDeltaTableSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func ResultsDeltaTable(metric Metric, filterExpr string) SectionConfig {
+func ResultsDeltaTable(metric Metric, filterExpr string, hidden bool) SectionConfig {
 	return &resultsDeltaTableSection{
 		baseSection: baseSection{
 			Type:            "results_delta_table",
@@ -65,5 +66,6 @@ func ResultsDeltaTable(metric Metric, filterExpr string) SectionConfig {
 			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric: metric,
+		Hidden: hidden,
 	}
 }

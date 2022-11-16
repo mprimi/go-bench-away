@@ -30,7 +30,6 @@ func (s *horizontalBarChartSection) fillData(dt *dataTableImpl) error {
 		s.XTitle = "Time/op (lower is better)"
 	case Speed:
 		table = dt.speedTable
-		s.SubText = "Higher is better"
 		s.XTitle = "Throughput (higher is better)"
 	default:
 		return fmt.Errorf("Unknow table metric: %s", s.Metric)
@@ -66,11 +65,19 @@ func (s *horizontalBarChartSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func HorizontalBarChart(metric Metric, filterExpr string) SectionConfig {
+func HorizontalBarChart(title string, metric Metric, filterExpr string) SectionConfig {
+	if title == "" {
+		title = fmt.Sprintf("%s comparison", metric)
+	}
+	subtext := fmt.Sprintf("Error bars represent %.0f%% confidence interval", kCentilePercent)
+	if filterExpr != "" {
+		subtext = fmt.Sprintf("%s, benchmarks filter: '%s'", subtext, filterExpr)
+	}
 	return &horizontalBarChartSection{
 		baseSection: baseSection{
 			Type:            "horizontal_bar_chart",
-			Title:           "Grouped by benchmark",
+			Title:           title,
+			SubText:         subtext,
 			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric:  metric,

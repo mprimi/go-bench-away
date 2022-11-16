@@ -64,7 +64,10 @@ func (s *trendChartSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func TrendChart(metric Metric, filterExpr string) SectionConfig {
+func TrendChart(title string, metric Metric, filterExpr string) SectionConfig {
+	if title == "" {
+		title = fmt.Sprintf("%s trend", metric)
+	}
 	subtext := fmt.Sprintf("Error bars represent %.0f%% confidence interval", kCentilePercent)
 	if filterExpr != "" {
 		subtext = fmt.Sprintf("%s, benchmarks filter: '%s'", subtext, filterExpr)
@@ -72,7 +75,7 @@ func TrendChart(metric Metric, filterExpr string) SectionConfig {
 	return &trendChartSection{
 		baseSection: baseSection{
 			Type:            "trend_chart",
-			Title:           "Trend",
+			Title:           title,
 			SubText:         subtext,
 			BenchmarkFilter: compileFilter(filterExpr),
 		},
