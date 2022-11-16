@@ -71,6 +71,10 @@
 
 {{define "results_table"}}
       <h2></h2>
+      {{if .Hidden}}
+      <details>
+        <summary>Show results table</summary>
+      {{end}}
       <table>
         <tr>
           <th></th>
@@ -87,11 +91,17 @@
         </tr>
         {{end}}
       </table>
+      {{if .Hidden}}
+      </details>
+      {{end}}
 {{end}}
-
 
 {{define "results_delta_table"}}
       <h2></h2>
+      {{if .Hidden}}
+      <details>
+        <summary>Show results table</summary>
+      {{end}}
       <table>
         <tr>
           <th></th>
@@ -109,10 +119,13 @@
         </tr>
         {{end}}
       </table>
+      {{if .Hidden}}
+      </details>
+      {{end}}
 {{end}}
 
 {{define "horizontal_bar_chart"}}
-      <h2>{{.Title}} ({{.Metric}})</h2>
+      <h2>{{.Title}}</h2>
       <small>{{.SubText}}</small>
       <div id="{{.ChartId}}" class="chart"></div>
       <script>
@@ -159,7 +172,7 @@
 {{end}}
 
 {{define "horizontal_delta_chart"}}
-      <h2>{{.Title}} ({{.Metric}})</h2>
+      <h2>{{.Title}}</h2>
       <small>{{.SubText}}</small>
       <div id="{{.ChartId}}" class="chart"></div>
       <script>
@@ -200,7 +213,7 @@
 {{end}}
 
 {{define "trend_chart"}}
-      <h2>{{.Title}} ({{.Metric}})</h2>
+      <h2>{{.Title}}</h2>
       <small>{{.SubText}}</small>
       <div id="{{.ChartId}}" class="chart"></div>
       <script>
@@ -237,5 +250,4 @@
       }
     );
 </script>
-
 {{end}}

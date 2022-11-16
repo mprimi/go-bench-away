@@ -62,11 +62,14 @@ func (s *horizontalDeltaChartSection) fillData(dt *dataTableImpl) error {
 	return nil
 }
 
-func HorizontalDeltaChart(metric Metric, filterExpr string) SectionConfig {
+func HorizontalDeltaChart(title string, metric Metric, filterExpr string) SectionConfig {
+	if title == "" {
+		title = fmt.Sprintf("Relative %s comparison", metric)
+	}
 	return &horizontalDeltaChartSection{
 		baseSection: baseSection{
 			Type:            "horizontal_delta_chart",
-			Title:           "Comparison",
+			Title:           title,
 			BenchmarkFilter: compileFilter(filterExpr),
 		},
 		Metric:  metric,

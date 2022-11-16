@@ -16,6 +16,7 @@ type trendReportCmd struct {
 	skipTimeOp          bool
 	skipSpeed           bool
 	benchmarkFilterExpr string
+	hiddenResultsTable  bool
 	reportCfg           reports.ReportConfig
 }
 
@@ -35,6 +36,7 @@ func (cmd *trendReportCmd) SetFlags(f *flag.FlagSet) {
 	f.BoolVar(&cmd.skipTimeOp, "no_timeop", false, "Do not include time/op graph and table")
 	f.BoolVar(&cmd.skipSpeed, "no_speed", false, "Do not include speed graph and table")
 	f.StringVar(&cmd.benchmarkFilterExpr, "benchmark_filter", "", "Regular expression to filter experiments based on benchmark name")
+	f.BoolVar(&cmd.hiddenResultsTable, "hide_table", false, "Hide the results table by default")
 }
 
 func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -79,15 +81,15 @@ func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...inte
 
 	if !cmd.skipTimeOp {
 		cmd.reportCfg.AddSections(
-			reports.TrendChart(reports.TimeOp, cmd.benchmarkFilterExpr),
-			reports.ResultsTable(reports.TimeOp, cmd.benchmarkFilterExpr),
+			reports.TrendChart("", reports.TimeOp, cmd.benchmarkFilterExpr),
+			reports.ResultsTable(reports.TimeOp, cmd.benchmarkFilterExpr, cmd.hiddenResultsTable),
 		)
 	}
 
 	if dataTable.HasSpeed() && !cmd.skipSpeed {
 		cmd.reportCfg.AddSections(
-			reports.TrendChart(reports.Speed, cmd.benchmarkFilterExpr),
-			reports.ResultsTable(reports.Speed, cmd.benchmarkFilterExpr),
+			reports.TrendChart("", reports.Speed, cmd.benchmarkFilterExpr),
+			reports.ResultsTable(reports.Speed, cmd.benchmarkFilterExpr, cmd.hiddenResultsTable),
 		)
 	}
 

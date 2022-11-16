@@ -1,0 +1,52 @@
+{
+  "title" : "Example report",
+  "jobs" : [
+    "ecc4d3f9-899f-4cc9-b0f3-2a2d79b69baa",
+    "1e06125a-fe77-46bb-b18a-6e4bd0f0d333",
+    "4144c4e1-4064-46a2-80b5-037ee263b5b4",
+    "3cdcd186-4e34-43e3-ac97-13f1338fd763",
+    "02f0b04e-f92b-45e6-aaaa-49fcc724e075",
+    "4f3910b6-9ab0-4cdb-ac7e-114075e72f98",
+    "6d3eb380-c9e6-4fd6-bacd-12a6b9e7dcef",
+    "5b7da30b-0768-4fa7-9dd4-3527dc31dafd",
+    "b884b22e-499d-4caa-9b53-7f1ba461dd80",
+    "5d3213f5-fb0e-43cb-b7dc-4e784ce868de"
+  ],
+  "sections" : [
+    {
+      "title" : "[NATS Core] Publish Speed",
+      "type" : "trend_chart",
+      "metric" : "speed",
+      "benchmark_filter" : "^_*Pub.*Payload.*",
+      "hidden_results_table" : true
+    },
+    {
+      "title" : "[NATS Core] FanOut Speed",
+      "type" : "trend_chart",
+      "metric": "speed",
+      "benchmark_filter" : "^_*FanOut.*",
+      "hidden_results_table" : true
+    },
+    {
+      "title" : "[NATS Core] FanIn Speed",
+      "type" : "trend_chart",
+      "metric" : "speed",
+      "benchmark_filter" : "^_*FanIn.*",
+      "hidden_results_table" : true
+    },
+    {
+      "title" : "[NATS Core] Gateway Speed",
+      "type" : "trend_chart",
+      "metric" : "speed",
+      "benchmark_filter" : "^_*GWs_Opt.*",
+      "hidden_results_table" : true
+    },
+    {
+      "title" : "[NATS Core] Publish to Queue (time/op)",
+      "type" : "trend_chart",
+      "metric" : "time/op",
+      "benchmark_filter" : "^_*Pub.*Queue.*",
+      "hidden_results_table" : true
+    }
+  ]
+}
