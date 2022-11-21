@@ -105,9 +105,10 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 
 		case core.Running:
 			fmt.Printf(
-				"     - Run time: %v\n"+
+				"     - Run time: %v (max: %v)\n"+
 					"",
 				time.Since(job.Started).Round(time.Second),
+				job.Parameters.Timeout,
 			)
 
 		case core.Submitted:
