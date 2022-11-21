@@ -18,7 +18,6 @@ Before V1.0:
 Future/Wishlist:
  * Embedded mode - run server and worker in-process
  * Expose `internal` as packages so parts can be used as library
- * Web UI (browse jobs)
  * Search jobs
  * Missing datapoint could be `NaN` rather than zeroes (tested in Trend, probably true in other plots)
  * Fetch job records in parallel
