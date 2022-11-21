@@ -13,7 +13,6 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
 )
 
@@ -33,13 +32,13 @@ type Worker interface {
 }
 
 type workerImpl struct {
-	c              client.Client
+	c              WorkerClient
 	jobsDir        string
 	workerInfo     core.WorkerInfo
 	scriptTemplate *template.Template
 }
 
-func NewWorker(c client.Client, jobsDir string) (Worker, error) {
+func NewWorker(c WorkerClient, jobsDir string) (Worker, error) {
 	// Utsname byte arrays are filled with string termination characters,
 	// and naive string conversion preserves them.
 	bts := func(buf []byte) string {

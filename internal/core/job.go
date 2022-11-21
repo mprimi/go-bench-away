@@ -86,6 +86,19 @@ func (this JobStatus) Icon() string {
 	}
 }
 
+func (jr *JobRecord) RunTime() string {
+	switch jr.Status {
+	case Failed:
+		fallthrough
+	case Succeeded:
+		return jr.Completed.Sub(jr.Started).Round(time.Second).String()
+	case Running:
+		return time.Since(jr.Started).Round(time.Second).String()
+	default:
+		return ""
+	}
+}
+
 func NewJob(params JobParameters) *JobRecord {
 	jobId := uuid.New().String()
 	return &JobRecord{

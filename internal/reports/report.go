@@ -3,7 +3,6 @@ package reports
 import (
 	_ "embed"
 	"fmt"
-	"github.com/mprimi/go-bench-away/internal/client"
 	"html/template"
 	"os"
 	"regexp"
@@ -57,7 +56,7 @@ func (r *ReportConfig) Log(format string, args ...any) {
 	}
 }
 
-func CreateReport(client client.Client, cfg *ReportConfig, dataTable DataTable) error {
+func CreateReport(client JobRecordClient, cfg *ReportConfig, dataTable DataTable) error {
 	dt := dataTable.(*dataTableImpl)
 	title := cfg.Title
 	if title == "" {

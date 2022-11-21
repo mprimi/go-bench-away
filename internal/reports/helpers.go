@@ -6,11 +6,10 @@ import (
 	"golang.org/x/perf/benchstat"
 	"regexp"
 
-	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
 )
 
-func loadJobAndResults(client client.Client, jobId string) (*core.JobRecord, []byte, error) {
+func loadJobAndResults(client JobRecordClient, jobId string) (*core.JobRecord, []byte, error) {
 	job, _, err := client.LoadJob(jobId)
 	if err != nil {
 		return nil, nil, err

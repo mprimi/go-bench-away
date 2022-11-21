@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"golang.org/x/perf/benchstat"
 
-	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
 )
 
@@ -24,7 +23,7 @@ func (dt *dataTableImpl) HasSpeed() bool {
 	return dt.speedTable != nil
 }
 
-func CreateDataTable(client client.Client, jobIds ...string) (DataTable, error) {
+func CreateDataTable(client JobRecordClient, jobIds ...string) (DataTable, error) {
 	if len(jobIds) == 0 {
 		return nil, fmt.Errorf("No jobs provided")
 	} else if countUnique(jobIds) != len(jobIds) {

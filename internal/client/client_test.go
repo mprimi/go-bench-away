@@ -23,12 +23,12 @@ func TestNewClient(t *testing.T) {
 	steps := []struct {
 		description string
 		expectError bool
-		action      func() (Client, error)
+		action      func() (*Client, error)
 	}{
 		{
 			"Client with no bindings",
 			false,
-			func() (Client, error) {
+			func() (*Client, error) {
 				return NewClient(
 					s.ClientURL(),
 					credentials,
@@ -40,7 +40,7 @@ func TestNewClient(t *testing.T) {
 		{
 			"Delete jobs queue, jobs repository, artifacts store before they exist",
 			false,
-			func() (Client, error) {
+			func() (*Client, error) {
 				client, err := NewClient(
 					s.ClientURL(),
 					credentials,
@@ -65,7 +65,7 @@ func TestNewClient(t *testing.T) {
 		{
 			"Client with JobsQueue before it's initialized",
 			true,
-			func() (Client, error) {
+			func() (*Client, error) {
 				return NewClient(
 					s.ClientURL(),
 					credentials,
@@ -78,7 +78,7 @@ func TestNewClient(t *testing.T) {
 		{
 			"Client with JobsRepository before it's initialized",
 			true,
-			func() (Client, error) {
+			func() (*Client, error) {
 				return NewClient(
 					s.ClientURL(),
 					credentials,
@@ -91,7 +91,7 @@ func TestNewClient(t *testing.T) {
 		{
 			"Client with ArtifactsStore before it's initialized",
 			true,
-			func() (Client, error) {
+			func() (*Client, error) {
 				return NewClient(
 					s.ClientURL(),
 					credentials,
@@ -104,7 +104,7 @@ func TestNewClient(t *testing.T) {
 		{
 			"Initialize jobs queue, jobs repository, artifacts store",
 			false,
-			func() (Client, error) {
+			func() (*Client, error) {
 				client, err := NewClient(
 					s.ClientURL(),
 					credentials,
@@ -129,7 +129,7 @@ func TestNewClient(t *testing.T) {
 		{
 			"Client JobsQueue, JobsRepository, ArtifactsStore",
 			false,
-			func() (Client, error) {
+			func() (*Client, error) {
 				return NewClient(
 					s.ClientURL(),
 					credentials,
@@ -144,7 +144,7 @@ func TestNewClient(t *testing.T) {
 		{
 			"Initialize jobs queue, jobs repository, artifacts store when they already exist",
 			false,
-			func() (Client, error) {
+			func() (*Client, error) {
 				client, err := NewClient(
 					s.ClientURL(),
 					credentials,
@@ -169,7 +169,7 @@ func TestNewClient(t *testing.T) {
 		{
 			"Delete jobs queue, jobs repository, artifacts store",
 			false,
-			func() (Client, error) {
+			func() (*Client, error) {
 				client, err := NewClient(
 					s.ClientURL(),
 					credentials,
