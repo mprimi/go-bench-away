@@ -14,7 +14,6 @@ Before V1.0:
  * Tests
  * Less code repetition in commands
  - Spin loop in worker when server is down
- - Use template for bash script and maybe save it as artifact
 
 Future/Wishlist:
  * Embedded mode - run server and worker in-process
