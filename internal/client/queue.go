@@ -81,3 +81,19 @@ func (c *Client) LoadRecentJobs(limit int) ([]*core.JobRecord, error) {
 
 	return jobs, nil
 }
+
+func (c *Client) GetQueueStatus() (*core.QueueStatus, error) {
+	qs := &core.QueueStatus{}
+
+	lastSubmitMsg, err := c.js.GetLastMsg(c.options.jobsQueueName, c.options.jobsSubmitSubject)
+	if err == nats.ErrMsgNotFound {
+		return qs, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	lastSeq := lastSubmitMsg.Sequence
+	qs.SubmittedCount = lastSeq
+
+	return qs, nil
+}

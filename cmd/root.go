@@ -76,10 +76,9 @@ func Run(args []string) int {
 			initCommand(),
 			wipeCommand(),
 		},
-		"submit, monitor, find jobs": {
+		"submit, monitor": {
 			submitCommand(),
 			waitCommand(),
-			listCommand(),
 		},
 		"job debugging": {
 			downloadCommand(),
@@ -93,6 +92,10 @@ func Run(args []string) int {
 		},
 		"worker": {
 			workerCommand(),
+		},
+		"explore job status": {
+			listCommand(),
+			webCommand(),
 		},
 		"help": {
 			versionCommand(),
