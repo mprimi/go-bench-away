@@ -96,7 +96,7 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 					"     - Log file: %s\n"+
 					"     - Results file: %s\n"+
 					"",
-				job.Completed.Sub(job.Started).Round(time.Second),
+				job.RunTime(),
 				job.SHA,
 				job.GoVersion,
 				job.Log,
@@ -107,7 +107,7 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 			fmt.Printf(
 				"     - Run time: %v (max: %v)\n"+
 					"",
-				time.Since(job.Started).Round(time.Second),
+				job.RunTime(),
 				job.Parameters.Timeout,
 			)
 
