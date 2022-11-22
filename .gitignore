@@ -1,8 +1,9 @@
+# To ignore editor-specific and system specific files like:
+# `.DS_Store` files on macOS, `.idea` directories or Vim swap files
+# Add them to your global ignore: $HOME/.config/git/ignore
+
 # Executable
 go-bench-away
-
-# macOS
-.DS_Store
 
 # Tests
 *.test
