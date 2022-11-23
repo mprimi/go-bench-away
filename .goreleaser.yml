@@ -7,8 +7,7 @@ before:
     - echo "🚀"
 
 builds:
-  -
-    binary: go-bench-away
+  - binary: go-bench-away
     ldflags: -s -w -X github.com/mprimi/go-bench-away/internal/core.Version={{ .Version }} -X github.com/mprimi/go-bench-away/internal/core.SHA={{ .ShortCommit }} -X github.com/mprimi/go-bench-away/internal/core.BuildDate={{ .Date }}
     goos:
       - linux
@@ -18,8 +17,7 @@ builds:
       - arm64
 
 archives:
-  -
-    builds:
+  - builds:
       - go-bench-away
     replacements:
       darwin: Darwin
