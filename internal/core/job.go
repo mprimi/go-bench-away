@@ -56,8 +56,8 @@ type JobRecord struct {
 	WorkerInfo WorkerInfo
 }
 
-func (this JobStatus) String() string {
-	switch this {
+func (jr JobStatus) String() string {
+	switch jr {
 	case Submitted:
 		return "SUBMITTED"
 	case Running:
@@ -67,12 +67,12 @@ func (this JobStatus) String() string {
 	case Succeeded:
 		return "SUCCEEDED"
 	default:
-		panic(fmt.Sprintf("Unexpected job status: %d", this))
+		panic(fmt.Sprintf("Unexpected job status: %d", jr))
 	}
 }
 
-func (this JobStatus) Icon() string {
-	switch this {
+func (jr JobStatus) Icon() string {
+	switch jr {
 	case Submitted:
 		return "⚪️"
 	case Running:
@@ -105,7 +105,7 @@ func NewJob(params JobParameters) *JobRecord {
 		Id:         jobId,
 		Status:     Submitted,
 		Parameters: params,
-		Created:    time.Now(),
+		Created:    time.Now().Round(1 * time.Second),
 	}
 }
 
@@ -118,10 +118,20 @@ func LoadJob(data []byte) (*JobRecord, error) {
 	return &job, nil
 }
 
-func (this *JobRecord) Bytes() []byte {
-	bytes, err := json.Marshal(this)
+func (jr *JobRecord) Bytes() []byte {
+	bytes, err := json.Marshal(jr)
 	if err != nil {
 		panic(fmt.Sprintf("Failed to serialize job: %v", err))
 	}
 	return bytes
+}
+
+func (jr *JobRecord) SetFinalStatus(s JobStatus) {
+	jr.Status = s
+	jr.Completed = time.Now().Round(1 * time.Second)
+}
+
+func (jr *JobRecord) SetRunningStatus() {
+	jr.Status = Running
+	jr.Started = time.Now().Round(1 * time.Second)
 }
