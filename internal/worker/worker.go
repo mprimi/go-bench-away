@@ -4,6 +4,7 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
+	"github.com/mprimi/go-bench-away/internal/core"
 	"golang.org/x/sys/unix"
 	"io"
 	"os"
@@ -11,9 +12,6 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
-	"time"
-
-	"github.com/mprimi/go-bench-away/internal/core"
 )
 
 const (
@@ -80,8 +78,7 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 		return false, fmt.Errorf("Cannot process job %s in status %v", job.Id, job.Status)
 	}
 
-	job.Status = core.Running
-	job.Started = time.Now()
+	job.SetRunningStatus()
 	job.WorkerInfo = w.workerInfo
 
 	newRevision, err := w.c.UpdateJob(job, revision)
@@ -95,10 +92,10 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 	jobTempDir, runErr := w.runJob(job)
 
 	// Update job status to final
-	job.Completed = time.Now()
-	job.Status = core.Succeeded
 	if runErr != nil {
-		job.Status = core.Failed
+		job.SetFinalStatus(core.Failed)
+	} else {
+		job.SetFinalStatus(core.Succeeded)
 	}
 
 	// Upload artifacts
