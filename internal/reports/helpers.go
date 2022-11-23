@@ -63,7 +63,7 @@ func createJobLabels(jobs []*core.JobRecord) []string {
 		func(job *core.JobRecord) string { return fmt.Sprintf("%s [%s]", job.Parameters.GitRef, job.SHA[0:7]) },
 		// Try GitRef + Go version
 		func(job *core.JobRecord) string { return fmt.Sprintf("%s [%s]", job.Parameters.GitRef, job.GoVersion) },
-		// Last resort.. use job ID
+		// Last resort, use job ID
 		func(job *core.JobRecord) string { return job.Id },
 	}
 

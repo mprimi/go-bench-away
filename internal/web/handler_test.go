@@ -10,7 +10,7 @@ func TestJobResourcesRegexp(t *testing.T) {
 		"/",
 		"/job",
 		"/job//log",
-		"/job/_2fb41f25-7e17-4383-9e08-8ab115152db2/log",    // Non hex char in JobId UUID
+		"/job/_2fb41f25-7e17-4383-9e08-8ab115152db2/log",    // Non-hexadecimal char in JobId UUID
 		"/job/2fb41f2-7e17-4383-9e08-8ab115152db2/log",      // Short 1 char in 1st group
 		"/job/2fb41f25-717-4383-9e08-8ab115152db2/log",      // Short 1 char in middle group
 		"/job/2fb41f25-7e17-483-9e08-8ab115152db2/log",      // Short 1 char in middle group

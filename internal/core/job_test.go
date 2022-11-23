@@ -9,7 +9,7 @@ import (
 func TestJobSerialization(t *testing.T) {
 
 	j := NewJob(JobParameters{
-		GitRemote:       "http://example.com/foo/bar",
+		GitRemote:       "https://example.com/foo/bar",
 		GitRef:          "v1.0.0",
 		TestsSubDir:     "tests",
 		TestsFilterExpr: ".*",

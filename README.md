@@ -3,7 +3,7 @@
 ### Utility to benchmark any Golang project and visualize results
 
 As of this writing, the project is maturing from "proof of concept" to "open-source utility".
-Some things may be broken, some are going to break. Also no documentations and no tests.
+Some things may be broken, some are going to break. Also, no documentations and no tests.
 
 Before V1.0:
 
