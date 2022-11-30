@@ -105,7 +105,7 @@ func NewJob(params JobParameters) *JobRecord {
 		Id:         jobId,
 		Status:     Submitted,
 		Parameters: params,
-		Created:    time.Now().Round(1 * time.Second),
+		Created:    time.Now().Round(1 * time.Second).UTC(),
 	}
 }
 
@@ -128,10 +128,10 @@ func (jr *JobRecord) Bytes() []byte {
 
 func (jr *JobRecord) SetFinalStatus(s JobStatus) {
 	jr.Status = s
-	jr.Completed = time.Now().Round(1 * time.Second)
+	jr.Completed = time.Now().Round(1 * time.Second).UTC()
 }
 
 func (jr *JobRecord) SetRunningStatus() {
 	jr.Status = Running
-	jr.Started = time.Now().Round(1 * time.Second)
+	jr.Started = time.Now().Round(1 * time.Second).UTC()
 }
