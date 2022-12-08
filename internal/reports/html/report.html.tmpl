@@ -39,6 +39,8 @@
       {{template "results_delta_table" .}}
       {{else if eq .Type "trend_chart"}}
       {{template "trend_chart" .}}
+      {{else if eq .Type "horizontal_box_chart"}}
+      {{template "horizontal_box_chart" .}}
       {{end}}
       {{end}}
     </body>
@@ -253,4 +255,46 @@
         }
       );
     </script>
+{{end}}
+
+{{define "horizontal_box_chart"}}
+      <h2>{{.Title}}</h2>
+      <small>{{.SubText}}</small>
+      <div id="{{.ChartId}}" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          {{.ChartId}}, // Id of container element
+          [ // Data: each horizontal line series is a different benchmark
+            {{range .Experiments}}
+            {
+              name: {{.Name}},
+              x: {{.Values}},
+              text: {{.Labels}},
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            {{end}}
+          ],
+          { // Layout
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: {{.XTitle}},
+            },
+            autosize: true,
+            height: ( 2  * 15) + ( {{.NumBenchmarks}}  * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
 {{end}}
