@@ -89,6 +89,7 @@ func Run(args []string) int {
 			basicReportCommand(),
 			comparativeReportCommand(),
 			customReportCommand(),
+			singleReportCommand(),
 		},
 		"worker": {
 			workerCommand(),
