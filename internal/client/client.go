@@ -2,6 +2,9 @@ package client
 
 import (
 	"fmt"
+	"os"
+	"os/user"
+	"time"
 
 	"github.com/nats-io/nats.go"
 )
@@ -13,6 +16,9 @@ const (
 	logArtifactKeyTemplate     = "jobs/%s/log.txt"
 	resultsArtifactKeyTemplate = "jobs/%s/results.txt"
 	scriptArtifactKeyTemplate  = "jobs/%s/run.sh"
+	defaultClientName          = "GoBenchAway CLI"
+	jobHandleRetryTimeout      = 30 * time.Second
+	jobHandleRetryDelay        = 1 * time.Second
 )
 
 type Options struct {
@@ -57,7 +63,7 @@ func NewClient(serverUrl, credentials, namespace string, opts ...Option) (*Clien
 			jobsSubmitSubject:  fmt.Sprintf("%s.jobs.submit", namespace),
 			jobsRepositoryName: fmt.Sprintf("%s-jobs", namespace),
 			artifactsStoreName: fmt.Sprintf("%s-artifacts", namespace),
-			clientName:         "go-bench-away CLI", //TODO add user@hostname
+			clientName:         getClientName(),
 		},
 	}
 
@@ -181,4 +187,13 @@ func Verbose(verbose bool) Option {
 		o.verbose = verbose
 		return nil
 	}
+}
+
+func getClientName() string {
+	user, err1 := user.Current()
+	hostname, err2 := os.Hostname()
+	if err1 != nil || err2 != nil {
+		return defaultClientName
+	}
+	return fmt.Sprintf("%s (%s@%s)", defaultClientName, user.Username, hostname)
 }
