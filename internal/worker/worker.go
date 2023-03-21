@@ -4,22 +4,27 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
-	"github.com/mprimi/go-bench-away/internal/core"
-	"golang.org/x/sys/unix"
 	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
+	"time"
+
+	"github.com/mprimi/go-bench-away/internal/core"
+	"golang.org/x/sys/unix"
 )
 
 const (
-	kScriptFilename    = "run.sh"
-	kLogFilename       = "log.txt"
-	kResultsFilename   = "results.txt"
-	kShaFilename       = "sha.txt"
-	kGoversionFilename = "go_version.txt"
+	kScriptFilename            = "run.sh"
+	kLogFilename               = "log.txt"
+	kResultsFilename           = "results.txt"
+	kShaFilename               = "sha.txt"
+	kGoversionFilename         = "go_version.txt"
+	finalUpdateRetryTimeout    = 30 * time.Second
+	revisionUpdateRetryTimeout = 30 * time.Second
+	updateRetryDelay           = 1 * time.Second
 )
 
 //go:embed scripts/benchmark.sh.tmpl
@@ -81,10 +86,22 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 	job.SetRunningStatus()
 	job.WorkerInfo = w.workerInfo
 
-	newRevision, err := w.c.UpdateJob(job, revision)
-	if err != nil {
-		// TODO: retry if error is transitional
-		return false, fmt.Errorf("Failed to update job %s: %v", job.Id, err)
+	var newRevision uint64
+	var err error
+	revisionUpdateRetryTimer := time.NewTimer(revisionUpdateRetryTimeout)
+revisionUpdateLoop:
+	for {
+		newRevision, err = w.c.UpdateJob(job, revision)
+		if err == nil {
+			break revisionUpdateLoop
+		}
+		fmt.Printf("Retrying updating job %s with revision %d: %v", job.Id, revision, err)
+		select {
+		case <-revisionUpdateRetryTimer.C:
+			return false, fmt.Errorf("Failed to update job %s with revision %d within %d seconds", job.Id, revision, finalUpdateRetryTimeout)
+		case <-time.After(updateRetryDelay):
+			continue revisionUpdateLoop
+		}
 	}
 
 	fmt.Printf("⚙️  Processing job %s\n", job.Id)
@@ -111,12 +128,21 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 	}
 
 	fmt.Printf("⚙️  Completed job %s, updating status to: %s\n", job.Id, job.Status)
-	_, finalUpdateErr := w.c.UpdateJob(job, newRevision)
-	if finalUpdateErr != nil {
-		// TODO: retry if error is transitional
-		return false, fmt.Errorf("Failed to update job %s: %v", job.Id, finalUpdateErr)
+	updateRetryTimer := time.NewTimer(finalUpdateRetryTimeout)
+finalUpdateLoop:
+	for {
+		_, finalUpdateErr := w.c.UpdateJob(job, newRevision)
+		if finalUpdateErr == nil {
+			break finalUpdateLoop
+		}
+		fmt.Printf("Retrying final update to job %s: %v", job.Id, finalUpdateErr)
+		select {
+		case <-updateRetryTimer.C:
+			return false, fmt.Errorf("Failed to update job %s within %d seconds", job.Id, finalUpdateRetryTimeout)
+		case <-time.After(updateRetryDelay):
+			continue finalUpdateLoop
+		}
 	}
-
 	return false, nil
 }
 

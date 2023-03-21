@@ -88,7 +88,6 @@ dispatchLoop:
 
 		c.logDebug("Dispatching job %s", jobId)
 
-		// TODO implement retry
 		_, handleErr := handleJob(job, revision)
 		if handleErr != nil {
 			c.logWarn("Failed to process job %s: %v", jobId, handleErr)
