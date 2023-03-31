@@ -3,6 +3,7 @@ package client
 import (
 	"fmt"
 
+	"github.com/mprimi/go-bench-away/internal/core"
 	"github.com/nats-io/nats.go"
 )
 
@@ -44,6 +45,19 @@ func (c *Client) Close() {
 	if c.nc != nil {
 		c.nc.Close()
 	}
+}
+
+func (c *Client) GetJobRecord(jobId string) (*core.JobRecord, error) {
+	jobRecordKey := fmt.Sprintf(kJobRecordKeyTmpl, jobId)
+	kve, err := c.jobsRepository.Get(jobRecordKey)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to get job %s record: %v", jobRecordKey, err)
+	}
+	job, err := core.LoadJob(kve.Value())
+	if err != nil {
+		return nil, fmt.Errorf("Failed to load job %s: %v", jobId, err)
+	}
+	return job, nil
 }
 
 func NewClient(serverUrl, credentials, namespace string, opts ...Option) (*Client, error) {
