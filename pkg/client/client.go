@@ -13,16 +13,6 @@ import (
 	"github.com/mprimi/go-bench-away/pkg/enum"
 )
 
-// TODO: move to a more appropriate pkg (e.g. messages, enums, etc.)
-type JobStatus int
-
-const (
-	Submitted JobStatus = iota
-	Running
-	Failed
-	Succeeded
-)
-
 type GBAClientInterface interface {
 	// Initializes client
 	Init() error
@@ -32,9 +22,9 @@ type GBAClientInterface interface {
 	SubmitJob(string, string, string, string, uint, time.Duration, time.Duration) (string, error)
 	// Retrieves the status of a job by ID
 	GetJobStatusByID(string) (*enum.JobStatus, error)
-	// Retrieves IDs of all jobs, regardless of JobStatus
+	// Retrieves IDs of N most recent jobs, regardless of JobStatus
 	// TODO: Not priority, can remove till we really need it
-	//GetJobIDs() ([]string, error)
+	//GetJobIDs(limit int) ([]string, error)
 }
 
 type GBAClientConfig struct {
@@ -104,7 +94,6 @@ func (c *GBAClient) Init() error {
 	return nil
 }
 
-// TODO: returns (JobID string, error)
 func (c *GBAClient) SubmitJob(gitRemote string, gitRef string, testsSubDir string, testsFilterExpr string, repetitions uint, testMinRuntime time.Duration, timeout time.Duration) (string, error) {
 
 	gbaClient := c.client
@@ -144,11 +133,3 @@ func (c *GBAClient) GetJobStatusByID(jobId string) (*enum.JobStatus, error) {
 
 	return (*enum.JobStatus)(&record.Status), nil
 }
-
-// TODO: add limit parameter, or change to ReturnRecentJobs()
-//func (c *GBAClient) GetJobIDs() ([]string, error) {
-
-//jobIDs := []string{}
-
-//return jobIDs, nil
-//}
