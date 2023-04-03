@@ -10,6 +10,7 @@ import (
 
 	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/core"
+	"github.com/mprimi/go-bench-away/pkg/enum"
 )
 
 // TODO: move to a more appropriate pkg (e.g. messages, enums, etc.)
@@ -24,16 +25,16 @@ const (
 
 type GBAClientInterface interface {
 	// Initializes client
-	ClientInit(bool) error
+	Init() error
+	// Closes go-bench-away client connection
+	Close()
 	// Submits go-bench-away job
-	SubmitJob(string, string, string, string, uint, time.Duration, time.Duration) error
+	SubmitJob(string, string, string, string, uint, time.Duration, time.Duration) (string, error)
 	// Retrieves the status of a job by ID
-	GetJobStatusByID(string) (*core.JobStatus, error)
+	GetJobStatusByID(string) (*enum.JobStatus, error)
 	// Retrieves IDs of all jobs, regardless of JobStatus
 	// TODO: Not priority, can remove till we really need it
 	//GetJobIDs() ([]string, error)
-	// TODO: create close method
-	Close() error
 }
 
 type GBAClientConfig struct {
@@ -44,10 +45,11 @@ type GBAClientConfig struct {
 
 type GBAClient struct {
 	client *client.Client
+	config *GBAClientConfig
 }
 
 // Rename: New() (*Client, error) [usage]=> client.New()
-func NewGBA(config GBAClientConfig) (*GBAClient, error) {
+func New(config GBAClientConfig) (*GBAClient, error) {
 
 	gba_client, err := client.NewClient(
 		config.NatsServerUrl,
@@ -60,6 +62,7 @@ func NewGBA(config GBAClientConfig) (*GBAClient, error) {
 
 	return &GBAClient{
 		client: gba_client,
+		config: &config,
 	}, nil
 }
 
@@ -68,28 +71,10 @@ func (c *GBAClient) Close() {
 	c.client.Close()
 }
 
-// doesn't return client, internally creates artifacts/resources, New() will use the created resources after Init()
-func Init() {
+// doesn't return client, internally creates artifacts/resources
+func (c *GBAClient) Init() error {
+	gbaClient := c.client
 
-}
-
-// TODO: init within NewGBAClient, remove this later
-func ClientInit(c GBAClientConfig, verbose bool) error {
-	gbaClient, err := client.NewClient(
-		c.NatsServerUrl,
-		c.Credentials,
-		c.Namespace,
-		// TODO: client might've failed to initalize before jobqueue, repo, etc. was created
-		client.InitJobsQueue(),
-		client.InitJobsRepository(),
-		client.Verbose(verbose),
-	)
-	if err != nil {
-		return err
-	}
-	defer gbaClient.Close()
-
-	// TODO: split into its own method, don't want to do this with every init
 	initFuncs := []func() error{
 		gbaClient.CreateJobsQueue,
 		gbaClient.CreateJobsRepository,
@@ -102,18 +87,31 @@ func ClientInit(c GBAClientConfig, verbose bool) error {
 		}
 	}
 
+	gba_client, err := client.NewClient(
+		c.config.NatsServerUrl,
+		c.config.Credentials,
+		c.config.Namespace,
+		client.InitJobsQueue(),
+		client.InitJobsRepository(),
+		client.InitArtifactsStore(),
+	)
+	if err != nil {
+		return err
+	}
+
+	c.client = gba_client
+
 	return nil
 }
 
 // TODO: returns (JobID string, error)
-func (c *GBAClient) SubmitJob(gitRemote string, gitRef string, testsSubDir string, testsFilterExpr string, repetitions uint, testMinRuntime time.Duration, timeout time.Duration) error {
+func (c *GBAClient) SubmitJob(gitRemote string, gitRef string, testsSubDir string, testsFilterExpr string, repetitions uint, testMinRuntime time.Duration, timeout time.Duration) (string, error) {
 
-	// TODO: don't need to recreate client
 	gbaClient := c.client
 
 	currUser, err := user.Current()
 	if err != nil {
-		return fmt.Errorf("%v\n", err)
+		return "", err
 	}
 
 	jobParameters := &core.JobParameters{
@@ -128,12 +126,14 @@ func (c *GBAClient) SubmitJob(gitRemote string, gitRef string, testsSubDir strin
 		Username:        currUser.Username,
 	}
 
-	gbaClient.SubmitJob(*jobParameters)
-
-	return nil
+	record, err := gbaClient.SubmitJob(*jobParameters)
+	if err != nil {
+		return "", err
+	}
+	return record.Id, nil
 }
 
-func (c *GBAClient) GetJobStatusByID(jobId string) (*JobStatus, error) {
+func (c *GBAClient) GetJobStatusByID(jobId string) (*enum.JobStatus, error) {
 
 	gbaClient := c.client
 
@@ -142,13 +142,13 @@ func (c *GBAClient) GetJobStatusByID(jobId string) (*JobStatus, error) {
 		return nil, err
 	}
 
-	return &record.Status, nil
+	return (*enum.JobStatus)(&record.Status), nil
 }
 
 // TODO: add limit parameter, or change to ReturnRecentJobs()
-func (c *GBAClient) GetJobIDs() ([]string, error) {
+//func (c *GBAClient) GetJobIDs() ([]string, error) {
 
-	jobIDs := []string{}
+//jobIDs := []string{}
 
-	return jobIDs, nil
-}
+//return jobIDs, nil
+//}

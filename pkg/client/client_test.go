@@ -33,7 +33,7 @@ func TestGBAClientInterface(t *testing.T) {
 			"Standard Client",
 			false,
 			func() (*GBAClient, error) {
-				return NewGBA(GBAClientConfig{
+				return New(GBAClientConfig{
 					s.ClientURL(),
 					credentials,
 					namespace,
