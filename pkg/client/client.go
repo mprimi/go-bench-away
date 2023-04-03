@@ -22,7 +22,7 @@ const (
 	Succeeded
 )
 
-type Client interface {
+type GBAClientInterface interface {
 	// Initializes client
 	ClientInit(bool) error
 	// Submits go-bench-away job
@@ -42,21 +42,12 @@ type GBAClientConfig struct {
 	Namespace     string
 }
 
-type gbaClient struct {
+type GBAClient struct {
 	client *client.Client
 }
 
-// Rename: New() (*Client, error) => client.New()
-//func NewGBAClient(natsServerUrl string, credentials string, namespace string) *GBAClient {
-//return &GBAClient{
-//NatsServerUrl: natsServerUrl,
-//Credentials:   credentials,
-//Namespace:     namespace,
-//}
-
-//}
-
-func NewGBA(config GBAClientConfig) (*gbaClient, error) {
+// Rename: New() (*Client, error) [usage]=> client.New()
+func NewGBA(config GBAClientConfig) (*GBAClient, error) {
 
 	gba_client, err := client.NewClient(
 		config.NatsServerUrl,
@@ -67,9 +58,14 @@ func NewGBA(config GBAClientConfig) (*gbaClient, error) {
 		return nil, err
 	}
 
-	return &gbaClient{
+	return &GBAClient{
 		client: gba_client,
 	}, nil
+}
+
+// Closes go-bench-away client connection
+func (c *GBAClient) Close() {
+	c.client.Close()
 }
 
 // doesn't return client, internally creates artifacts/resources, New() will use the created resources after Init()
@@ -110,19 +106,10 @@ func ClientInit(c GBAClientConfig, verbose bool) error {
 }
 
 // TODO: returns (JobID string, error)
-func (c *gbaClient) SubmitJob(gitRemote string, gitRef string, testsSubDir string, testsFilterExpr string, repetitions uint, testMinRuntime time.Duration, timeout time.Duration) error {
+func (c *GBAClient) SubmitJob(gitRemote string, gitRef string, testsSubDir string, testsFilterExpr string, repetitions uint, testMinRuntime time.Duration, timeout time.Duration) error {
 
 	// TODO: don't need to recreate client
-	gbaClient, err := client.NewClient(
-		c.NatsServerUrl,
-		c.Credentials,
-		c.Namespace,
-	)
-	if err != nil {
-		return fmt.Errorf("%v\n", err)
-
-	}
-	defer gbaClient.Close()
+	gbaClient := c.client
 
 	currUser, err := user.Current()
 	if err != nil {
@@ -148,16 +135,7 @@ func (c *gbaClient) SubmitJob(gitRemote string, gitRef string, testsSubDir strin
 
 func (c *GBAClient) GetJobStatusByID(jobId string) (*JobStatus, error) {
 
-	// TODO: don't need to recreate client
-	gbaClient, err := client.NewClient(
-		c.NatsServerUrl,
-		c.Credentials,
-		c.Namespace,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer gbaClient.Close()
+	gbaClient := c.client
 
 	record, err := gbaClient.GetJobRecord(jobId)
 	if err != nil {
@@ -169,18 +147,8 @@ func (c *GBAClient) GetJobStatusByID(jobId string) (*JobStatus, error) {
 
 // TODO: add limit parameter, or change to ReturnRecentJobs()
 func (c *GBAClient) GetJobIDs() ([]string, error) {
-	// TODO
-	gbaClient, err := client.NewClient(
-		c.NatsServerUrl,
-		c.Credentials,
-		c.Namespace,
-	)
-	if err != nil {
-		return nil, fmt.Errorf("%v\n", err)
-	}
 
 	jobIDs := []string{}
 
-	defer gbaClient.Close()
 	return jobIDs, nil
 }

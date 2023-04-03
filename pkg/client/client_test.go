@@ -18,18 +18,48 @@ func TestGBAClientInterface(t *testing.T) {
 	opts.JetStream = true
 	opts.StoreDir = t.TempDir()
 
+	namespace := "test"
+	credentials := ""
+
 	s := server.RunServer(&opts)
 	defer s.Shutdown()
 
-	gbaClientConfig := &GBAClientConfig{
-		NatsServerUrl: s.ClientURL(),
-		Credentials:   "",
-		Namespace:     "test",
+	steps := []struct {
+		description string
+		expectError bool
+		action      func() (*GBAClient, error)
+	}{
+		{
+			"Standard Client",
+			false,
+			func() (*GBAClient, error) {
+				return NewGBA(GBAClientConfig{
+					s.ClientURL(),
+					credentials,
+					namespace,
+				})
+			},
+		},
 	}
 
-	return NewGBA
+	for i, step := range steps {
+		stepClient, stepErr := step.action()
+		if stepClient != nil {
+			stepClient.Close()
+		}
 
-	// client := client.New() || pkg, returns a connected client
+		if (stepErr != nil) != step.expectError {
+			t.Fatalf(
+				"Error in step %d/%d: '%s' -- expect error: %v, got error: %v",
+				i+1,
+				len(steps),
+				step.description,
+				step.expectError,
+				stepErr,
+			)
+		}
+	}
+	return
 
 	// start nats server
 	// init backend storage resources
