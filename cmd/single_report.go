@@ -6,9 +6,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/reports"
+	"github.com/mprimi/go-bench-away/pkg/client"
+
+	"github.com/google/subcommands"
 )
 
 type singleReportCmd struct {
@@ -51,7 +52,7 @@ func (cmd *singleReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...int
 
 	jobId := f.Args()[0]
 
-	client, err := client.NewClient(
+	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
@@ -64,9 +65,9 @@ func (cmd *singleReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...int
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer client.Close()
+	defer c.Close()
 
-	dataTable, err := reports.CreateDataTable(client, jobId)
+	dataTable, err := reports.CreateDataTable(c, jobId)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
@@ -98,7 +99,7 @@ func (cmd *singleReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...int
 		cmd.reportCfg.Title = fmt.Sprintf("Job report: %s", jobId)
 	}
 
-	reportErr := reports.CreateReport(client, &cmd.reportCfg, dataTable)
+	reportErr := reports.CreateReport(c, &cmd.reportCfg, dataTable)
 	if reportErr != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", reportErr)
 		return subcommands.ExitFailure

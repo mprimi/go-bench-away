@@ -4,8 +4,9 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/mprimi/go-bench-away/pkg/core"
+
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/core"
 )
 
 type versionCmd struct {

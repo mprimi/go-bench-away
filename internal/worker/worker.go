@@ -4,14 +4,15 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
-	"github.com/mprimi/go-bench-away/internal/core"
-	"golang.org/x/sys/unix"
 	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/mprimi/go-bench-away/pkg/core"
+	"golang.org/x/sys/unix"
 )
 
 const (

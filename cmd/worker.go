@@ -6,9 +6,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/client"
 	"github.com/mprimi/go-bench-away/internal/worker"
+	"github.com/mprimi/go-bench-away/pkg/client"
+
+	"github.com/google/subcommands"
 )
 
 type workerCmd struct {
@@ -36,7 +37,7 @@ func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interfa
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	client, err := client.NewClient(
+	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
@@ -50,7 +51,7 @@ func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interfa
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer client.Close()
+	defer c.Close()
 
 	if cmd.jobsDir != "" {
 		err := os.MkdirAll(cmd.jobsDir, 0750)
@@ -60,7 +61,7 @@ func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interfa
 		}
 	}
 
-	w, err := worker.NewWorker(client, cmd.jobsDir)
+	w, err := worker.NewWorker(c, cmd.jobsDir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure

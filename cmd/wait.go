@@ -8,9 +8,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/mprimi/go-bench-away/pkg/client"
+	"github.com/mprimi/go-bench-away/pkg/core"
+
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/client"
-	"github.com/mprimi/go-bench-away/internal/core"
 )
 
 type waitCmd struct {
@@ -42,7 +43,7 @@ func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 
 	jobIds := f.Args()
 
-	client, err := client.NewClient(
+	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
@@ -54,7 +55,7 @@ func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer client.Close()
+	defer c.Close()
 
 	wg := sync.WaitGroup{}
 
@@ -68,7 +69,7 @@ func (cmd *waitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		previousRevision := uint64(0)
 
 		for {
-			job, revision, err := client.LoadJob(jobId)
+			job, revision, err := c.LoadJob(jobId)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Failed to wait on job %s: %v\n", jobId, err)
 				return

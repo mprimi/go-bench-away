@@ -2,7 +2,7 @@ package reports
 
 import (
 	"fmt"
-	"github.com/mprimi/go-bench-away/internal/core"
+	"github.com/mprimi/go-bench-away/pkg/core"
 	"golang.org/x/perf/benchstat"
 )
 
