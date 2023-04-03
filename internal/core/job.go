@@ -3,8 +3,9 @@ package core
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type JobStatus int
@@ -36,8 +37,10 @@ type WorkerInfo struct {
 	Version  string
 }
 
+// TODO: export to pkg
 type JobRecord struct {
-	Id         string
+	Id string
+	// TODO: change type to enum.JobStatus (potentially)
 	Status     JobStatus
 	Parameters JobParameters
 
