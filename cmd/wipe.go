@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/mprimi/go-bench-away/pkg/client"
+
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/client"
 )
 
 type wipeCmd struct {
@@ -29,7 +30,7 @@ func (cmd *wipeCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	client, err := client.NewClient(
+	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
@@ -40,12 +41,12 @@ func (cmd *wipeCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer client.Close()
+	defer c.Close()
 
 	initFuncs := []func() error{
-		client.DeleteJobsQueue,
-		client.DeleteJobsRepository,
-		client.DeleteArtifactsStore,
+		c.DeleteJobsQueue,
+		c.DeleteJobsRepository,
+		c.DeleteArtifactsStore,
 	}
 
 	for _, fun := range initFuncs {

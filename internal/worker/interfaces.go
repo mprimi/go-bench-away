@@ -2,7 +2,7 @@ package worker
 
 import (
 	"context"
-	"github.com/mprimi/go-bench-away/internal/core"
+	"github.com/mprimi/go-bench-away/pkg/core"
 )
 
 type HandleJobFunc func(*core.JobRecord, uint64) (bool, error)

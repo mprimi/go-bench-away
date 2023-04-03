@@ -2,7 +2,8 @@ package client
 
 import (
 	"fmt"
-	"github.com/mprimi/go-bench-away/internal/core"
+
+	"github.com/mprimi/go-bench-away/pkg/core"
 )
 
 func (c *Client) UpdateJob(job *core.JobRecord, revision uint64) (uint64, error) {

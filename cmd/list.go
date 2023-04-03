@@ -7,9 +7,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/mprimi/go-bench-away/pkg/client"
+	"github.com/mprimi/go-bench-away/pkg/core"
+
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/client"
-	"github.com/mprimi/go-bench-away/internal/core"
 )
 
 type listCmd struct {
@@ -36,7 +37,7 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	client, err := client.NewClient(
+	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
@@ -49,9 +50,9 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer client.Close()
+	defer c.Close()
 
-	jobs, err := client.LoadRecentJobs(cmd.limit)
+	jobs, err := c.LoadRecentJobs(cmd.limit)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure

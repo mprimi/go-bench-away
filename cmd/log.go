@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/mprimi/go-bench-away/pkg/client"
+
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/client"
 )
 
 type logCmd struct {
@@ -39,7 +40,7 @@ func (cmd *logCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{})
 
 	jobId := f.Args()[0]
 
-	client, err := client.NewClient(
+	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
@@ -52,9 +53,9 @@ func (cmd *logCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{})
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer client.Close()
+	defer c.Close()
 
-	job, _, err := client.LoadJob(jobId)
+	job, _, err := c.LoadJob(jobId)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
@@ -63,7 +64,7 @@ func (cmd *logCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{})
 	if job.Log == "" {
 		fmt.Printf("No log artifact for job %s\n", job.Id)
 	} else {
-		logBytes, err := client.LoadLogArtifact(job)
+		logBytes, err := c.LoadLogArtifact(job)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Download failed: %v\n", err)
 			return subcommands.ExitFailure

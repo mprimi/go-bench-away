@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/mprimi/go-bench-away/pkg/core"
+
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/core"
 )
 
 var rootOptions struct {

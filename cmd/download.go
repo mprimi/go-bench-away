@@ -7,8 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/mprimi/go-bench-away/pkg/client"
+
 	"github.com/google/subcommands"
-	"github.com/mprimi/go-bench-away/internal/client"
 )
 
 type downloadCmd struct {
@@ -59,7 +60,7 @@ func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 	}
 	outputDir.Close()
 
-	client, err := client.NewClient(
+	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
@@ -72,10 +73,10 @@ func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
-	defer client.Close()
+	defer c.Close()
 
 	for _, jobId := range f.Args() {
-		job, _, err := client.LoadJob(jobId)
+		job, _, err := c.LoadJob(jobId)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return subcommands.ExitFailure
@@ -86,7 +87,7 @@ func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		} else {
 			fileName := fmt.Sprintf("%s_log.txt", jobId)
 			filePath := filepath.Join(cmd.outputDirPath, fileName)
-			err := client.DownloadLogArtifact(job, filePath)
+			err := c.DownloadLogArtifact(job, filePath)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Download failed: %v\n", err)
 				return subcommands.ExitFailure
@@ -99,7 +100,7 @@ func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		} else {
 			fileName := fmt.Sprintf("%s_results.txt", jobId)
 			filePath := filepath.Join(cmd.outputDirPath, fileName)
-			err := client.DownloadResultsArtifact(job, filePath)
+			err := c.DownloadResultsArtifact(job, filePath)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Download failed: %v\n", err)
 				return subcommands.ExitFailure
@@ -112,7 +113,7 @@ func (cmd *downloadCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		} else {
 			fileName := fmt.Sprintf("%s_run.sh", jobId)
 			filePath := filepath.Join(cmd.outputDirPath, fileName)
-			err := client.DownloadScriptArtifact(job, filePath)
+			err := c.DownloadScriptArtifact(job, filePath)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Download failed: %v\n", err)
 				return subcommands.ExitFailure
