@@ -38,6 +38,7 @@ lint: # Depends on https://github.com/golangci/golangci-lint
 	@golangci-lint run -c .golangci-lint.yml --fix
 
 mod:
+	@go get -u -t ./...
 	@go mod tidy
 
 check: mod fmt test lint cover vet
