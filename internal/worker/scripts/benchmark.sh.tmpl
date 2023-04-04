@@ -55,8 +55,10 @@ fi
 
 # The git executable, must be in PATH
 GIT=`which git`
+# Extra options passed to `git`
+GIT_OPS="--quiet"
 # Extra options passed to `git clone`
-GIT_CLONE_OPS="--quiet --depth=1 --single-branch -c advice.detachedHead=false"
+GIT_CLONE_OPS="--depth=1 --single-branch -c advice.detachedHead=false"
 # Extra options passed to `go test`
 GO_TEST_OPTS="-v"
 # Name of checkout folder (within ROOT_DIR)
@@ -122,17 +124,28 @@ echo
 
 ###
 ### Clone source
+### Avoid downloading repository history and support both reference (tag or branch) and commit SHAs
 ###
+
 echo "Cloning ${GIT_REMOTE} ref: ${GIT_REF} to ${ROOT_DIR}/${CHECKOUT_DIR}"
-${GIT} clone ${GIT_CLONE_OPS} --branch ${GIT_REF} ${GIT_REMOTE} "${ROOT_DIR}/${CHECKOUT_DIR}" || fail "Failed to checkout source"
 
-cd "${ROOT_DIR}/${CHECKOUT_DIR}/${TESTS_DIR}" || fail "Failed to cd to ${ROOT_DIR}/${CHECKOUT_DIR}/${TESTS_DIR}"
+# Shallow-clone HEAD
+${GIT} clone ${GIT_OPS} ${GIT_CLONE_OPS} "${GIT_REMOTE}" "${ROOT_DIR}/${CHECKOUT_DIR}" || fail "Failed to checkout source"
 
-echo
+cd "${ROOT_DIR}/${CHECKOUT_DIR}" || fail "Failed to cd to ${ROOT_DIR}/${CHECKOUT_DIR}"
+
+# Fetch ref or SHA
+${GIT} fetch ${GIT_OPS} --depth=1 "${GIT_REMOTE}" "${GIT_REF}"
+
+# Checkout ref-or-SHA
+${GIT} checkout ${GIT_OPS} FETCH_HEAD
+
+# Cleanup any files that may be left over from initial clone of HEAD
+${GIT} clean ${GIT_OPS} -fxd
 
 # Record the commit SHA
 echo "SHA of ${GIT_REF}:"
-${GIT} rev-parse --verify HEAD | tee "${SHA_FILE}"
+${GIT} rev-parse --verify FETCH_HEAD | tee "${SHA_FILE}"
 
 test -s "${SHA_FILE}" || fail "Failed to identify commit SHA"
 
@@ -144,6 +157,9 @@ test -s "${GO_VERSION_FILE}" || fail "Failed to identify commit SHA"
 
 echo
 
+cd "${ROOT_DIR}/${CHECKOUT_DIR}/${TESTS_DIR}" || fail "Failed to cd to ${ROOT_DIR}/${CHECKOUT_DIR}/${TESTS_DIR}"
+
+echo
 ###
 ### Run benchmarks
 ###
