@@ -9,13 +9,13 @@ default: build
 .PHONY: build install run test clean cover vet fmt lint mod check
 
 build:
-	@go build -ldflags "-X $(project)/internal/core.Version=$(version) -X $(project)/internal/core.SHA=$(sha) -X $(project)/internal/core.BuildDate=$(date)" -o $(projectname)
+	@go build -ldflags "-X $(project)/pkg/core.Version=$(version) -X $(project)/pkg/core.SHA=$(sha) -X $(project)/pkg/core.BuildDate=$(date)" -o $(projectname)
 
 install:
-	@go install -ldflags "-X $(project)/internal/core.Version=$(version) -X $(project)/internal/core.SHA=$(sha) -X $(project)/internal/core.BuildDate=$(date)"
+	@go install -ldflags "-X $(project)/pkg/core.Version=$(version) -X $(project)/pkg/core.SHA=$(sha) -X $(project)/pkg/core.BuildDate=$(date)"
 
 run:
-	@go run main.go -ldflags "-X $(project)/internal/core.Version=$(version) -X $(project)/internal/core.SHA=$(sha) -X $(project)/internal/core.BuildDate=$(date)" main.go
+	@go run main.go -ldflags "-X $(project)/pkg/core.Version=$(version) -X $(project)/pkg/core.SHA=$(sha) -X $(project)/pkg/core.BuildDate=$(date)" main.go
 
 test:
 	@go test -v -failfast -count=1 ./...

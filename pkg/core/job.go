@@ -136,3 +136,8 @@ func (jr *JobRecord) SetRunningStatus() {
 	jr.Status = Running
 	jr.Started = time.Now().Round(1 * time.Second).UTC()
 }
+
+type QueueStatus struct {
+	SubmittedCount uint64
+	RunningJob     *JobRecord
+}
