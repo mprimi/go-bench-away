@@ -6,7 +6,7 @@ date?=$(shell date "+%Y-%m-%d_%H:%M:%S")
 
 default: build
 
-.PHONY: build install run test clean cover vet fmt lint mod check
+.PHONY: build install run test clean cover vet fmt lint mod update-deps check
 
 build:
 	@go build -ldflags "-X $(project)/pkg/core.Version=$(version) -X $(project)/pkg/core.SHA=$(sha) -X $(project)/pkg/core.BuildDate=$(date)" -o $(projectname)
@@ -38,6 +38,9 @@ lint: # Depends on https://github.com/golangci/golangci-lint
 	@golangci-lint run -c .golangci-lint.yml --fix
 
 mod:
+	@go mod tidy
+
+update-deps:
 	@go get -u -t ./...
 	@go mod tidy
 
