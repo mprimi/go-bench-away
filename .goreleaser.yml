@@ -8,7 +8,7 @@ before:
 
 builds:
   - binary: go-bench-away
-    ldflags: -s -w -X github.com/mprimi/go-bench-away/pkg/core.Version={{ .Version }} -X github.com/mprimi/go-bench-away/pkg/core.SHA={{ .ShortCommit }} -X github.com/mprimi/go-bench-away/pkg/core.BuildDate={{ .Date }}
+    ldflags: -s -w -X github.com/mprimi/go-bench-away/v1/core.Version={{ .Version }} -X github.com/mprimi/go-bench-away/v1/core.SHA={{ .ShortCommit }} -X github.com/mprimi/go-bench-away/v1/core.BuildDate={{ .Date }}
     goos:
       - linux
       - darwin

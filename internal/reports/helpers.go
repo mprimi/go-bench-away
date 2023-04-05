@@ -2,10 +2,11 @@ package reports
 
 import (
 	"fmt"
-	"github.com/montanaflynn/stats"
-	"github.com/mprimi/go-bench-away/pkg/core"
-	"golang.org/x/perf/benchstat"
 	"regexp"
+
+	"github.com/montanaflynn/stats"
+	"github.com/mprimi/go-bench-away/v1/core"
+	"golang.org/x/perf/benchstat"
 )
 
 func loadJobAndResults(client JobRecordClient, jobId string) (*core.JobRecord, []byte, error) {

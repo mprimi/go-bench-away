@@ -4,11 +4,12 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
-	"github.com/mprimi/go-bench-away/pkg/core"
 	"html/template"
 	"net/http"
 	"regexp"
 	"strings"
+
+	"github.com/mprimi/go-bench-away/v1/core"
 )
 
 //go:embed html/index.html.tmpl
