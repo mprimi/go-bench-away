@@ -2,11 +2,12 @@ package worker
 
 import (
 	"context"
-	"github.com/mprimi/go-bench-away/pkg/core"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/mprimi/go-bench-away/v1/core"
 )
 
 type mockClient struct {

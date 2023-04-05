@@ -1,7 +1,7 @@
 package reports
 
 import (
-	"github.com/mprimi/go-bench-away/pkg/core"
+	"github.com/mprimi/go-bench-away/v1/core"
 )
 
 type JobRecordClient interface {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mprimi/go-bench-away/pkg/core"
+	"github.com/mprimi/go-bench-away/v1/core"
 
 	"github.com/nats-io/nats.go"
 )

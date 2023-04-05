@@ -11,7 +11,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/mprimi/go-bench-away/pkg/core"
+	"github.com/mprimi/go-bench-away/v1/core"
 	"golang.org/x/sys/unix"
 )
 

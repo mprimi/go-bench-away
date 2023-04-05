@@ -3,7 +3,7 @@ package client
 import (
 	"fmt"
 
-	"github.com/mprimi/go-bench-away/pkg/core"
+	"github.com/mprimi/go-bench-away/v1/core"
 )
 
 func (c *Client) UpdateJob(job *core.JobRecord, revision uint64) (uint64, error) {
