@@ -1,6 +1,7 @@
 package reports
 
 import (
+	"bytes"
 	"fmt"
 	"regexp"
 
@@ -20,12 +21,14 @@ func loadJobAndResults(client JobRecordClient, jobId string) (*core.JobRecord, [
 	}
 
 	fmt.Printf("Loading job %s\n", jobId)
-	results, err := client.LoadResultsArtifact(job)
+	const initialBufferSize = 1024
+	buf := bytes.NewBuffer(make([]byte, 0, initialBufferSize))
+	err = client.LoadResultsArtifact(job, buf)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	return job, results, nil
+	return job, buf.Bytes(), nil
 }
 
 // Count the unique string in the slice

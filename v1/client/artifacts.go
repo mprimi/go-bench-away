@@ -2,6 +2,7 @@ package client
 
 import (
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/mprimi/go-bench-away/v1/core"
@@ -55,25 +56,32 @@ func (c *Client) DownloadScriptArtifact(job *core.JobRecord, filePath string) er
 	return c.artifactsStore.GetFile(job.Script, filePath)
 }
 
-func (c *Client) LoadResultsArtifact(job *core.JobRecord) ([]byte, error) {
-	if job.Results == "" {
-		return nil, fmt.Errorf("Job %s has no results artifact", job.Id)
+func (c *Client) readArtifact(key string, w io.Writer) error {
+	if key == "" {
+		return fmt.Errorf("missing artifact")
 	}
-	return c.artifactsStore.GetBytes(job.Results)
+	o, err := c.artifactsStore.Get(key)
+	if err != nil {
+		return fmt.Errorf("artifact get: %w", err)
+	}
+	defer o.Close()
+	_, err = io.Copy(w, o)
+	if err != nil {
+		return fmt.Errorf("artifact copy: %w", err)
+	}
+	return nil
 }
 
-func (c *Client) LoadLogArtifact(job *core.JobRecord) ([]byte, error) {
-	if job.Log == "" {
-		return nil, fmt.Errorf("Job %s has no log artifact", job.Id)
-	}
-	return c.artifactsStore.GetBytes(job.Log)
+func (c *Client) LoadResultsArtifact(job *core.JobRecord, writer io.Writer) error {
+	return c.readArtifact(job.Results, writer)
 }
 
-func (c *Client) LoadScriptArtifact(job *core.JobRecord) ([]byte, error) {
-	if job.Script == "" {
-		return nil, fmt.Errorf("Job %s has no script artifact", job.Id)
-	}
-	return c.artifactsStore.GetBytes(job.Script)
+func (c *Client) LoadLogArtifact(job *core.JobRecord, writer io.Writer) error {
+	return c.readArtifact(job.Log, writer)
+}
+
+func (c *Client) LoadScriptArtifact(job *core.JobRecord, writer io.Writer) error {
+	return c.readArtifact(job.Script, writer)
 }
 
 func (c *Client) UploadLogArtifact(jobId, logFilePath string) (string, error) {

@@ -103,26 +103,21 @@ func (h *handler) serveJobResource(w http.ResponseWriter, jobId, resourceType st
 		return fmt.Errorf("Failed to load job '%s': %v", jobId, err)
 	}
 
-	var content []byte
-
 	switch resourceType {
 	case "log":
-		content, err = h.client.LoadLogArtifact(jobRecord)
+		err = h.client.LoadLogArtifact(jobRecord, w)
 	case "script":
-		content, err = h.client.LoadScriptArtifact(jobRecord)
+		err = h.client.LoadScriptArtifact(jobRecord, w)
 	case "results":
-		content, err = h.client.LoadResultsArtifact(jobRecord)
+		err = h.client.LoadResultsArtifact(jobRecord, w)
 	case "record":
-		content, err = json.MarshalIndent(jobRecord, "", "  ")
+		e := json.NewEncoder(w)
+		e.SetIndent("", "  ")
+		err = e.Encode(jobRecord)
 	}
 
 	if err != nil {
 		return fmt.Errorf("failed to load '%s': %v", resourceType, err)
-	}
-
-	_, err = w.Write(content)
-	if err != nil {
-		return fmt.Errorf("failed to write response: %v", err)
 	}
 
 	return nil
