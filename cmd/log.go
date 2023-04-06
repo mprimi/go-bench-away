@@ -64,13 +64,12 @@ func (cmd *logCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{})
 	if job.Log == "" {
 		fmt.Printf("No log artifact for job %s\n", job.Id)
 	} else {
-		logBytes, err := c.LoadLogArtifact(job)
+		err := c.LoadLogArtifact(job, os.Stdout)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Download failed: %v\n", err)
 			return subcommands.ExitFailure
 		}
 
-		fmt.Fprint(os.Stdout, string(logBytes))
 		fmt.Fprintf(os.Stdout, "\n")
 	}
 
