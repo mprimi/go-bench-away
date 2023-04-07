@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 	"html/template"
-	"os"
+	"io"
 	"regexp"
 )
 
@@ -34,10 +34,9 @@ const (
 )
 
 type ReportConfig struct {
-	Title      string
-	OutputPath string
-	sections   []SectionConfig
-	verbose    bool
+	Title    string
+	sections []SectionConfig
+	verbose  bool
 }
 
 func (r *ReportConfig) AddSections(sections ...SectionConfig) *ReportConfig {
@@ -56,7 +55,7 @@ func (r *ReportConfig) Log(format string, args ...any) {
 	}
 }
 
-func CreateReport(cfg *ReportConfig, dataTable DataTable) error {
+func WriteReport(cfg *ReportConfig, dataTable DataTable, writer io.Writer) error {
 	dt := dataTable.(*dataTableImpl)
 	title := cfg.Title
 	if title == "" {
@@ -73,12 +72,6 @@ func CreateReport(cfg *ReportConfig, dataTable DataTable) error {
 		}
 	}
 
-	f, err := os.Create(cfg.OutputPath)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
 	t := template.New("report")
 	t = template.Must(t.Parse(reportHtmlTmpl))
 
@@ -90,7 +83,7 @@ func CreateReport(cfg *ReportConfig, dataTable DataTable) error {
 		Sections: cfg.sections,
 	}
 
-	err = t.Execute(f, tv)
+	err := t.Execute(writer, tv)
 	if err != nil {
 		return err
 	}

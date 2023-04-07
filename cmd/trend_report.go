@@ -18,6 +18,7 @@ type trendReportCmd struct {
 	skipSpeed           bool
 	benchmarkFilterExpr string
 	hiddenResultsTable  bool
+	outputPath          string
 	reportCfg           reports.ReportConfig
 }
 
@@ -32,7 +33,7 @@ func trendReportCommand() subcommands.Command {
 }
 
 func (cmd *trendReportCmd) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.reportCfg.OutputPath, "output", "report.html", "Output report (HTML)")
+	f.StringVar(&cmd.outputPath, "output", "report.html", "Output report (HTML)")
 	f.StringVar(&cmd.reportCfg.Title, "title", "", "Title of the report (auto-generated if empty)")
 	f.BoolVar(&cmd.skipTimeOp, "no_timeop", false, "Do not include time/op graph and table")
 	f.BoolVar(&cmd.skipSpeed, "no_speed", false, "Do not include speed graph and table")
@@ -94,12 +95,19 @@ func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...inte
 		)
 	}
 
-	reportErr := reports.CreateReport(&cmd.reportCfg, dataTable)
+	file, err := os.Create(cmd.outputPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		return subcommands.ExitFailure
+	}
+	defer file.Close()
+
+	reportErr := reports.WriteReport(&cmd.reportCfg, dataTable, file)
 	if reportErr != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", reportErr)
 		return subcommands.ExitFailure
 	}
 
-	fmt.Printf("Created report: %s\n", cmd.reportCfg.OutputPath)
+	fmt.Printf("Created report: %s\n", cmd.outputPath)
 	return subcommands.ExitSuccess
 }
