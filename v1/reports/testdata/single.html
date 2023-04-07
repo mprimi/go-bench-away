@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <style>
+          body {
+            margin: 25px 100px 100px 50px;
+            background-color: lavender;
+          }
+          div.chart {
+          }
+          table {
+            background-color: #eee6fa;
+            border: 2px solid black;
+            padding: 3px;
+            margin: 3px;
+          }
+          td {
+            padding: 4px;
+            border: 1px solid gray;
+          }
+        </style>
+    <title>Single results set report</title>
+    </head>
+    <body>
+      <h1>Single results set report</h1>
+      
+      
+      
+      
+      <details>
+        <summary>Show jobs details</summary>
+        <table>
+          <tr>
+            <th>Job</th>
+            <th>Source</th>
+            <th>Filter</th>
+            <th>Repetitions</th>
+            <th>Go</th>
+            <th>Worker</th>
+            <th>Job Info</th>
+          </tr>
+          
+          <tr>
+            <td>067997a3-761e-475e-9559-f10d7400b835</td>
+            <td>v2.9.11<br>https://github.com/nats-io/nats-server.git<br>(23ffc16f95673efe4f7aa07d7fc4a5fb97679511)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 5s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:04:51 &#43;0000 UTC</td>
+          </tr>
+          
+        </table>
+      </details>
+
+      
+      
+      
+      
+      <h2>time/op results distribution</h2>
+      <small></small>
+      <div id="chart_9" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_9", 
+          [ 
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16",
+              x: [1697,1932,1963,1720,1714,1733,1962,1711,1950,1942],
+              text: ["1.70µs","1.93µs","1.96µs","1.72µs","1.71µs","1.73µs","1.96µs","1.71µs","1.95µs","1.94µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16",
+              x: [1791,1780,1471,1772,1765,1475,1755,1768,1450,1763],
+              text: ["1.79µs","1.78µs","1.47µs","1.77µs","1.77µs","1.48µs","1.75µs","1.77µs","1.45µs","1.76µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16",
+              x: [838,845.3,922.3,906,914.1,850.6,897.9,901.5,923.9,853.2],
+              text: ["838ns","845ns","922ns","906ns","914ns","851ns","898ns","902ns","924ns","853ns"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16",
+              x: [2287,4358,2464,3178,2883,2279,4069,2310,3597,2237],
+              text: ["2.29µs","4.36µs","2.46µs","3.18µs","2.88µs","2.28µs","4.07µs","2.31µs","3.60µs","2.24µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16",
+              x: [10957,7610,3101,7498,2905,11730,3677,2893,3679,3686],
+              text: ["10.96µs","7.61µs","3.10µs","7.50µs","2.91µs","11.73µs","3.68µs","2.89µs","3.68µs","3.69µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16",
+              x: [2469,3349,3366,3363,2465,3355,2472,3329,3346,2483],
+              text: ["2.47µs","3.35µs","3.37µs","3.36µs","2.47µs","3.35µs","2.47µs","3.33µs","3.35µs","2.48µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16",
+              x: [5541,3466],
+              text: ["5.54µs","3.47µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16",
+              x: [4502,8147,4440,5453,4391,4840,5701,5329],
+              text: ["4.50µs","8.15µs","4.44µs","5.45µs","4.39µs","4.84µs","5.70µs","5.33µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16",
+              x: [4314,13923,8682,13270,11257,9871,13812,10615,4356,9745],
+              text: ["4.3µs","13.9µs","8.7µs","13.3µs","11.3µs","9.9µs","13.8µs","10.6µs","4.4µs","9.7µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16",
+              x: [3627,6422,4074,5719,5210,5007,6215,5413,6206,3623],
+              text: ["3.63µs","6.42µs","4.07µs","5.72µs","5.21µs","5.01µs","6.21µs","5.41µs","6.21µs","3.62µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16",
+              x: [67701,57422,77253,71302,60883,59227,59713,64928,57326,65294],
+              text: ["67.7µs","57.4µs","77.3µs","71.3µs","60.9µs","59.2µs","59.7µs","64.9µs","57.3µs","65.3µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16",
+              x: [140991,182305,220962,151447,202670,103117,218536,238013,168393,197173],
+              text: ["141µs","182µs","221µs","151µs","203µs","103µs","219µs","238µs","168µs","197µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16",
+              x: [689431,882720,956143,776137,884880,744590,699214,397152,651678,980736],
+              text: ["689µs","883µs","956µs","776µs","885µs","745µs","699µs","397µs","652µs","981µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16",
+              x: [69611,75158,62129,65423,64470,61413,65874,74366,61703,63476],
+              text: ["69.6µs","75.2µs","62.1µs","65.4µs","64.5µs","61.4µs","65.9µs","74.4µs","61.7µs","63.5µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16",
+              x: [130894,130371,121539,144251,143574,132907,148718,128348,135693,123629],
+              text: ["131µs","130µs","122µs","144µs","144µs","133µs","149µs","128µs","136µs","124µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16",
+              x: [325099,327808,215763,228961,305216,645961,229649,235338,300947,244062],
+              text: ["325µs","328µs","216µs","229µs","305µs","646µs","230µs","235µs","301µs","244µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16",
+              x: [87031,62735,62456,64768,69244,70416,64440,62015,82814,69036],
+              text: ["87.0µs","62.7µs","62.5µs","64.8µs","69.2µs","70.4µs","64.4µs","62.0µs","82.8µs","69.0µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16",
+              x: [136365,143771,135977,142760,133043,133345,137394,126102,140916,147560],
+              text: ["136µs","144µs","136µs","143µs","133µs","133µs","137µs","126µs","141µs","148µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16",
+              x: [221136,269905,262960,218950,232611,229801,296222,259091,267534,239714],
+              text: ["221µs","270µs","263µs","219µs","233µs","230µs","296µs","259µs","268µs","240µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16",
+              x: [92817,93142,92373,131731,130770,130681,128467,127935,92490,128533],
+              text: ["93µs","93µs","92µs","132µs","131µs","131µs","128µs","128µs","92µs","129µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16",
+              x: [10680,10546,14094,10752,10828,14682,14525,16127,10584,14256],
+              text: ["10.7µs","10.5µs","14.1µs","10.8µs","10.8µs","14.7µs","14.5µs","16.1µs","10.6µs","14.3µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16",
+              x: [9652,13810,9658,9606,9663,9699,9665,9575,9763],
+              text: ["9.65µs","13.81µs","9.66µs","9.61µs","9.66µs","9.70µs","9.66µs","9.58µs","9.76µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16",
+              x: [13667,9217,9171,13728,13589,9204,13529,13625],
+              text: ["13.7µs","9.2µs","9.2µs","13.7µs","13.6µs","9.2µs","13.5µs","13.6µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16",
+              x: [142023,158219,165565,145805,156075,163105,140613,207641,200707,161036],
+              text: ["142µs","158µs","166µs","146µs","156µs","163µs","141µs","208µs","201µs","161µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16",
+              x: [15004,15019,15009,14949,14992,18323,18120,15023,18180,15002],
+              text: ["15.0µs","15.0µs","15.0µs","14.9µs","15.0µs","18.3µs","18.1µs","15.0µs","18.2µs","15.0µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16",
+              x: [17563,14256,17592,14194,17503,17626,14231,14242,17670],
+              text: ["17.6µs","14.3µs","17.6µs","14.2µs","17.5µs","17.6µs","14.2µs","14.2µs","17.7µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16",
+              x: [14059,14108,17537,17484,13897,14105,14259,17445,14098],
+              text: ["14.1µs","14.1µs","17.5µs","17.5µs","13.9µs","14.1µs","14.3µs","17.4µs","14.1µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+          ],
+          { 
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Time/op (lower is better)",
+            },
+            autosize: true,
+            height: ( 2  * 15) + (  27   * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+      
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16</th>
+          
+          <td>1.83µs ± 0.13µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>1.68µs ± 0.10µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16</th>
+          
+          <td>885ns ± 37ns</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16</th>
+          
+          <td>2.97µs ± 1.10µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16</th>
+          
+          <td>5.77µs ± 5.18µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16</th>
+          
+          <td>3.00µs ± 0.36µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>4.50µs ± 1.04µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16</th>
+          
+          <td>4.95µs ± 0.63µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16</th>
+          
+          <td>10.0µs ± 3.8µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16</th>
+          
+          <td>5.15µs ± 1.06µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16</th>
+          
+          <td>64.1µs ± 7.2µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16</th>
+          
+          <td>182µs ± 39µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>766µs ± 190µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16</th>
+          
+          <td>66.4µs ± 8.0µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16</th>
+          
+          <td>134µs ± 10µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>268µs ± 58µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16</th>
+          
+          <td>67.5µs ± 9.1µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16</th>
+          
+          <td>138µs ± 6µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>250µs ± 20µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16</th>
+          
+          <td>115µs ± 16µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>12.7µs ± 2.0µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>9.66µs ± 0.07µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>12.0µs ± 1.7µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16</th>
+          
+          <td>159µs ± 24µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>16.0µs ± 2.2µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>16.1µs ± 1.6µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>15.2µs ± 2.3µs</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+      
+      
+      <h2>speed results distribution</h2>
+      <small></small>
+      <div id="chart_10" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_10", 
+          [ 
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16",
+              x: [5.89,5.17,5.1,5.81,5.83,5.77,5.1,5.84,5.13,5.15],
+              text: ["5.89MB/s","5.17MB/s","5.10MB/s","5.81MB/s","5.83MB/s","5.77MB/s","5.10MB/s","5.84MB/s","5.13MB/s","5.15MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16",
+              x: [5.58,5.62,6.8,5.64,5.67,6.78,5.7,5.66,6.9,5.67],
+              text: ["5.58MB/s","5.62MB/s","6.80MB/s","5.64MB/s","5.67MB/s","6.78MB/s","5.70MB/s","5.66MB/s","6.90MB/s","5.67MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16",
+              x: [11.93,11.83,10.84,11.04,10.94,11.76,11.14,11.09,10.82,11.72],
+              text: ["11.9MB/s","11.8MB/s","10.8MB/s","11.0MB/s","10.9MB/s","11.8MB/s","11.1MB/s","11.1MB/s","10.8MB/s","11.7MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16",
+              x: [4.37,2.29,4.06,3.15,3.47,4.39,2.46,4.33,2.78,4.47],
+              text: ["4.37MB/s","2.29MB/s","4.06MB/s","3.15MB/s","3.47MB/s","4.39MB/s","2.46MB/s","4.33MB/s","2.78MB/s","4.47MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16",
+              x: [0.91,1.31,3.22,1.33,3.44,0.85,2.72,3.46,2.72,2.71],
+              text: ["0.91MB/s","1.31MB/s","3.22MB/s","1.33MB/s","3.44MB/s","0.85MB/s","2.72MB/s","3.46MB/s","2.72MB/s","2.71MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16",
+              x: [4.05,2.99,2.97,2.97,4.06,2.98,4.05,3,2.99,4.03],
+              text: ["4.05MB/s","2.99MB/s","2.97MB/s","2.97MB/s","4.06MB/s","2.98MB/s","4.05MB/s","3.00MB/s","2.99MB/s","4.03MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16",
+              x: [184.8,295.46],
+              text: ["185MB/s","295MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16",
+              x: [227.44,125.69,230.63,187.78,233.18,211.57,179.61,192.14],
+              text: ["227MB/s","126MB/s","231MB/s","188MB/s","233MB/s","212MB/s","180MB/s","192MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16",
+              x: [237.37,73.55,117.95,77.17,90.97,103.74,74.14,96.47,235.07,105.08],
+              text: ["237.4MB/s","73.5MB/s","118.0MB/s","77.2MB/s","91.0MB/s","103.7MB/s","74.1MB/s","96.5MB/s","235.1MB/s","105.1MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16",
+              x: [282.35,159.45,251.37,179.06,196.54,204.5,164.76,189.18,165,282.67],
+              text: ["282MB/s","159MB/s","251MB/s","179MB/s","197MB/s","204MB/s","165MB/s","189MB/s","165MB/s","283MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16",
+              x: [1.48,1.74,1.29,1.4,1.64,1.69,1.67,1.54,1.74,1.53],
+              text: ["1.48MB/s","1.74MB/s","1.29MB/s","1.40MB/s","1.64MB/s","1.69MB/s","1.67MB/s","1.54MB/s","1.74MB/s","1.53MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16",
+              x: [0.71,0.55,0.45,0.66,0.49,0.97,0.46,0.42,0.59,0.51],
+              text: ["710kB/s","550kB/s","450kB/s","660kB/s","490kB/s","970kB/s","460kB/s","420kB/s","590kB/s","510kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16",
+              x: [0.15,0.11,0.1,0.13,0.11,0.13,0.14,0.25,0.15,0.1],
+              text: ["150kB/s","110kB/s","100kB/s","130kB/s","110kB/s","130kB/s","140kB/s","250kB/s","150kB/s","100kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16",
+              x: [1.44,1.33,1.61,1.53,1.55,1.63,1.52,1.34,1.62,1.58],
+              text: ["1.44MB/s","1.33MB/s","1.61MB/s","1.53MB/s","1.55MB/s","1.63MB/s","1.52MB/s","1.34MB/s","1.62MB/s","1.58MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16",
+              x: [0.76,0.77,0.82,0.69,0.7,0.75,0.67,0.78,0.74,0.81],
+              text: ["760kB/s","770kB/s","820kB/s","690kB/s","700kB/s","750kB/s","670kB/s","780kB/s","740kB/s","810kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16",
+              x: [0.31,0.31,0.46,0.44,0.33,0.15,0.44,0.42,0.33,0.41],
+              text: ["310kB/s","310kB/s","460kB/s","440kB/s","330kB/s","150kB/s","440kB/s","420kB/s","330kB/s","410kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16",
+              x: [11.77,16.32,16.4,15.81,14.79,14.54,15.89,16.51,12.37,14.83],
+              text: ["11.8MB/s","16.3MB/s","16.4MB/s","15.8MB/s","14.8MB/s","14.5MB/s","15.9MB/s","16.5MB/s","12.4MB/s","14.8MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16",
+              x: [7.51,7.12,7.53,7.17,7.7,7.68,7.45,8.12,7.27,6.94],
+              text: ["7.51MB/s","7.12MB/s","7.53MB/s","7.17MB/s","7.70MB/s","7.68MB/s","7.45MB/s","8.12MB/s","7.27MB/s","6.94MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16",
+              x: [4.63,3.79,3.89,4.68,4.4,4.46,3.46,3.95,3.83,4.27],
+              text: ["4.63MB/s","3.79MB/s","3.89MB/s","4.68MB/s","4.40MB/s","4.46MB/s","3.46MB/s","3.95MB/s","3.83MB/s","4.27MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16",
+              x: [0.11,0.11,0.11,0.08,0.08,0.08,0.08,0.08,0.11,0.08],
+              text: ["110.0kB/s","110.0kB/s","110.0kB/s","80.0kB/s","80.0kB/s","80.0kB/s","80.0kB/s","80.0kB/s","110.0kB/s","80.0kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16",
+              x: [0.94,0.95,0.71,0.93,0.92,0.68,0.69,0.62,0.94,0.7],
+              text: ["940kB/s","950kB/s","710kB/s","930kB/s","920kB/s","680kB/s","690kB/s","620kB/s","940kB/s","700kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16",
+              x: [1.04,0.72,1.04,1.04,1.03,1.03,1.03,1.04,1.02],
+              text: ["1.04MB/s","0.72MB/s","1.04MB/s","1.04MB/s","1.03MB/s","1.03MB/s","1.03MB/s","1.04MB/s","1.02MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16",
+              x: [0.73,1.08,1.09,0.73,0.74,1.09,0.74,0.73],
+              text: ["730kB/s","1080kB/s","1090kB/s","730kB/s","740kB/s","1090kB/s","740kB/s","730kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16",
+              x: [7.21,6.47,6.18,7.02,6.56,6.28,7.28,4.93,5.1,6.36],
+              text: ["7.21MB/s","6.47MB/s","6.18MB/s","7.02MB/s","6.56MB/s","6.28MB/s","7.28MB/s","4.93MB/s","5.10MB/s","6.36MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16",
+              x: [68.25,68.18,68.23,68.5,68.3,55.89,56.51,68.16,56.32,68.26],
+              text: ["68.2MB/s","68.2MB/s","68.2MB/s","68.5MB/s","68.3MB/s","55.9MB/s","56.5MB/s","68.2MB/s","56.3MB/s","68.3MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16",
+              x: [58.31,71.83,58.21,72.14,58.5,58.1,71.95,71.9,57.95],
+              text: ["58.3MB/s","71.8MB/s","58.2MB/s","72.1MB/s","58.5MB/s","58.1MB/s","72.0MB/s","71.9MB/s","58.0MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16",
+              x: [72.83,72.58,58.39,58.57,73.69,72.6,71.81,58.7,72.64],
+              text: ["72.8MB/s","72.6MB/s","58.4MB/s","58.6MB/s","73.7MB/s","72.6MB/s","71.8MB/s","58.7MB/s","72.6MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+          ],
+          { 
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Throughput (higher is better)",
+            },
+            autosize: true,
+            height: ( 2  * 15) + (  27   * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+      
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16</th>
+          
+          <td>5.48MB/s ± 0.36MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>6.00MB/s ± 0.80MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16</th>
+          
+          <td>11.3MB/s ± 0.5MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16</th>
+          
+          <td>3.58MB/s ± 0.81MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16</th>
+          
+          <td>2.27MB/s ± 1.17MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16</th>
+          
+          <td>3.41MB/s ± 0.64MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>240MB/s ± 55MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16</th>
+          
+          <td>199MB/s ± 33MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16</th>
+          
+          <td>92.4MB/s ± 19.1MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16</th>
+          
+          <td>207MB/s ± 75MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16</th>
+          
+          <td>1.57MB/s ± 0.17MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16</th>
+          
+          <td>581kB/s ± 129kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>124kB/s ± 26kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16</th>
+          
+          <td>1.51MB/s ± 0.11MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16</th>
+          
+          <td>749kB/s ± 61kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>360kB/s ± 80kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16</th>
+          
+          <td>14.9MB/s ± 1.5MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16</th>
+          
+          <td>7.45MB/s ± 0.25MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.14MB/s ± 0.49MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16</th>
+          
+          <td>92.0kB/s ± 18.0kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>808kB/s ± 132kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>1.03MB/s ± 0.01MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>866kB/s ± 224kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16</th>
+          
+          <td>6.34MB/s ± 0.87MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>64.7MB/s ± 3.6MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>64.3MB/s ± 7.7MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>68.0MB/s ± 5.3MB/s</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

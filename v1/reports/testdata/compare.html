@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <style>
+          body {
+            margin: 25px 100px 100px 50px;
+            background-color: lavender;
+          }
+          div.chart {
+          }
+          table {
+            background-color: #eee6fa;
+            border: 2px solid black;
+            padding: 3px;
+            margin: 3px;
+          }
+          td {
+            padding: 4px;
+            border: 1px solid gray;
+          }
+        </style>
+    <title>Comparative report</title>
+    </head>
+    <body>
+      <h1>Comparative report</h1>
+      
+      
+      
+      
+      <details>
+        <summary>Show jobs details</summary>
+        <table>
+          <tr>
+            <th>Job</th>
+            <th>Source</th>
+            <th>Filter</th>
+            <th>Repetitions</th>
+            <th>Go</th>
+            <th>Worker</th>
+            <th>Job Info</th>
+          </tr>
+          
+          <tr>
+            <td>067997a3-761e-475e-9559-f10d7400b835</td>
+            <td>v2.9.11<br>https://github.com/nats-io/nats-server.git<br>(23ffc16f95673efe4f7aa07d7fc4a5fb97679511)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 5s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:04:51 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <td>dd146049-0137-4ba0-89b1-0a2f8d0a2268</td>
+            <td>main<br>https://github.com/nats-io/nats-server.git<br>(d14968cb4face7aba66b225a172b2bc6f6784ffb)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 3s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:27:45 &#43;0000 UTC</td>
+          </tr>
+          
+        </table>
+      </details>
+
+      
+      
+      
+      
+      <h2>Relative time/op comparison</h2>
+      <small></small>
+      <div id="chart_7" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        "chart_7",
+        [{
+          type: 'bar',
+          y: ["JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16","JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16","JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16","JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16","JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16","JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16","JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16","JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16","JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16","JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16","JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16","JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16","JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16"],
+          x: [-6.188605108055012,3.394877903514004,0,0,0,0,-55.3680470744976,-32.1228647276085,-43.7047423506435,-39.07523876077336,0,58.22723865394251,-12.264923986787368,130.1445583143174,21.77257814622322,87.46470450004418,243.6143991683171,14.406494761598054,148.19057745551908,0,-33.82989439224389,-15.16776439228268,-32.890885244379454,50.63922916544561,-25.252316424530598,-27.858735341013407,-24.516655821403543],
+          text: ["-6.2%","+3.4%","inconclusive","inconclusive","inconclusive","inconclusive","-55.4%","-32.1%","-43.7%","-39.1%","inconclusive","+58.2%","-12.3%","+130.1%","+21.8%","+87.5%","+243.6%","+14.4%","+148.2%","inconclusive","-33.8%","-15.2%","-32.9%","+50.6%","-25.3%","-27.9%","-24.5%"],
+          marker: {
+            color: ["green","red","red","red","red","red","green","green","green","green","red","red","green","red","red","red","red","red","red","red","green","green","green","red","green","green","green"]
+          },
+          orientation: 'h'
+        }],
+        {
+          xaxis: {
+            title: "Δ% time/op (lower is better)",
+            ticksuffix: "%",
+            zeroline: true,
+            zerolinewidth: 3,
+          },
+          yaxis: {
+            ticklabelposition: "inside",
+            automargin: true,
+            dtick: 1,
+            autorange: "reversed",
+          },
+          autosize: true,
+          height: ( 27  * 50) + 50,
+          margin: {
+            t: 20,
+            b: 30,
+          }
+        }
+      );
+      </script>
+
+      
+      
+      
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+          <th>main</th>
+          
+          <th>Δ%</th>
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16</th>
+          
+          <td>1.83µs ± 0.13µs</td>
+          
+          <td>1.72µs ± 0.02µs</td>
+          
+          <td>-6.2%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>1.68µs ± 0.10µs</td>
+          
+          <td>1.74µs ± 0.01µs</td>
+          
+          <td>&#43;3.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16</th>
+          
+          <td>885ns ± 37ns</td>
+          
+          <td>888ns ± 36ns</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16</th>
+          
+          <td>2.97µs ± 1.10µs</td>
+          
+          <td>2.93µs ± 0.46µs</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16</th>
+          
+          <td>5.77µs ± 5.18µs</td>
+          
+          <td>5.84µs ± 1.48µs</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16</th>
+          
+          <td>3.00µs ± 0.36µs</td>
+          
+          <td>3.00µs ± 0.01µs</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>4.50µs ± 1.04µs</td>
+          
+          <td>2.01µs ± 0.12µs</td>
+          
+          <td>-55.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16</th>
+          
+          <td>4.95µs ± 0.63µs</td>
+          
+          <td>3.36µs ± 0.87µs</td>
+          
+          <td>-32.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16</th>
+          
+          <td>10.0µs ± 3.8µs</td>
+          
+          <td>5.62µs ± 2.72µs</td>
+          
+          <td>-43.7%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16</th>
+          
+          <td>5.15µs ± 1.06µs</td>
+          
+          <td>3.14µs ± 0.37µs</td>
+          
+          <td>-39.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16</th>
+          
+          <td>64.1µs ± 7.2µs</td>
+          
+          <td>62.3µs ± 11.0µs</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16</th>
+          
+          <td>182µs ± 39µs</td>
+          
+          <td>289µs ± 133µs</td>
+          
+          <td>&#43;58.2%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>766µs ± 190µs</td>
+          
+          <td>672µs ± 204µs</td>
+          
+          <td>-12.3%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16</th>
+          
+          <td>66.4µs ± 8.0µs</td>
+          
+          <td>153µs ± 69µs</td>
+          
+          <td>&#43;130.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16</th>
+          
+          <td>134µs ± 10µs</td>
+          
+          <td>163µs ± 48µs</td>
+          
+          <td>&#43;21.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>268µs ± 58µs</td>
+          
+          <td>503µs ± 261µs</td>
+          
+          <td>&#43;87.5%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16</th>
+          
+          <td>67.5µs ± 9.1µs</td>
+          
+          <td>232µs ± 130µs</td>
+          
+          <td>&#43;243.6%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16</th>
+          
+          <td>138µs ± 6µs</td>
+          
+          <td>158µs ± 37µs</td>
+          
+          <td>&#43;14.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>250µs ± 20µs</td>
+          
+          <td>620µs ± 206µs</td>
+          
+          <td>&#43;148.2%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16</th>
+          
+          <td>115µs ± 16µs</td>
+          
+          <td>111µs ± 18µs</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>12.7µs ± 2.0µs</td>
+          
+          <td>8.41µs ± 0.20µs</td>
+          
+          <td>-33.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>9.66µs ± 0.07µs</td>
+          
+          <td>8.19µs ± 0.05µs</td>
+          
+          <td>-15.2%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>12.0µs ± 1.7µs</td>
+          
+          <td>8.03µs ± 0.09µs</td>
+          
+          <td>-32.9%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16</th>
+          
+          <td>159µs ± 24µs</td>
+          
+          <td>240µs ± 104µs</td>
+          
+          <td>&#43;50.6%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>16.0µs ± 2.2µs</td>
+          
+          <td>11.9µs ± 0.2µs</td>
+          
+          <td>-25.3%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>16.1µs ± 1.6µs</td>
+          
+          <td>11.6µs ± 0.2µs</td>
+          
+          <td>-27.9%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>15.2µs ± 2.3µs</td>
+          
+          <td>11.5µs ± 0.2µs</td>
+          
+          <td>-24.5%</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+      
+      
+      <h2>Relative speed comparison</h2>
+      <small></small>
+      <div id="chart_8" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        "chart_8",
+        [{
+          type: 'bar',
+          y: ["JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16","JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16","JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16","JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16","JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16","JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16","JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16","JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16","JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16","JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16","JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16","JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16","JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16","JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16"],
+          x: [6.178134696112436,-4.124551075567407,0,0,0,0,112.97713738391701,57.75572403717788,120.15884828230074,58.61399213448484,0,-40.14151845477145,39.821428571428584,-53.86138613861387,-14.81975967957274,-36.94444444444444,-64.02197949473967,-10.51147805074506,-56.2862669245648,0,47.400990099009846,18.016928657799248,43.78707712041048,-16.658778987221957,32.782245592329076,37.101176389296775,31.120539289742165],
+          text: ["+6.2%","-4.1%","inconclusive","inconclusive","inconclusive","inconclusive","+113.0%","+57.8%","+120.2%","+58.6%","inconclusive","-40.1%","+39.8%","-53.9%","-14.8%","-36.9%","-64.0%","-10.5%","-56.3%","inconclusive","+47.4%","+18.0%","+43.8%","-16.7%","+32.8%","+37.1%","+31.1%"],
+          marker: {
+            color: ["green","red","green","green","green","green","green","green","green","green","green","red","green","red","red","red","red","red","red","green","green","green","green","red","green","green","green"]
+          },
+          orientation: 'h'
+        }],
+        {
+          xaxis: {
+            title: "Δ% throughput (higher is better)",
+            ticksuffix: "%",
+            zeroline: true,
+            zerolinewidth: 3,
+          },
+          yaxis: {
+            ticklabelposition: "inside",
+            automargin: true,
+            dtick: 1,
+            autorange: "reversed",
+          },
+          autosize: true,
+          height: ( 27  * 50) + 50,
+          margin: {
+            t: 20,
+            b: 30,
+          }
+        }
+      );
+      </script>
+
+      
+      
+      
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+          <th>main</th>
+          
+          <th>Δ%</th>
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16</th>
+          
+          <td>5.48MB/s ± 0.36MB/s</td>
+          
+          <td>5.82MB/s ± 0.07MB/s</td>
+          
+          <td>&#43;6.2%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>6.00MB/s ± 0.80MB/s</td>
+          
+          <td>5.75MB/s ± 0.02MB/s</td>
+          
+          <td>-4.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16</th>
+          
+          <td>11.3MB/s ± 0.5MB/s</td>
+          
+          <td>11.3MB/s ± 0.5MB/s</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16</th>
+          
+          <td>3.58MB/s ± 0.81MB/s</td>
+          
+          <td>3.46MB/s ± 0.51MB/s</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16</th>
+          
+          <td>2.27MB/s ± 1.17MB/s</td>
+          
+          <td>1.82MB/s ± 0.40MB/s</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16</th>
+          
+          <td>3.41MB/s ± 0.64MB/s</td>
+          
+          <td>3.33MB/s ± 0.01MB/s</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>240MB/s ± 55MB/s</td>
+          
+          <td>511MB/s ± 63MB/s</td>
+          
+          <td>&#43;113.0%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16</th>
+          
+          <td>199MB/s ± 33MB/s</td>
+          
+          <td>313MB/s ± 49MB/s</td>
+          
+          <td>&#43;57.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16</th>
+          
+          <td>92.4MB/s ± 19.1MB/s</td>
+          
+          <td>203MB/s ± 47MB/s</td>
+          
+          <td>&#43;120.2%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16</th>
+          
+          <td>207MB/s ± 75MB/s</td>
+          
+          <td>329MB/s ± 26MB/s</td>
+          
+          <td>&#43;58.6%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16</th>
+          
+          <td>1.57MB/s ± 0.17MB/s</td>
+          
+          <td>1.63MB/s ± 0.29MB/s</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16</th>
+          
+          <td>581kB/s ± 129kB/s</td>
+          
+          <td>348kB/s ± 102kB/s</td>
+          
+          <td>-40.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>124kB/s ± 26kB/s</td>
+          
+          <td>174kB/s ± 106kB/s</td>
+          
+          <td>&#43;39.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16</th>
+          
+          <td>1.51MB/s ± 0.11MB/s</td>
+          
+          <td>699kB/s ± 481kB/s</td>
+          
+          <td>-53.9%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16</th>
+          
+          <td>749kB/s ± 61kB/s</td>
+          
+          <td>638kB/s ± 102kB/s</td>
+          
+          <td>-14.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>360kB/s ± 80kB/s</td>
+          
+          <td>227kB/s ± 103kB/s</td>
+          
+          <td>-36.9%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16</th>
+          
+          <td>14.9MB/s ± 1.5MB/s</td>
+          
+          <td>5.37MB/s ± 3.78MB/s</td>
+          
+          <td>-64.0%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16</th>
+          
+          <td>7.45MB/s ± 0.25MB/s</td>
+          
+          <td>6.67MB/s ± 1.07MB/s</td>
+          
+          <td>-10.5%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.14MB/s ± 0.49MB/s</td>
+          
+          <td>1.81MB/s ± 0.61MB/s</td>
+          
+          <td>-56.3%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16</th>
+          
+          <td>92.0kB/s ± 18.0kB/s</td>
+          
+          <td>94.0kB/s ± 16.0kB/s</td>
+          
+          <td>Inconclusive</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>808kB/s ± 132kB/s</td>
+          
+          <td>1.19MB/s ± 0.03MB/s</td>
+          
+          <td>&#43;47.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>1.03MB/s ± 0.01MB/s</td>
+          
+          <td>1.22MB/s ± 0.01MB/s</td>
+          
+          <td>&#43;18.0%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>866kB/s ± 224kB/s</td>
+          
+          <td>1.25MB/s ± 0.01MB/s</td>
+          
+          <td>&#43;43.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16</th>
+          
+          <td>6.34MB/s ± 0.87MB/s</td>
+          
+          <td>5.28MB/s ± 2.65MB/s</td>
+          
+          <td>-16.7%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>64.7MB/s ± 3.6MB/s</td>
+          
+          <td>85.9MB/s ± 1.7MB/s</td>
+          
+          <td>&#43;32.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>64.3MB/s ± 7.7MB/s</td>
+          
+          <td>88.2MB/s ± 0.9MB/s</td>
+          
+          <td>&#43;37.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>68.0MB/s ± 5.3MB/s</td>
+          
+          <td>89.1MB/s ± 0.9MB/s</td>
+          
+          <td>&#43;31.1%</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
