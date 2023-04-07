@@ -17,6 +17,7 @@ import (
 type customReportCmd struct {
 	baseCommand
 	hiddenResultsTable bool
+	outputPath         string
 	reportCfg          reports.ReportConfig
 }
 
@@ -31,7 +32,7 @@ func customReportCommand() subcommands.Command {
 }
 
 func (cmd *customReportCmd) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.reportCfg.OutputPath, "output", "report.html", "Output report (HTML)")
+	f.StringVar(&cmd.outputPath, "output", "report.html", "Output report (HTML)")
 	f.BoolVar(&cmd.hiddenResultsTable, "hide_table", false, "Hide the results table by default")
 }
 
@@ -126,32 +127,24 @@ func (cmd *customReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...int
 		}
 	}
 
-	reportErr := reports.CreateReport(&cmd.reportCfg, dataTable)
+	file, err := os.Create(cmd.outputPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		return subcommands.ExitFailure
+	}
+	defer file.Close()
+
+	reportErr := reports.WriteReport(&cmd.reportCfg, dataTable, file)
 	if reportErr != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", reportErr)
 		return subcommands.ExitFailure
 	}
 
-	fmt.Printf("Created report: %s\n", cmd.reportCfg.OutputPath)
+	fmt.Printf("Created report: %s\n", cmd.outputPath)
 	return subcommands.ExitSuccess
 }
 
-type reportSectionSpec struct {
-	Title               string `json:"title"`
-	Metric              string `json:"metric"`
-	Type                string `json:"type"`
-	BenchmarkFilterExpr string `json:"benchmark_filter"`
-	ResultsTable        bool   `json:"results_table"`
-	HiddenResultsTable  bool   `json:"hidden_results_table"`
-}
-
-type reportSpec struct {
-	Title    string              `json:"title"`
-	JobIds   []string            `json:"jobs"`
-	Sections []reportSectionSpec `json:"sections"`
-}
-
-func parseReportSpec(specPath string) (*reportSpec, error) {
+func parseReportSpec(specPath string) (*reports.ReportSpec, error) {
 	file, err := os.Open(specPath)
 	if err != nil {
 		return nil, err
@@ -163,7 +156,7 @@ func parseReportSpec(specPath string) (*reportSpec, error) {
 		return nil, err
 	}
 
-	spec := &reportSpec{}
+	spec := &reports.ReportSpec{}
 	jsonErr := json.Unmarshal(specFileContent, spec)
 	if jsonErr != nil {
 		return nil, fmt.Errorf("Failed to parse spec: %v", jsonErr)
