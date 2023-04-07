@@ -56,7 +56,7 @@ func (r *ReportConfig) Log(format string, args ...any) {
 	}
 }
 
-func CreateReport(client JobRecordClient, cfg *ReportConfig, dataTable DataTable) error {
+func CreateReport(cfg *ReportConfig, dataTable DataTable) error {
 	dt := dataTable.(*dataTableImpl)
 	title := cfg.Title
 	if title == "" {

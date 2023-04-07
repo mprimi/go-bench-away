@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mprimi/go-bench-away/internal/reports"
 	"github.com/mprimi/go-bench-away/v1/client"
+	"github.com/mprimi/go-bench-away/v1/reports"
 
 	"github.com/google/subcommands"
 )
@@ -99,7 +99,7 @@ func (cmd *singleReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...int
 		cmd.reportCfg.Title = fmt.Sprintf("Job report: %s", jobId)
 	}
 
-	reportErr := reports.CreateReport(c, &cmd.reportCfg, dataTable)
+	reportErr := reports.CreateReport(&cmd.reportCfg, dataTable)
 	if reportErr != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", reportErr)
 		return subcommands.ExitFailure
