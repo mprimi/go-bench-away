@@ -2,6 +2,7 @@ package reports
 
 import (
 	"fmt"
+
 	"golang.org/x/perf/benchstat"
 )
 
