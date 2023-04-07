@@ -1,0 +1,376 @@
+goos: linux
+goarch: amd64
+pkg: github.com/nats-io/nats-server/v2/server
+cpu: Intel(R) Xeon(R) E-2278G CPU @ 3.40GHz
+BenchmarkJetStreamConsume
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 3630489	      1389 ns/op	   7.20 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 3571437	      1744 ns/op	   5.74 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 3582494	      1747 ns/op	   5.72 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 4346614	      1738 ns/op	   5.75 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 3604900	      1742 ns/op	   5.74 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 3603096	      1726 ns/op	   5.79 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 3547440	      1717 ns/op	   5.82 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 4395459	      1731 ns/op	   5.78 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 3597650	      1712 ns/op	   5.84 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16         	 3560640	      1737 ns/op	   5.76 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 4366606	      1746 ns/op	   5.73 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 3566520	      1747 ns/op	   5.72 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 3465141	      1740 ns/op	   5.75 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 4307216	      1756 ns/op	   5.70 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 3480787	      1734 ns/op	   5.77 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 4210340	      1726 ns/op	   5.79 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 3452572	      1758 ns/op	   5.69 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 3515695	      1735 ns/op	   5.77 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 3449865	      1737 ns/op	   5.76 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16        	 3490713	      1742 ns/op	   5.74 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6456304	       852.4 ns/op	  11.73 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6922978	       869.7 ns/op	  11.50 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6632504	       870.0 ns/op	  11.49 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6371247	       915.2 ns/op	  10.93 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6658546	       862.5 ns/op	  11.59 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6452186	       915.0 ns/op	  10.93 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6661449	       909.3 ns/op	  11.00 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6480069	       867.1 ns/op	  11.53 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6405252	       955.4 ns/op	  10.47 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16          	 6367581	       939.8 ns/op	  10.64 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2027376	      2525 ns/op	   3.96 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2137470	      2896 ns/op	   3.45 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2354222	      2403 ns/op	   4.16 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2273812	      2722 ns/op	   3.67 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 1954514	      2940 ns/op	   3.40 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2121626	      2476 ns/op	   4.04 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2317874	      2692 ns/op	   3.71 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2128347	      3306 ns/op	   3.02 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2283878	      2497 ns/op	   4.00 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16          	 2356732	      2836 ns/op	   3.53 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1287634	      5085 ns/op	   1.97 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1417647	      6914 ns/op	   1.45 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1268551	      5617 ns/op	   1.78 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1000000	      6998 ns/op	   1.43 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1000000	      6141 ns/op	   1.63 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1000000	      5102 ns/op	   1.96 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1000000	      5593 ns/op	   1.79 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1000000	      5072 ns/op	   1.97 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1406481	      8071 ns/op	   1.24 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16                	 1394756	      4350 ns/op	   2.30 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 1874905	      3270 ns/op	   3.06 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 1844478	      3249 ns/op	   3.08 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 2465074	      2449 ns/op	   4.08 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 2469735	      2453 ns/op	   4.08 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 2467759	      2444 ns/op	   4.09 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 2446184	      2435 ns/op	   4.11 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 2464005	      2443 ns/op	   4.09 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 2443898	      3290 ns/op	   3.04 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 2497076	      3281 ns/op	   3.05 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16              	 1845026	      3266 ns/op	   3.06 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ordered]-16
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1582272	      3192 ns/op	 320.85 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1844444	      3376 ns/op	 303.34 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1801791	      3723 ns/op	 275.08 MB/s	         0 %dupe	         0 %error
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1935136	      3395 ns/op	 301.66 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1618269	      3461 ns/op	 295.88 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1897159	      3431 ns/op	 298.47 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1831492	      3556 ns/op	 287.98 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1996177	      4894 ns/op	 209.25 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16        	 1886890	      3319 ns/op	 308.50 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1000000	      7164 ns/op	 142.95 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1000000	      8172 ns/op	 125.31 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1233987	      4425 ns/op	 231.39 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1000000	      7091 ns/op	 144.40 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1680728	      8829 ns/op	 115.98 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	  710113	      9880 ns/op	 103.65 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1000000	      5447 ns/op	 187.98 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1000000	      7179 ns/op	 142.65 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1000000	      8438 ns/op	 121.36 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16              	 1337443	      9384 ns/op	 109.12 MB/s	         0 %dupe	         0 %error
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16            	 2028092	      3953 ns/op	 259.06 MB/s	         0 %dupe	         0 %error
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16            	 2029126	      3951 ns/op	 259.20 MB/s	         0 %dupe	         0 %error
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16            	 2032756	      3961 ns/op	 258.51 MB/s	         0 %dupe	         0 %error
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16
+BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16            	 2016138	      3976 ns/op	 257.53 MB/s	         0 %dupe	         0 %error
+    jetstream_benchmark_consume_test.go:356: Publish timed out
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16
+--- FAIL: BenchmarkJetStreamConsume/N=3,R=3,MsgSz=1024b
+--- FAIL: BenchmarkJetStreamConsume
+BenchmarkJetStreamKV
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	   79718	     81436 ns/op	   1.23 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	  100956	     61293 ns/op	   1.63 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	  111315	     54719 ns/op	   1.83 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	  103147	     59305 ns/op	   1.69 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	   86350	     58270 ns/op	   1.72 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	  112602	     58920 ns/op	   1.70 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	  138745	     64740 ns/op	   1.54 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	  133190	     59592 ns/op	   1.68 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	  107173	     53399 ns/op	   1.87 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16                    	   85152	     66775 ns/op	   1.50 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   29122	    215780 ns/op	   0.46 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   42834	    171668 ns/op	   0.58 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   54927	    211123 ns/op	   0.47 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   43855	    173365 ns/op	   0.58 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   39166	    233212 ns/op	   0.43 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   46896	    108583 ns/op	   0.92 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   47976	    160787 ns/op	   0.62 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   50872	     99268 ns/op	   1.01 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   49149	    222402 ns/op	   0.45 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16                    	   61462	     98291 ns/op	   1.02 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	    583549 ns/op	   0.17 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	   1086944 ns/op	   0.09 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	    511980 ns/op	   0.20 MB/s	         0.02000 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	    822021 ns/op	   0.12 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	   1113880 ns/op	   0.09 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	   1098370 ns/op	   0.09 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	    608068 ns/op	   0.16 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	   1087282 ns/op	   0.09 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	    942108 ns/op	   0.11 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16                    	   10000	    521843 ns/op	   0.19 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   51268	    265954 ns/op	   0.38 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   67623	    173875 ns/op	   0.58 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   27542	    373572 ns/op	   0.27 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   47193	    124997 ns/op	   0.80 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   60412	    114888 ns/op	   0.87 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   76170	    107831 ns/op	   0.93 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   64521	    103131 ns/op	   0.97 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   27609	    244941 ns/op	   0.41 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   55104	     97959 ns/op	   1.02 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16                  	   30841	    186493 ns/op	   0.54 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   51854	    123021 ns/op	   0.81 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   50294	    134627 ns/op	   0.74 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   40482	    154897 ns/op	   0.65 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   45918	    137225 ns/op	   0.73 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   39830	    132030 ns/op	   0.76 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   45511	    123232 ns/op	   0.81 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   39934	    145411 ns/op	   0.69 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   46828	    131792 ns/op	   0.76 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   40586	    137590 ns/op	   0.73 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16                  	   45840	    143805 ns/op	   0.70 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   21705	    289396 ns/op	   0.35 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   23412	    420962 ns/op	   0.24 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   21025	    286664 ns/op	   0.35 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   10000	    648931 ns/op	   0.15 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   20138	    324772 ns/op	   0.31 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   10000	    696765 ns/op	   0.14 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   24406	    463416 ns/op	   0.22 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   13219	    477342 ns/op	   0.21 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   18520	    341532 ns/op	   0.29 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16                  	   23637	    554313 ns/op	   0.18 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   64250	     92531 ns/op	  11.07 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   73933	     88907 ns/op	  11.52 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   72654	    105328 ns/op	   9.72 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   71194	    157077 ns/op	   6.52 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   72321	     84620 ns/op	  12.10 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   53212	    114909 ns/op	   8.91 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   71668	    123449 ns/op	   8.29 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   73682	    105965 ns/op	   9.66 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   54556	     95044 ns/op	  10.77 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16                 	   68828	    134033 ns/op	   7.64 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   40100	    142867 ns/op	   7.17 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   45247	    136875 ns/op	   7.48 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   47643	    133932 ns/op	   7.65 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   43833	    146795 ns/op	   6.98 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   42609	    136772 ns/op	   7.49 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   43383	    134389 ns/op	   7.62 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   45164	    133116 ns/op	   7.69 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   44096	    132977 ns/op	   7.70 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   42948	    135977 ns/op	   7.53 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16                 	   44086	    139520 ns/op	   7.34 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   22731	    257813 ns/op	   3.97 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   21798	    285636 ns/op	   3.58 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   14904	    403512 ns/op	   2.54 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   22134	    388657 ns/op	   2.63 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   10000	    581911 ns/op	   1.76 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   22204	    267905 ns/op	   3.82 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   21384	    366440 ns/op	   2.79 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   17113	    445917 ns/op	   2.30 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   17430	    326673 ns/op	   3.13 MB/s	         0 %error
+BenchmarkJetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16                 	   19525	    303715 ns/op	   3.37 MB/s	         0 %error
+BenchmarkJetStreamPublish
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	    130855 ns/op	   0.08 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	    129709 ns/op	   0.08 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	     92240 ns/op	   0.11 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	    131385 ns/op	   0.08 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	    124739 ns/op	   0.08 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	     92555 ns/op	   0.11 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	     92068 ns/op	   0.11 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	    128237 ns/op	   0.08 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	    128660 ns/op	   0.08 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16                 	 1000000	    127986 ns/op	   0.08 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	      8274 ns/op	   1.21 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	     13225 ns/op	   0.76 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	      8294 ns/op	   1.21 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	     13638 ns/op	   0.73 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	     13708 ns/op	   0.73 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	      8454 ns/op	   1.18 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	     13870 ns/op	   0.72 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	      8987 ns/op	   1.11 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	      8895 ns/op	   1.12 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16        	 1000000	     13300 ns/op	   0.75 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	      8143 ns/op	   1.23 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	      8235 ns/op	   1.21 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	      8189 ns/op	   1.22 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	     13114 ns/op	   0.76 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	      8112 ns/op	   1.23 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	      8273 ns/op	   1.21 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	      8177 ns/op	   1.22 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	     13067 ns/op	   0.77 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	      8140 ns/op	   1.23 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16        	 1000000	      8267 ns/op	   1.21 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	     12927 ns/op	   0.77 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	     12998 ns/op	   0.77 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	     12869 ns/op	   0.78 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	      7927 ns/op	   1.26 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	      8123 ns/op	   1.23 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	     12988 ns/op	   0.77 MB/s	         0 %error
+    jetstream_benchmark_publish_test.go:121: PubAck is still pending after publish completed
+--- FAIL: BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	      7892 ns/op	   1.27 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	      7878 ns/op	   1.27 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16        	 1000000	     13048 ns/op	   0.77 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   32608	    173852 ns/op	   5.89 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   35182	    183777 ns/op	   5.57 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   26475	    191555 ns/op	   5.35 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   52700	    116951 ns/op	   8.76 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   39926	    177424 ns/op	   5.77 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   52742	    143824 ns/op	   7.12 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   27616	    191231 ns/op	   5.35 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   44506	    144883 ns/op	   7.07 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   28390	    189177 ns/op	   5.41 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16               	   53653	    156992 ns/op	   6.52 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  326618	     16633 ns/op	  61.56 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  438061	     11892 ns/op	  86.11 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  420339	     16614 ns/op	  61.63 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  439300	     11928 ns/op	  85.85 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  424590	     11923 ns/op	  85.89 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  503350	     11897 ns/op	  86.07 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  455638	     16598 ns/op	  61.69 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  502208	     11867 ns/op	  86.29 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  438486	     11818 ns/op	  86.65 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16      	  317835	     17663 ns/op	  57.97 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  463366	     11718 ns/op	  87.39 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  340438	     16265 ns/op	  62.96 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  439794	     11749 ns/op	  87.16 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  464917	     11750 ns/op	  87.15 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  510187	     11777 ns/op	  86.95 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  447786	     16248 ns/op	  63.02 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  340812	     16247 ns/op	  63.03 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  461346	     16241 ns/op	  63.05 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  508298	     11775 ns/op	  86.97 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16      	  454821	     11757 ns/op	  87.09 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  512176	     11650 ns/op	  87.90 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  514428	     11674 ns/op	  87.72 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  473706	     11635 ns/op	  88.01 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  353642	     16146 ns/op	  63.42 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  514783	     11728 ns/op	  87.31 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  491647	     11691 ns/op	  87.59 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  513727	     11701 ns/op	  87.51 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  345942	     16189 ns/op	  63.25 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  516121	     16042 ns/op	  63.83 MB/s	         0 %error
+BenchmarkJetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16      	  455245	     16065 ns/op	  63.74 MB/s	         0 %error
+FAIL
+exit status 1
+FAIL	github.com/nats-io/nats-server/v2/server	12022.291s

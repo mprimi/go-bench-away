@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <style>
+          body {
+            margin: 25px 100px 100px 50px;
+            background-color: lavender;
+          }
+          div.chart {
+          }
+          table {
+            background-color: #eee6fa;
+            border: 2px solid black;
+            padding: 3px;
+            margin: 3px;
+          }
+          td {
+            padding: 4px;
+            border: 1px solid gray;
+          }
+        </style>
+    <title>Trend report</title>
+    </head>
+    <body>
+      <h1>Trend report</h1>
+      
+      
+      
+      
+      <details>
+        <summary>Show jobs details</summary>
+        <table>
+          <tr>
+            <th>Job</th>
+            <th>Source</th>
+            <th>Filter</th>
+            <th>Repetitions</th>
+            <th>Go</th>
+            <th>Worker</th>
+            <th>Job Info</th>
+          </tr>
+          
+          <tr>
+            <td>067997a3-761e-475e-9559-f10d7400b835</td>
+            <td>v2.9.11<br>https://github.com/nats-io/nats-server.git<br>(23ffc16f95673efe4f7aa07d7fc4a5fb97679511)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 5s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:04:51 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <td>dd146049-0137-4ba0-89b1-0a2f8d0a2268</td>
+            <td>main<br>https://github.com/nats-io/nats-server.git<br>(d14968cb4face7aba66b225a172b2bc6f6784ffb)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 3s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:27:45 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <td>e98b2caa-df6d-4f12-815c-431db896a9f5</td>
+            <td>v2.9.15<br>https://github.com/nats-io/nats-server.git<br>(b91fa85462d42c2f988170aee27955773e68c56d)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 5s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:04:50 &#43;0000 UTC</td>
+          </tr>
+          
+        </table>
+      </details>
+
+      
+      
+      
+      
+      <h2>time/op trend</h2>
+      <small>Error bars represent 90% confidence interval</small>
+      <div id="chart_1" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        "chart_1", 
+        [ 
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PUSH[Sync,Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [1832.4000000000003,1719.0000000000002,1732.6666666666667],
+            "text": ["1.83µs ± 0.13µs","1.72µs ± 0.02µs","1.73µs ± 0.01µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [129.59999999999968,20.999999999999773,12.833333333333258],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PUSH[Async,Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [1678.9999999999998,1735.9999999999998,1742.1],
+            "text": ["1.68µs ± 0.10µs","1.74µs ± 0.01µs","1.74µs ± 0.01µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [101.00000000000023,7.000000000000227,13.900000000000091],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PUSH[Async,Ordered]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [885.2800000000002,887.9499999999998,895.64],
+            "text": ["885ns ± 37ns","888ns ± 36ns","896ns ± 44ns"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [37.019999999999754,36.350000000000136,44.15999999999997],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PUSH[Async,Durable]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [2966.2,2933.7999999999993,2729.3],
+            "text": ["2.97µs ± 1.10µs","2.93µs ± 0.46µs","2.73µs ± 0.21µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1102.8000000000002,458.2000000000007,210.69999999999982],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PULL[Durable]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [5773.6,5842.499999999999,5894.3],
+            "text": ["5.77µs ± 5.18µs","5.84µs ± 1.48µs","5.89µs ± 1.10µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [5183.4,1475.500000000001,1103.6999999999998],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PULL[Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [2999.7000000000007,2999.75,2857.9999999999995],
+            "text": ["3.00µs ± 0.36µs","3.00µs ± 0.01µs","2.86µs ± 0.42µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [363.2999999999993,13.25,423.00000000000045],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PUSH[Async,Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [4503.5,2010,0],
+            "text": ["4.50µs ± 1.04µs","2.01µs ± 0.12µs","no data"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1037.5,122,0],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PUSH[Async,Durable]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [4950.857142857142,3360.499999999999,3431.6250000000005],
+            "text": ["4.95µs ± 0.63µs","3.36µs ± 0.87µs","3.43µs ± 0.21µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [626.1428571428578,868.5000000000009,207.87499999999955],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PULL[Durable]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [9984.5,5620.8,7600.900000000001],
+            "text": ["10.0µs ± 3.8µs","5.62µs ± 2.72µs","7.60µs ± 1.78µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [3827.5,2717.2,1783.0999999999995],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PULL[Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [5151.6,3138.6,3960.25],
+            "text": ["5.15µs ± 1.06µs","3.14µs ± 0.37µs","3.96µs ± 0.02µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1063.3999999999996,366.4000000000001,15.75],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/GET-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [64104.899999999994,62263.22222222222,59668.1111111111],
+            "text": ["64.1µs ± 7.2µs","62.3µs ± 11.0µs","59.7µs ± 6.1µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [7197.100000000006,11024.277777777781,6089.388888888898],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/PUT-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [182360.69999999998,288544.3000000001,169447.9],
+            "text": ["182µs ± 39µs","289µs ± 133µs","169µs ± 53µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [38601.30000000002,132934.6999999999,52954.100000000006],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [766268.0999999999,672285.9,837604.5],
+            "text": ["766µs ± 190µs","672µs ± 204µs","838µs ± 261µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [189874.90000000014,203696.09999999998,260765.5],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/GET-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [66362.3,152729.22222222225,179364.1],
+            "text": ["66.4µs ± 8.0µs","153µs ± 69µs","179µs ± 87µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [8003.699999999997,68642.77777777775,86589.9],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/PUT-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [133992.39999999997,163165.99999999997,136363.00000000003],
+            "text": ["134µs ± 10µs","163µs ± 48µs","136µs ± 9µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [10258.600000000035,47887.00000000003,9047.99999999997],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [268093.6666666666,502581,450409.3],
+            "text": ["268µs ± 58µs","503µs ± 261µs","450µs ± 199µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [58359.83333333337,261339,198521.7],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/GET-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [67547.11111111111,232101.6,110186.30000000002],
+            "text": ["67.5µs ± 9.1µs","232µs ± 130µs","110µs ± 24µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [9067.88888888889,129746.4,23846.699999999983],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/PUT-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [137723.30000000002,157564.4,137322],
+            "text": ["138µs ± 6µs","158µs ± 37µs","137µs ± 6µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [6047.6999999999825,36874.600000000006,5545],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [249792.4,619961.2000000001,362817.9],
+            "text": ["250µs ± 20µs","620µs ± 206µs","363µs ± 83µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [20112.600000000006,205972.79999999993,83099.09999999998],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=10b,Subjs=1\/Sync-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [114893.90000000001,111496.00000000001,117843.40000000001],
+            "text": ["115µs ± 16µs","111µs ± 18µs","118µs ± 13µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [15876.099999999991,18164.999999999985,13011.599999999991],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=10b,Subjs=1\/Async[W:1000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [12707.4,8408.5,11064.499999999996],
+            "text": ["12.7µs ± 2.0µs","8.41µs ± 0.20µs","11.1µs ± 2.6µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1974.6000000000004,202.5,2643.5000000000036],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=10b,Subjs=1\/Async[W:4000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [9660.125,8194.900000000003,8192],
+            "text": ["9.66µs ± 0.07µs","8.19µs ± 0.05µs","8.19µs ± 0.08µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [70.875,45.099999999996726,78],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=10b,Subjs=1\/Async[W:8000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [11966.25,8030.444444444444,10738.88888888889],
+            "text": ["12.0µs ± 1.7µs","8.03µs ± 0.09µs","10.7µs ± 2.3µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1731.25,86.55555555555566,2284.1111111111095],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=1024b,Subjs=1\/Sync-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [159238.66666666666,239875.90000000002,166966.59999999998],
+            "text": ["159µs ± 24µs","240µs ± 104µs","167µs ± 24µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [23897.333333333343,104204.09999999998,24264.400000000023],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=1024b,Subjs=1\/Async[W:1000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [15962.1,11931.300000000001,13883.3],
+            "text": ["16.0µs ± 2.2µs","11.9µs ± 0.2µs","13.9µs ± 2.7µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [2217.8999999999996,231.6999999999989,2749.7000000000007],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=1024b,Subjs=1\/Async[W:4000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [16097.444444444445,11612.900000000001,13552.700000000003],
+            "text": ["16.1µs ± 1.6µs","11.6µs ± 0.2µs","13.6µs ± 2.7µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1550.5555555555547,166.09999999999854,2695.2999999999975],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=1024b,Subjs=1\/Async[W:8000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [15221.333333333334,11489.57142857143,13452.1],
+            "text": ["15.2µs ± 2.3µs","11.5µs ± 0.2µs","13.5µs ± 2.7µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [2289.166666666666,182.42857142857065,2693.8999999999996],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PUSH[Sync,Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0,1932.2857142857144,0],
+            "text": ["no data","1.93µs ± 0.17µs","no data"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0,166.21428571428555,0],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+        ],
+        {
+          yaxis: {
+            title: "time/op",
+          },
+          xaxis: {
+            title: "(lower is better)",
+            tickvals: ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            ticktext : ["v2.9.11","main","v2.9.15"],
+          }
+        }
+      );
+    </script>
+
+      
+      
+      
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+          <th>main</th>
+          
+          <th>v2.9.15</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16</th>
+          
+          <td>1.83µs ± 0.13µs</td>
+          
+          <td>1.72µs ± 0.02µs</td>
+          
+          <td>1.73µs ± 0.01µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>1.68µs ± 0.10µs</td>
+          
+          <td>1.74µs ± 0.01µs</td>
+          
+          <td>1.74µs ± 0.01µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16</th>
+          
+          <td>885ns ± 37ns</td>
+          
+          <td>888ns ± 36ns</td>
+          
+          <td>896ns ± 44ns</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16</th>
+          
+          <td>2.97µs ± 1.10µs</td>
+          
+          <td>2.93µs ± 0.46µs</td>
+          
+          <td>2.73µs ± 0.21µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16</th>
+          
+          <td>5.77µs ± 5.18µs</td>
+          
+          <td>5.84µs ± 1.48µs</td>
+          
+          <td>5.89µs ± 1.10µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16</th>
+          
+          <td>3.00µs ± 0.36µs</td>
+          
+          <td>3.00µs ± 0.01µs</td>
+          
+          <td>2.86µs ± 0.42µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>4.50µs ± 1.04µs</td>
+          
+          <td>2.01µs ± 0.12µs</td>
+          
+          <td>no data</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16</th>
+          
+          <td>4.95µs ± 0.63µs</td>
+          
+          <td>3.36µs ± 0.87µs</td>
+          
+          <td>3.43µs ± 0.21µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16</th>
+          
+          <td>10.0µs ± 3.8µs</td>
+          
+          <td>5.62µs ± 2.72µs</td>
+          
+          <td>7.60µs ± 1.78µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16</th>
+          
+          <td>5.15µs ± 1.06µs</td>
+          
+          <td>3.14µs ± 0.37µs</td>
+          
+          <td>3.96µs ± 0.02µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16</th>
+          
+          <td>64.1µs ± 7.2µs</td>
+          
+          <td>62.3µs ± 11.0µs</td>
+          
+          <td>59.7µs ± 6.1µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16</th>
+          
+          <td>182µs ± 39µs</td>
+          
+          <td>289µs ± 133µs</td>
+          
+          <td>169µs ± 53µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>766µs ± 190µs</td>
+          
+          <td>672µs ± 204µs</td>
+          
+          <td>838µs ± 261µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16</th>
+          
+          <td>66.4µs ± 8.0µs</td>
+          
+          <td>153µs ± 69µs</td>
+          
+          <td>179µs ± 87µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16</th>
+          
+          <td>134µs ± 10µs</td>
+          
+          <td>163µs ± 48µs</td>
+          
+          <td>136µs ± 9µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>268µs ± 58µs</td>
+          
+          <td>503µs ± 261µs</td>
+          
+          <td>450µs ± 199µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16</th>
+          
+          <td>67.5µs ± 9.1µs</td>
+          
+          <td>232µs ± 130µs</td>
+          
+          <td>110µs ± 24µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16</th>
+          
+          <td>138µs ± 6µs</td>
+          
+          <td>158µs ± 37µs</td>
+          
+          <td>137µs ± 6µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>250µs ± 20µs</td>
+          
+          <td>620µs ± 206µs</td>
+          
+          <td>363µs ± 83µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16</th>
+          
+          <td>115µs ± 16µs</td>
+          
+          <td>111µs ± 18µs</td>
+          
+          <td>118µs ± 13µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>12.7µs ± 2.0µs</td>
+          
+          <td>8.41µs ± 0.20µs</td>
+          
+          <td>11.1µs ± 2.6µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>9.66µs ± 0.07µs</td>
+          
+          <td>8.19µs ± 0.05µs</td>
+          
+          <td>8.19µs ± 0.08µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>12.0µs ± 1.7µs</td>
+          
+          <td>8.03µs ± 0.09µs</td>
+          
+          <td>10.7µs ± 2.3µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16</th>
+          
+          <td>159µs ± 24µs</td>
+          
+          <td>240µs ± 104µs</td>
+          
+          <td>167µs ± 24µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>16.0µs ± 2.2µs</td>
+          
+          <td>11.9µs ± 0.2µs</td>
+          
+          <td>13.9µs ± 2.7µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>16.1µs ± 1.6µs</td>
+          
+          <td>11.6µs ± 0.2µs</td>
+          
+          <td>13.6µs ± 2.7µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>15.2µs ± 2.3µs</td>
+          
+          <td>11.5µs ± 0.2µs</td>
+          
+          <td>13.5µs ± 2.7µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16</th>
+          
+          <td>no data</td>
+          
+          <td>1.93µs ± 0.17µs</td>
+          
+          <td>no data</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+      
+      
+      <h2>speed trend</h2>
+      <small>Error bars represent 90% confidence interval</small>
+      <div id="chart_2" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        "chart_2", 
+        [ 
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PUSH[Sync,Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [5.478999999999999,5.8175,5.771111111111112],
+            "text": ["5.48MB/s ± 0.36MB/s","5.82MB/s ± 0.07MB/s","5.77MB/s ± 0.06MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.36100000000000065,0.0674999999999999,0.058888888888888324],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PUSH[Async,Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [6.002000000000001,5.754444444444445,5.742000000000001],
+            "text": ["6.00MB/s ± 0.80MB/s","5.75MB/s ± 0.02MB/s","5.74MB/s ± 0.03MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.7979999999999992,0.020555555555555216,0.027999999999998693],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PUSH[Async,Ordered]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [11.311,11.283,11.181],
+            "text": ["11.3MB/s ± 0.5MB/s","11.3MB/s ± 0.5MB/s","11.2MB/s ± 0.4MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.5190000000000001,0.5170000000000012,0.4090000000000007],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PUSH[Async,Durable]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [3.5769999999999995,3.459000000000001,3.6939999999999995],
+            "text": ["3.58MB/s ± 0.81MB/s","3.46MB/s ± 0.51MB/s","3.69MB/s ± 0.35MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.8130000000000002,0.5109999999999992,0.34600000000000053],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PULL[Durable]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [2.2670000000000003,1.8230000000000002,1.7519999999999998],
+            "text": ["2.27MB/s ± 1.17MB/s","1.82MB/s ± 0.40MB/s","1.75MB/s ± 0.22MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1.1729999999999996,0.397,0.2180000000000002],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=10b\/PULL[Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [3.409,3.3325,3.5740000000000007],
+            "text": ["3.41MB/s ± 0.64MB/s","3.33MB/s ± 0.01MB/s","3.57MB/s ± 0.52MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.641,0.012499999999999734,0.5159999999999991],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PUSH[Async,Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [240.13,511.42199999999997,0],
+            "text": ["240MB/s ± 55MB/s","511MB/s ± 63MB/s","no data"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [55.329999999999984,62.81800000000004,0],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PUSH[Async,Durable]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [198.505,313.15299999999996,298.96999999999997],
+            "text": ["199MB/s ± 33MB/s","313MB/s ± 49MB/s","299MB/s ± 16MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [33.400000000000006,48.98700000000002,15.705000000000041],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PULL[Durable]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [92.38375,203.39100000000002,132.60000000000002],
+            "text": ["92.4MB/s ± 19.1MB/s","203MB/s ± 47MB/s","133MB/s ± 34MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [19.131249999999994,46.66899999999998,33.589999999999975],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PULL[Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [207.488,329.1049999999999,258.575],
+            "text": ["207MB/s ± 75MB/s","329MB/s ± 26MB/s","259MB/s ± 1MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [74.86200000000002,25.855000000000075,0.625],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/GET-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [1.572,1.63,1.6844444444444446],
+            "text": ["1.57MB/s ± 0.17MB/s","1.63MB/s ± 0.29MB/s","1.68MB/s ± 0.17MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.16799999999999993,0.28500000000000014,0.16555555555555546],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/PUT-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.5809999999999998,0.3477777777777778,0.6539999999999999],
+            "text": ["581kB/s ± 129kB/s","348kB/s ± 102kB/s","654kB/s ± 356kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.12900000000000011,0.10222222222222221,0.3560000000000001],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.12444444444444444,0.17400000000000002,0.131],
+            "text": ["124kB/s ± 26kB/s","174kB/s ± 106kB/s","131kB/s ± 59kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.025555555555555554,0.10600000000000001,0.059],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/GET-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [1.515,0.6989999999999998,0.677],
+            "text": ["1.51MB/s ± 0.11MB/s","699kB/s ± 481kB/s","677kB/s ± 293kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.1050000000000002,0.4810000000000001,0.2929999999999999],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/PUT-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.7489999999999998,0.638,0.738],
+            "text": ["749kB/s ± 61kB/s","638kB/s ± 102kB/s","738kB/s ± 72kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.061000000000000276,0.10199999999999998,0.07200000000000006],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.36000000000000004,0.227,0.24399999999999997],
+            "text": ["360kB/s ± 80kB/s","227kB/s ± 103kB/s","244kB/s ± 106kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.07999999999999996,0.10300000000000001,0.10600000000000001],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/GET-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [14.922999999999998,5.368999999999999,9.62],
+            "text": ["14.9MB/s ± 1.5MB/s","5.37MB/s ± 3.78MB/s","9.62MB/s ± 1.90MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1.4770000000000003,3.7810000000000015,1.9000000000000004],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/PUT-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [7.449,6.666,7.465],
+            "text": ["7.45MB/s ± 0.25MB/s","6.67MB/s ± 1.07MB/s","7.46MB/s ± 0.23MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.25100000000000033,1.0739999999999998,0.22500000000000053],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [4.136,1.808,2.9890000000000003],
+            "text": ["4.14MB/s ± 0.49MB/s","1.81MB/s ± 0.61MB/s","2.99MB/s ± 0.83MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.4939999999999998,0.6119999999999999,0.8309999999999995],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=10b,Subjs=1\/Sync-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.09199999999999998,0.094,0.089],
+            "text": ["92.0kB/s ± 18.0kB/s","94.0kB/s ± 16.0kB/s","89.0kB/s ± 21.0kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.018000000000000016,0.016,0.021000000000000005],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=10b,Subjs=1\/Async[W:1000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.808,1.1909999999999996,0.9520000000000001],
+            "text": ["808kB/s ± 132kB/s","1.19MB/s ± 0.03MB/s","952kB/s ± 258kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.1319999999999999,0.02900000000000036,0.2579999999999999],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=10b,Subjs=1\/Async[W:4000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [1.0337500000000002,1.22,1.22],
+            "text": ["1.03MB/s ± 0.01MB/s","1.22MB/s ± 0.01MB/s","1.22MB/s ± 0.01MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.006249999999999867,0.010000000000000009,0.010000000000000009],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=10b,Subjs=1\/Async[W:8000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.86625,1.2455555555555557,0.9877777777777776],
+            "text": ["866kB/s ± 224kB/s","1.25MB/s ± 0.01MB/s","988kB/s ± 282kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.22375000000000012,0.009444444444444144,0.2822222222222224],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=1024b,Subjs=1\/Sync-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [6.339,5.283,6.281000000000001],
+            "text": ["6.34MB/s ± 0.87MB/s","5.28MB/s ± 2.65MB/s","6.28MB/s ± 0.84MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.8709999999999996,2.6469999999999994,0.8389999999999995],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=1024b,Subjs=1\/Async[W:1000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [64.66000000000001,85.857,75.97100000000002],
+            "text": ["64.7MB/s ± 3.6MB/s","85.9MB/s ± 1.7MB/s","76.0MB/s ± 10.3MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [3.6399999999999864,1.683000000000007,10.318999999999988],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=1024b,Subjs=1\/Async[W:4000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [64.32111111111112,88.18500000000003,77.47699999999999],
+            "text": ["64.3MB/s ± 7.7MB/s","88.2MB/s ± 0.9MB/s","77.5MB/s ± 9.7MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [7.7238888888888795,0.8949999999999676,9.683000000000007],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamPublish\/N=3,R=3,MsgSz=1024b,Subjs=1\/Async[W:8000]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [67.97888888888889,89.13428571428572,78.02800000000002],
+            "text": ["68.0MB/s ± 5.3MB/s","89.1MB/s ± 0.9MB/s","78.0MB/s ± 9.9MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [5.281111111111102,0.9057142857142679,9.871999999999986],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamConsume\/N=3,R=3,MsgSz=1024b\/PUSH[Sync,Ephemeral]-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0,532.9228571428571,0],
+            "text": ["no data","533MB/s ± 45MB/s","no data"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0,45.16214285714295,0],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+        ],
+        {
+          yaxis: {
+            title: "throughput",
+          },
+          xaxis: {
+            title: "(higher is better)",
+            tickvals: ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            ticktext : ["v2.9.11","main","v2.9.15"],
+          }
+        }
+      );
+    </script>
+
+      
+      
+      
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+          <th>main</th>
+          
+          <th>v2.9.15</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Sync,Ephemeral]-16</th>
+          
+          <td>5.48MB/s ± 0.36MB/s</td>
+          
+          <td>5.82MB/s ± 0.07MB/s</td>
+          
+          <td>5.77MB/s ± 0.06MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>6.00MB/s ± 0.80MB/s</td>
+          
+          <td>5.75MB/s ± 0.02MB/s</td>
+          
+          <td>5.74MB/s ± 0.03MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Ordered]-16</th>
+          
+          <td>11.3MB/s ± 0.5MB/s</td>
+          
+          <td>11.3MB/s ± 0.5MB/s</td>
+          
+          <td>11.2MB/s ± 0.4MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PUSH[Async,Durable]-16</th>
+          
+          <td>3.58MB/s ± 0.81MB/s</td>
+          
+          <td>3.46MB/s ± 0.51MB/s</td>
+          
+          <td>3.69MB/s ± 0.35MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Durable]-16</th>
+          
+          <td>2.27MB/s ± 1.17MB/s</td>
+          
+          <td>1.82MB/s ± 0.40MB/s</td>
+          
+          <td>1.75MB/s ± 0.22MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=10b/PULL[Ephemeral]-16</th>
+          
+          <td>3.41MB/s ± 0.64MB/s</td>
+          
+          <td>3.33MB/s ± 0.01MB/s</td>
+          
+          <td>3.57MB/s ± 0.52MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Ephemeral]-16</th>
+          
+          <td>240MB/s ± 55MB/s</td>
+          
+          <td>511MB/s ± 63MB/s</td>
+          
+          <td>no data</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Async,Durable]-16</th>
+          
+          <td>199MB/s ± 33MB/s</td>
+          
+          <td>313MB/s ± 49MB/s</td>
+          
+          <td>299MB/s ± 16MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Durable]-16</th>
+          
+          <td>92.4MB/s ± 19.1MB/s</td>
+          
+          <td>203MB/s ± 47MB/s</td>
+          
+          <td>133MB/s ± 34MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PULL[Ephemeral]-16</th>
+          
+          <td>207MB/s ± 75MB/s</td>
+          
+          <td>329MB/s ± 26MB/s</td>
+          
+          <td>259MB/s ± 1MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16</th>
+          
+          <td>1.57MB/s ± 0.17MB/s</td>
+          
+          <td>1.63MB/s ± 0.29MB/s</td>
+          
+          <td>1.68MB/s ± 0.17MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16</th>
+          
+          <td>581kB/s ± 129kB/s</td>
+          
+          <td>348kB/s ± 102kB/s</td>
+          
+          <td>654kB/s ± 356kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>124kB/s ± 26kB/s</td>
+          
+          <td>174kB/s ± 106kB/s</td>
+          
+          <td>131kB/s ± 59kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16</th>
+          
+          <td>1.51MB/s ± 0.11MB/s</td>
+          
+          <td>699kB/s ± 481kB/s</td>
+          
+          <td>677kB/s ± 293kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16</th>
+          
+          <td>749kB/s ± 61kB/s</td>
+          
+          <td>638kB/s ± 102kB/s</td>
+          
+          <td>738kB/s ± 72kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>360kB/s ± 80kB/s</td>
+          
+          <td>227kB/s ± 103kB/s</td>
+          
+          <td>244kB/s ± 106kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16</th>
+          
+          <td>14.9MB/s ± 1.5MB/s</td>
+          
+          <td>5.37MB/s ± 3.78MB/s</td>
+          
+          <td>9.62MB/s ± 1.90MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16</th>
+          
+          <td>7.45MB/s ± 0.25MB/s</td>
+          
+          <td>6.67MB/s ± 1.07MB/s</td>
+          
+          <td>7.46MB/s ± 0.23MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.14MB/s ± 0.49MB/s</td>
+          
+          <td>1.81MB/s ± 0.61MB/s</td>
+          
+          <td>2.99MB/s ± 0.83MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Sync-16</th>
+          
+          <td>92.0kB/s ± 18.0kB/s</td>
+          
+          <td>94.0kB/s ± 16.0kB/s</td>
+          
+          <td>89.0kB/s ± 21.0kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>808kB/s ± 132kB/s</td>
+          
+          <td>1.19MB/s ± 0.03MB/s</td>
+          
+          <td>952kB/s ± 258kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>1.03MB/s ± 0.01MB/s</td>
+          
+          <td>1.22MB/s ± 0.01MB/s</td>
+          
+          <td>1.22MB/s ± 0.01MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=10b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>866kB/s ± 224kB/s</td>
+          
+          <td>1.25MB/s ± 0.01MB/s</td>
+          
+          <td>988kB/s ± 282kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Sync-16</th>
+          
+          <td>6.34MB/s ± 0.87MB/s</td>
+          
+          <td>5.28MB/s ± 2.65MB/s</td>
+          
+          <td>6.28MB/s ± 0.84MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:1000]-16</th>
+          
+          <td>64.7MB/s ± 3.6MB/s</td>
+          
+          <td>85.9MB/s ± 1.7MB/s</td>
+          
+          <td>76.0MB/s ± 10.3MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:4000]-16</th>
+          
+          <td>64.3MB/s ± 7.7MB/s</td>
+          
+          <td>88.2MB/s ± 0.9MB/s</td>
+          
+          <td>77.5MB/s ± 9.7MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamPublish/N=3,R=3,MsgSz=1024b,Subjs=1/Async[W:8000]-16</th>
+          
+          <td>68.0MB/s ± 5.3MB/s</td>
+          
+          <td>89.1MB/s ± 0.9MB/s</td>
+          
+          <td>78.0MB/s ± 9.9MB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamConsume/N=3,R=3,MsgSz=1024b/PUSH[Sync,Ephemeral]-16</th>
+          
+          <td>no data</td>
+          
+          <td>533MB/s ± 45MB/s</td>
+          
+          <td>no data</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

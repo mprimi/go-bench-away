@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <style>
+          body {
+            margin: 25px 100px 100px 50px;
+            background-color: lavender;
+          }
+          div.chart {
+          }
+          table {
+            background-color: #eee6fa;
+            border: 2px solid black;
+            padding: 3px;
+            margin: 3px;
+          }
+          td {
+            padding: 4px;
+            border: 1px solid gray;
+          }
+        </style>
+    <title>Trend report</title>
+    </head>
+    <body>
+      <h1>Trend report</h1>
+      
+      
+      
+      
+      <details>
+        <summary>Show jobs details</summary>
+        <table>
+          <tr>
+            <th>Job</th>
+            <th>Source</th>
+            <th>Filter</th>
+            <th>Repetitions</th>
+            <th>Go</th>
+            <th>Worker</th>
+            <th>Job Info</th>
+          </tr>
+          
+          <tr>
+            <td>067997a3-761e-475e-9559-f10d7400b835</td>
+            <td>v2.9.11<br>https://github.com/nats-io/nats-server.git<br>(23ffc16f95673efe4f7aa07d7fc4a5fb97679511)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 5s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:04:51 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <td>dd146049-0137-4ba0-89b1-0a2f8d0a2268</td>
+            <td>main<br>https://github.com/nats-io/nats-server.git<br>(d14968cb4face7aba66b225a172b2bc6f6784ffb)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 3s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:27:45 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <td>e98b2caa-df6d-4f12-815c-431db896a9f5</td>
+            <td>v2.9.15<br>https://github.com/nats-io/nats-server.git<br>(b91fa85462d42c2f988170aee27955773e68c56d)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 5s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:04:50 &#43;0000 UTC</td>
+          </tr>
+          
+        </table>
+      </details>
+
+      
+      
+      
+      
+      <h2>time/op trend</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_3" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        "chart_3", 
+        [ 
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [766268.0999999999,672285.9,837604.5],
+            "text": ["766µs ± 190µs","672µs ± 204µs","838µs ± 261µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [189874.90000000014,203696.09999999998,260765.5],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [268093.6666666666,502581,450409.3],
+            "text": ["268µs ± 58µs","503µs ± 261µs","450µs ± 199µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [58359.83333333337,261339,198521.7],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [249792.4,619961.2000000001,362817.9],
+            "text": ["250µs ± 20µs","620µs ± 206µs","363µs ± 83µs"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [20112.600000000006,205972.79999999993,83099.09999999998],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+        ],
+        {
+          yaxis: {
+            title: "time/op",
+          },
+          xaxis: {
+            title: "(lower is better)",
+            tickvals: ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            ticktext : ["v2.9.11","main","v2.9.15"],
+          }
+        }
+      );
+    </script>
+
+      
+      
+      
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+          <th>main</th>
+          
+          <th>v2.9.15</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>766µs ± 190µs</td>
+          
+          <td>672µs ± 204µs</td>
+          
+          <td>838µs ± 261µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>268µs ± 58µs</td>
+          
+          <td>503µs ± 261µs</td>
+          
+          <td>450µs ± 199µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>250µs ± 20µs</td>
+          
+          <td>620µs ± 206µs</td>
+          
+          <td>363µs ± 83µs</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+      
+      
+      <h2>speed trend</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_4" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        "chart_4", 
+        [ 
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.12444444444444444,0.17400000000000002,0.131],
+            "text": ["124kB/s ± 26kB/s","174kB/s ± 106kB/s","131kB/s ± 59kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.025555555555555554,0.10600000000000001,0.059],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [0.36000000000000004,0.227,0.24399999999999997],
+            "text": ["360kB/s ± 80kB/s","227kB/s ± 103kB/s","244kB/s ± 106kB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.07999999999999996,0.10300000000000001,0.10600000000000001],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [4.136,1.808,2.9890000000000003],
+            "text": ["4.14MB/s ± 0.49MB/s","1.81MB/s ± 0.61MB/s","2.99MB/s ± 0.83MB/s"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [0.4939999999999998,0.6119999999999999,0.8309999999999995],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+        ],
+        {
+          yaxis: {
+            title: "throughput",
+          },
+          xaxis: {
+            title: "(higher is better)",
+            tickvals: ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            ticktext : ["v2.9.11","main","v2.9.15"],
+          }
+        }
+      );
+    </script>
+
+      
+      
+      
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+          <th>main</th>
+          
+          <th>v2.9.15</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>124kB/s ± 26kB/s</td>
+          
+          <td>174kB/s ± 106kB/s</td>
+          
+          <td>131kB/s ± 59kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>360kB/s ± 80kB/s</td>
+          
+          <td>227kB/s ± 103kB/s</td>
+          
+          <td>244kB/s ± 106kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.14MB/s ± 0.49MB/s</td>
+          
+          <td>1.81MB/s ± 0.61MB/s</td>
+          
+          <td>2.99MB/s ± 0.83MB/s</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

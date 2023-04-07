@@ -1,0 +1,30 @@
+{
+  "Id": "dd146049-0137-4ba0-89b1-0a2f8d0a2268",
+  "Status": 2,
+  "Parameters": {
+    "GitRemote": "https://github.com/nats-io/nats-server.git",
+    "GitRef": "main",
+    "TestsSubDir": "server",
+    "TestsFilterExpr": "BenchmarkJetStream.*/.*R=3.*",
+    "Reps": 10,
+    "TestMinRuntime": 3000000000,
+    "Timeout": 18000000000000,
+    "SkipCleanup": false,
+    "Username": "benchmark-bot",
+    "GoPath": "/usr/local/go1.19.3/bin/go",
+    "CleanupCmd": "rm -rf /tmp/nats-server/*"
+  },
+  "Created": "2023-04-05T01:27:45Z",
+  "Started": "2023-04-05T13:40:19Z",
+  "Completed": "2023-04-05T16:00:46Z",
+  "SHA": "d14968cb4face7aba66b225a172b2bc6f6784ffb",
+  "GoVersion": "go version go1.19.3 linux/amd64",
+  "Log": "jobs/dd146049-0137-4ba0-89b1-0a2f8d0a2268/log.txt",
+  "Results": "jobs/dd146049-0137-4ba0-89b1-0a2f8d0a2268/results.txt",
+  "Script": "jobs/dd146049-0137-4ba0-89b1-0a2f8d0a2268/run.sh",
+  "WorkerInfo": {
+    "Hostname": "benchmark.example.com",
+    "Uname": "Linux_5.15.0-56-generic-x86_64",
+    "Version": "0.2.3 (a0af6ac)"
+  }
+}
