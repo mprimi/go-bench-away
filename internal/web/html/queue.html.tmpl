@@ -27,20 +27,6 @@
   </body>
 </html>
 
-
-{{define "completed_job"}}
-    Completed in {{.RunTime}}<br>
-    [<a href="/job/{{.Id}}/results">Results</a>]
-    [<a href="/job/{{.Id}}/log">Log</a>]
-    [<a href="/job/{{.Id}}/script">Script</a>]
-{{end}}
-
-{{define "running_job"}}
-    Running for {{.RunTime}} and counting<br>
-    [<a href="/job/{{.Id}}/log">Log</a>]
-    [<a href="/job/{{.Id}}/script">Script</a>]
-{{end}}
-
 {{define "submitted_job"}}
 
 {{end}}
@@ -65,6 +51,11 @@
       <tr>
         <th>Artifacts:</th><td>{{template "record_artifact" .}}{{template "log_artifact" .}}{{template "results_artifact" .}}{{template "script_artifact" .}}</td>
       </tr>
+      {{if ne .Results ""}}
+      <tr>
+        <th>Results</th><td>{{template "plot_results" .}}</td>
+      </tr>
+      {{end}}
     </table>
 {{end}}
 
@@ -72,6 +63,7 @@
 {{define "log_artifact"}}{{if ne .Log ""}}[<a href="/job/{{.Id}}/log">Log</a>]{{end}}{{end}}
 {{define "results_artifact"}}{{if ne .Results ""}}[<a href="/job/{{.Id}}/results">Results</a>]{{end}}{{end}}
 {{define "script_artifact"}}{{if ne .Script ""}}[<a href="/job/{{.Id}}/script">Run Script</a>]{{end}}{{end}}
+{{define "plot_results"}}[<a href="/job/{{.Id}}/plot">Plot</a>]{{end}}
 
 {{define "job_status_message"}}
 {{if eq .Status.String "SUCCEEDED"}}
