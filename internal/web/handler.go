@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/mprimi/go-bench-away/v1/core"
+	"github.com/mprimi/go-bench-away/v1/reports"
 )
 
 //go:embed html/index.html.tmpl
@@ -18,7 +19,7 @@ var indexTmpl string
 //go:embed html/queue.html.tmpl
 var queueTmpl string
 
-var jobResourceRegexp = regexp.MustCompile(`^/job/([[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12})/(log|script|results|record)/?$`)
+var jobResourceRegexp = regexp.MustCompile(`^/job/([[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12})/(log|script|results|record|plot)/?$`)
 
 type handler struct {
 	client        WebClient
@@ -55,6 +56,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		groupMatches := jobResourceRegexp.FindStringSubmatch(path)
 		if groupMatches == nil || len(groupMatches) != 3 {
 			http.Error(w, "Bad request", http.StatusBadRequest)
+			return
 		}
 		jobId, resource := groupMatches[1], groupMatches[2]
 
@@ -114,11 +116,47 @@ func (h *handler) serveJobResource(w http.ResponseWriter, jobId, resourceType st
 		e := json.NewEncoder(w)
 		e.SetIndent("", "  ")
 		err = e.Encode(jobRecord)
+	case "plot":
+		err = h.serveJobResultsPlot(jobId, w)
 	}
 
 	if err != nil {
 		return fmt.Errorf("failed to load '%s': %v", resourceType, err)
 	}
 
+	return nil
+}
+
+func (h *handler) serveJobResultsPlot(jobId string, w http.ResponseWriter) error {
+
+	dataTable, err := reports.CreateDataTable(h.client, jobId)
+	if err != nil {
+		return err
+	}
+
+	cfg := reports.ReportConfig{
+		Title: fmt.Sprintf("Results report for job %s", jobId),
+	}
+
+	cfg.AddSections(
+		reports.JobsTable(),
+	)
+
+	if dataTable.HasSpeed() {
+		cfg.AddSections(
+			reports.HorizontalBoxChart("", reports.Speed, ""),
+			reports.ResultsTable(reports.Speed, "", true),
+		)
+	}
+
+	cfg.AddSections(
+		reports.HorizontalBoxChart("", reports.TimeOp, ""),
+		reports.ResultsTable(reports.TimeOp, "", true),
+	)
+
+	err = reports.WriteReport(&cfg, dataTable, w)
+	if err != nil {
+		return err
+	}
 	return nil
 }
