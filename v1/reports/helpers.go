@@ -60,10 +60,20 @@ func createJobLabels(jobs []*core.JobRecord) []string {
 	type LabelFunc func(*core.JobRecord) string
 
 	labelFunctions := []LabelFunc{
-		// Try GitRef
-		func(job *core.JobRecord) string { return job.Parameters.GitRef },
-		// Try GitRef + SHA
-		func(job *core.JobRecord) string { return fmt.Sprintf("%s [%s]", job.Parameters.GitRef, job.SHA[0:7]) },
+		// Try GitRef (or short SHA if ref is the SHA)
+		func(job *core.JobRecord) string {
+			if job.Parameters.GitRef == job.SHA {
+				return job.SHA[0:7]
+			}
+			return job.Parameters.GitRef
+		},
+		// Try GitRef + SHA (or just SHA if the GitRef is the SHA)
+		func(job *core.JobRecord) string {
+			if job.Parameters.GitRef == job.SHA {
+				return job.SHA[0:7]
+			}
+			return fmt.Sprintf("%s [%s]", job.Parameters.GitRef, job.SHA[0:7])
+		},
 		// Try GitRef + Go version
 		func(job *core.JobRecord) string { return fmt.Sprintf("%s [%s]", job.Parameters.GitRef, job.GoVersion) },
 		// Last resort, use job ID
