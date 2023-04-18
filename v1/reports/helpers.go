@@ -101,6 +101,11 @@ func uniqueChartName() string {
 	return fmt.Sprintf("chart_%d", chartCounter)
 }
 
+func resetChartId() {
+	//TODO this is a ugly hack necessary for creating deterministic graphs in tests, find a better way
+	chartCounter = 0
+}
+
 func valueDeviationAndScaledString(m *benchstat.Metrics) (float64, float64, string) {
 	if len(m.RValues) == 0 {
 		return 0, 0, "no data"

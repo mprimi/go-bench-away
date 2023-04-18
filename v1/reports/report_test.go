@@ -59,6 +59,7 @@ func (m mockClient) LoadResultsArtifact(record *core.JobRecord, writer io.Writer
 }
 
 func TestWriteEmptyReport(t *testing.T) {
+	resetChartId()
 	cfg := ReportConfig{
 		Title:   "Empty report",
 		verbose: true,
@@ -73,6 +74,7 @@ func TestWriteEmptyReport(t *testing.T) {
 }
 
 func TestWriteTrendReport(t *testing.T) {
+	resetChartId()
 	cfg := &ReportConfig{
 		Title:   "Trend report",
 		verbose: true,
@@ -95,6 +97,7 @@ func TestWriteTrendReport(t *testing.T) {
 }
 
 func TestWriteTrendReportFiltered(t *testing.T) {
+	resetChartId()
 	cfg := &ReportConfig{
 		Title:   "Trend report",
 		verbose: true,
@@ -119,6 +122,7 @@ func TestWriteTrendReportFiltered(t *testing.T) {
 }
 
 func TestWriteCompareNReport(t *testing.T) {
+	resetChartId()
 	cfg := &ReportConfig{
 		Title:   "Comparative report",
 		verbose: true,
@@ -143,6 +147,7 @@ func TestWriteCompareNReport(t *testing.T) {
 }
 
 func TestWriteCompareReport(t *testing.T) {
+	resetChartId()
 	cfg := &ReportConfig{
 		Title:   "Comparative report",
 		verbose: true,
@@ -167,6 +172,7 @@ func TestWriteCompareReport(t *testing.T) {
 }
 
 func TestWriteSingleReport(t *testing.T) {
+	resetChartId()
 	cfg := &ReportConfig{
 		Title:   "Single results set report",
 		verbose: true,
@@ -247,6 +253,16 @@ func assertReportEqual(t *testing.T, reportPath string, expectedReportPath strin
 	}
 
 	if !bytes.Equal(reportDigest.Sum(nil), expectedReportDigest.Sum(nil)) {
+		// Set to true to copy the produced report over the expected report in the test data directory.
+		// Useful to update the reports after a code change, assuming the new output is valid after being reviewed
+		// via git diff.
+		const overwriteTestData = false
+		if overwriteTestData {
+			err := os.Rename(reportPath, expectedReportPath)
+			if err != nil {
+				t.Log(err)
+			}
+		}
 		t.Fatalf("Report %s does not match expected %s", reportPath, expectedReportPath)
 	}
 }
