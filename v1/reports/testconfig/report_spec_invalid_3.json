@@ -1,0 +1,10 @@
+{
+  "title" : "Chart type does not exist",
+  "sections" : [
+    {
+      "title" : "Time/Op Trend",
+      "metric": "time/op",
+      "type": "magic_chart"
+    }
+  ]
+}

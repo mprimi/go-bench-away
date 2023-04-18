@@ -1,0 +1,9 @@
+{
+  "title" : "Valid format, unknown metric",
+  "sections" : [
+    {
+      "metric": "bubbles/s",
+      "type": "trend_chart"
+    }
+  ]
+}

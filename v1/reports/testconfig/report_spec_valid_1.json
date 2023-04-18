@@ -1,0 +1,20 @@
+{
+  "title" : "Trend, Bars, Delta, no filters",
+  "sections" : [
+    {
+      "title" : "Time/Op Trend",
+      "metric": "time/op",
+      "type": "trend_chart"
+    },
+    {
+      "title" : "Speed measurements",
+      "metric": "speed",
+      "type": "horizontal_bar_chart"
+    },
+    {
+      "title" : "Speed delta",
+      "metric": "speed",
+      "type": "horizontal_delta_chart"
+    }
+  ]
+}
