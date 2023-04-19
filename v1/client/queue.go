@@ -35,6 +35,26 @@ func (c *Client) SubmitJob(params core.JobParameters) (*core.JobRecord, error) {
 	return job, nil
 }
 
+func (c *Client) CancelJob(jobId string) error {
+
+	jobRecord, revision, err := c.LoadJob(jobId)
+	if err != nil {
+		return err
+	}
+
+	if jobRecord.Status != core.Submitted {
+		return fmt.Errorf("cannot cancel job in state %s", jobRecord.Status.String())
+	}
+
+	jobRecord.SetFinalStatus(core.Cancelled)
+
+	_, err = c.UpdateJob(jobRecord, revision)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c *Client) LoadRecentJobs(limit int) ([]*core.JobRecord, error) {
 	jobs := []*core.JobRecord{}
 
