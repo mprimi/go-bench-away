@@ -105,6 +105,14 @@ func (jr *JobRecord) RunTime() string {
 	}
 }
 
+func (jr *JobRecord) IsCompleted() bool {
+	return jr.Status == Failed || jr.Status == Succeeded || jr.Status == Cancelled
+}
+
+func (jr *JobRecord) HasResults() bool {
+	return jr.Results != ""
+}
+
 func NewJob(params JobParameters) *JobRecord {
 	jobId := uuid.New().String()
 	return &JobRecord{

@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -74,4 +75,72 @@ func TestJobSerialization(t *testing.T) {
 	j.Script = "jobs/blah/run.sh"
 
 	checkSerializeAndLoad()
+}
+
+func TestJobRecord_States(t *testing.T) {
+
+	j := NewJob(JobParameters{
+		GitRemote:       "https://example.com/foo/bar",
+		GitRef:          "v1.0.0",
+		TestsSubDir:     "tests",
+		TestsFilterExpr: ".*",
+		Reps:            5,
+		TestMinRuntime:  1 * time.Second,
+		Timeout:         1 * time.Hour,
+		Username:        "Alice",
+	})
+
+	if j.RunTime() != "" {
+		t.Fatalf("Unexpected job run time")
+	}
+
+	if j.IsCompleted() {
+		t.Fatalf("Unexpected job completed status")
+	}
+
+	j.SetRunningStatus()
+
+	if j.IsCompleted() {
+		t.Fatalf("Unexpected job completed status")
+	}
+
+	if j.RunTime() == "" {
+		t.Fatalf("Missing job run time while running")
+	}
+
+	j.SetFinalStatus(Failed)
+
+	if j.RunTime() == "" {
+		t.Fatalf("Missing job run time after completion")
+	}
+
+	if !j.IsCompleted() {
+		t.Fatalf("Unexpected job not completed status")
+	}
+}
+
+func TestJobStatus_IconAndString(t *testing.T) {
+	knownStates := []JobStatus{
+		Submitted,
+		Running,
+		Failed,
+		Succeeded,
+		Cancelled,
+	}
+
+	expectedStrings := []string{
+		"⚪️ SUBMITTED",
+		"🟣 RUNNING",
+		"🔴 FAILED",
+		"🟢 SUCCEEDED",
+		"❌ CANCELLED",
+	}
+
+	for i, state := range knownStates {
+		jobStateDescription := fmt.Sprintf("%s %s", state.Icon(), state.String())
+
+		if jobStateDescription != expectedStrings[i] {
+			t.Fatalf("Expected: %s, actual: %s", expectedStrings[i], jobStateDescription)
+		}
+	}
 }
