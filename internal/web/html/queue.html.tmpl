@@ -74,6 +74,8 @@
   Running for {{.RunTime}} (timeout: {{.Parameters.Timeout}})
 {{else if eq .Status.String "SUBMITTED"}}
   Waiting in queue
+{{else if eq .Status.String "CANCELLED"}}
+  Cancelled
 {{else}}
   Unknown status: <b>{{.Status.String}}</b>
 {{end}}
