@@ -64,6 +64,7 @@
 {{define "results_artifact"}}{{if ne .Results ""}}[<a href="/job/{{.Id}}/results">Results</a>]{{end}}{{end}}
 {{define "script_artifact"}}{{if ne .Script ""}}[<a href="/job/{{.Id}}/script">Run Script</a>]{{end}}{{end}}
 {{define "plot_results"}}[<a href="/job/{{.Id}}/plot">Plot</a>]{{end}}
+{{define "cancel_job"}}[<a href="/job/{{.Id}}/cancel">Cancel</a>]{{end}}
 
 {{define "job_status_message"}}
 {{if eq .Status.String "SUCCEEDED"}}
@@ -73,7 +74,7 @@
 {{else if eq .Status.String "RUNNING"}}
   Running for {{.RunTime}} (timeout: {{.Parameters.Timeout}})
 {{else if eq .Status.String "SUBMITTED"}}
-  Waiting in queue
+  Waiting in queue {{template "cancel_job" .}}
 {{else if eq .Status.String "CANCELLED"}}
   Cancelled
 {{else}}

@@ -19,7 +19,7 @@ var indexTmpl string
 //go:embed html/queue.html.tmpl
 var queueTmpl string
 
-var jobResourceRegexp = regexp.MustCompile(`^/job/([[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12})/(log|script|results|record|plot)/?$`)
+var jobResourceRegexp = regexp.MustCompile(`^/job/([[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12})/(log|script|results|record|plot|cancel)/?$`)
 
 type handler struct {
 	client        WebClient
@@ -118,6 +118,11 @@ func (h *handler) serveJobResource(w http.ResponseWriter, jobId, resourceType st
 		err = e.Encode(jobRecord)
 	case "plot":
 		err = h.serveJobResultsPlot(jobId, w)
+	case "cancel":
+		err = h.client.CancelJob(jobId)
+		if err == nil {
+			fmt.Fprintf(w, "Job %s cancelled", jobId)
+		}
 	}
 
 	if err != nil {
