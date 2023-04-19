@@ -37,7 +37,7 @@ dispatchLoop:
 	for {
 		if ctx.Err() != nil {
 			// Stop dispatching if the context was closed
-			dispatchErr = fmt.Errorf("Context closed: %v", ctx.Err())
+			dispatchErr = fmt.Errorf("Context closed: %w", ctx.Err())
 			break dispatchLoop
 		}
 
@@ -85,6 +85,12 @@ dispatchLoop:
 		} else if job.Id != jobId {
 			dispatchErr = fmt.Errorf("Job ID mismatch in repository: %s vs %s", job.Id, jobId)
 			break dispatchLoop
+		} else if job.Status != core.Submitted {
+			c.logWarn("Skipping job %s in state: %s", jobId, job.Status.String())
+			if err := msg.Ack(); err != nil {
+				c.logWarn("Failed to ACK message: %v", err)
+			}
+			continue dispatchLoop
 		}
 
 		c.logDebug("Dispatching job %s", jobId)

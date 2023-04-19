@@ -15,6 +15,7 @@ const (
 	Running
 	Failed
 	Succeeded
+	Cancelled
 )
 
 type JobParameters struct {
@@ -67,6 +68,8 @@ func (jr JobStatus) String() string {
 		return "FAILED"
 	case Succeeded:
 		return "SUCCEEDED"
+	case Cancelled:
+		return "CANCELLED"
 	default:
 		panic(fmt.Sprintf("Unexpected job status: %d", jr))
 	}
@@ -82,6 +85,8 @@ func (jr JobStatus) Icon() string {
 		return "🔴"
 	case Succeeded:
 		return "🟢"
+	case Cancelled:
+		return "❌"
 	default:
 		return "❓"
 	}
