@@ -77,9 +77,10 @@ func Run(args []string) int {
 			initCommand(),
 			wipeCommand(),
 		},
-		"submit, monitor": {
+		"submit, monitor, cancel": {
 			submitCommand(),
 			waitCommand(),
+			cancelCommand(),
 		},
 		"job debugging": {
 			downloadCommand(),
