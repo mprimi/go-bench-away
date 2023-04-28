@@ -59,6 +59,10 @@ func (spec *ReportSpec) ConfigureReport(reportCfg *ReportConfig) error {
 			metric = TimeOp
 		case string(Speed):
 			metric = Speed
+		case string(OpsPerSec):
+			metric = OpsPerSec
+		case string(MsgPerSec):
+			metric = MsgPerSec
 		default:
 			// TODO: handle custom metrics
 			return fmt.Errorf("unknown metric: %s", sectionSpec.Metric)

@@ -35,6 +35,10 @@ func TestReportSpec_LoadFile(t *testing.T) {
 	validReportCfg2.AddSections(
 		TrendChart("Time/Op Trend", TimeOp, "foo.*"),
 		ResultsTable(TimeOp, "foo.*", true),
+		TrendChart("Op/s Trend", OpsPerSec, "foo.*"),
+		ResultsTable(OpsPerSec, "foo.*", true),
+		TrendChart("Msg/s Trend", MsgPerSec, "foo.*"),
+		ResultsTable(MsgPerSec, "foo.*", true),
 		HorizontalBarChart("Speed measurements", Speed, "bar.*"),
 		ResultsTable(Speed, "bar.*", true),
 		HorizontalDeltaChart("Speed delta", Speed, "baz.*"),
