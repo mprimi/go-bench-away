@@ -32,6 +32,12 @@ func (s *horizontalBarChartSection) fillData(dt *dataTableImpl) error {
 	case Speed:
 		table = dt.speedTable
 		s.XTitle = "Throughput (higher is better)"
+	case OpsPerSec:
+		table = invertTimeOpTable(dt.timeOpTable, s.Metric)
+		s.XTitle = "Operations per second (higher is better)"
+	case MsgPerSec:
+		table = invertTimeOpTable(dt.timeOpTable, s.Metric)
+		s.XTitle = "Messages per second (higher is better)"
 	default:
 		return fmt.Errorf("Unknow table metric: %s", s.Metric)
 	}

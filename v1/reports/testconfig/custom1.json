@@ -1,35 +1,29 @@
 {
-  "title" : "Trend, Bars, Delta, with filters",
+  "title" : "Trends with filters",
   "sections" : [
     {
       "title" : "Time/Op Trend",
       "metric": "time/op",
       "type": "trend_chart",
-      "filter": "foo.*"
+      "filter": ".*JetStreamKV/.*/CAS"
     },
     {
       "title" : "Op/s Trend",
       "metric": "op/s",
       "type": "trend_chart",
-      "filter": "foo.*"
+      "filter": ".*JetStreamKV/.*/CAS"
     },
     {
       "title" : "Msg/s Trend",
       "metric": "msg/s",
       "type": "trend_chart",
-      "filter": "foo.*"
+      "filter": ".*JetStreamKV/.*/CAS"
     },
     {
-      "title" : "Speed measurements",
+      "title" : "Speed Trend",
       "metric": "speed",
-      "type": "horizontal_bar_chart",
-      "filter": "bar.*"
-    },
-    {
-      "title" : "Speed delta",
-      "metric": "speed",
-      "type": "horizontal_delta_chart",
-      "filter": "baz.*"
+      "type": "trend_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
     }
   ]
 }

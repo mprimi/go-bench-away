@@ -27,6 +27,10 @@ func (s *resultsTableSection) fillData(dt *dataTableImpl) error {
 		table = dt.timeOpTable
 	case Speed:
 		table = dt.speedTable
+	case OpsPerSec:
+		fallthrough
+	case MsgPerSec:
+		table = invertTimeOpTable(dt.timeOpTable, s.Metric)
 	default:
 		return fmt.Errorf("Unknow table metric: %s", s.Metric)
 	}

@@ -1,0 +1,29 @@
+{
+  "title" : "Bar charts with filters",
+  "sections" : [
+    {
+      "title" : "Time/Op Trend",
+      "metric": "time/op",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Op/s Trend",
+      "metric": "op/s",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Msg/s Trend",
+      "metric": "msg/s",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Speed Trend",
+      "metric": "speed",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    }
+  ]
+}

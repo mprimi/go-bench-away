@@ -36,6 +36,14 @@ func (s *trendChartSection) fillData(dt *dataTableImpl) error {
 		table = dt.speedTable
 		s.YTitle = "throughput"
 		s.XTitle = "(higher is better)"
+	case OpsPerSec:
+		table = invertTimeOpTable(dt.timeOpTable, s.Metric)
+		s.YTitle = "operations/s"
+		s.XTitle = "(higher is better)"
+	case MsgPerSec:
+		table = invertTimeOpTable(dt.timeOpTable, s.Metric)
+		s.YTitle = "messages/s"
+		s.XTitle = "(higher is better)"
 	default:
 		return fmt.Errorf("Unknow table metric: %s", s.Metric)
 	}

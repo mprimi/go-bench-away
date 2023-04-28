@@ -3,6 +3,7 @@ package reports
 import (
 	"bytes"
 	"fmt"
+	"math"
 	"regexp"
 
 	"github.com/montanaflynn/stats"
@@ -140,4 +141,88 @@ func compileFilter(filterExpr string) *regexp.Regexp {
 		return nil
 	}
 	return regexp.MustCompile(filterExpr)
+}
+
+// Given a TimeOp table, construct and return a table with inverse values. e.g. 0.1 s/op -> 10 op/s
+// All table fields are copied as-is except for the metric, which is replaced with the metric passed as argument
+// (e.g., op/s or  msg/s). All rows values are assumed to be ns/op and converted to op/s.
+// TODO - this has been tested for value tables, but not for delta tables
+func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.Table {
+	if timeOpTable.Metric != string(TimeOp) {
+		panic(fmt.Sprintf("unexpected input metric: %s", timeOpTable.Metric))
+	}
+
+	nsOpToMsgPerSec := func(v float64) float64 {
+		return 1 / v * 1_000_000_000
+	}
+
+	// N.B. benchstat calculates geometric mean differently see GeomMean:
+	// https://cs.opensource.google/go/x/perf/+/d343f639:internal/stats/sample.go;l=152
+	mean := func(vs []float64) float64 {
+		if len(vs) == 0 {
+			return math.NaN()
+		}
+		m := 0.0
+		for _, x := range vs {
+			ix := nsOpToMsgPerSec(x)
+			if ix <= 0 {
+				return math.NaN()
+			}
+			m += ix
+		}
+		return m / float64(len(vs))
+	}
+
+	msgPerSecTable := &benchstat.Table{
+		Metric:      string(metric),
+		OldNewDelta: timeOpTable.OldNewDelta,
+		Configs:     timeOpTable.Configs,
+		Groups:      timeOpTable.Groups,
+		Rows:        make([]*benchstat.Row, len(timeOpTable.Rows)),
+	}
+
+	for i, timeOpRow := range timeOpTable.Rows {
+		msgPerSecRow := &benchstat.Row{
+			Benchmark: timeOpRow.Benchmark,
+			Group:     timeOpRow.Group,
+			Scaler:    nil,
+			Metrics:   make([]*benchstat.Metrics, len(timeOpRow.Metrics)),
+			PctDelta:  timeOpRow.PctDelta,
+			Delta:     timeOpRow.Delta,
+			Note:      timeOpRow.Note,
+			Change:    timeOpRow.Change,
+		}
+
+		for j, timeOpMetric := range timeOpRow.Metrics {
+			if len(timeOpMetric.Values) == 0 {
+				// empty row, copy as-is
+				msgPerSecRow.Metrics[j] = timeOpMetric
+				continue
+			}
+			if timeOpMetric.Unit != "ns/op" {
+				panic(fmt.Sprintf("unexpected unit: %s", timeOpMetric.Unit))
+			}
+			msgPerSecMetric := &benchstat.Metrics{
+				Unit:    string(metric),
+				Values:  make([]float64, len(timeOpMetric.Values)),
+				RValues: make([]float64, len(timeOpMetric.RValues)),
+				Min:     nsOpToMsgPerSec(timeOpMetric.Max),
+				Mean:    mean(timeOpMetric.RValues),
+				Max:     nsOpToMsgPerSec(timeOpMetric.Min),
+			}
+
+			for k, value := range timeOpMetric.Values {
+				msgPerSecMetric.Values[k] = nsOpToMsgPerSec(value)
+			}
+			for k, value := range timeOpMetric.RValues {
+				msgPerSecMetric.RValues[k] = nsOpToMsgPerSec(value)
+			}
+
+			msgPerSecRow.Metrics[j] = msgPerSecMetric
+		}
+
+		msgPerSecTable.Rows[i] = msgPerSecRow
+	}
+
+	return msgPerSecTable
 }
