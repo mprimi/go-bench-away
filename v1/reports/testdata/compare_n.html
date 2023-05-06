@@ -4,31 +4,111 @@
         <meta charset="UTF-8" />
         <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
         <style>
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;900&display=swap');
+
+          * {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+          }
           body {
-            margin: 25px 100px 100px 50px;
-            background-color: lavender;
+            background: #f1f5f9;
+            color: #444;
+            padding-left: 2rem;
+            padding-right: 2rem;
           }
-          div.chart {
+          h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            line-height: 2.5rem;
+            text-transform: uppercase;
           }
+          h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            line-height: 2rem;
+            text-transform: capitalize;
+          }
+          small {
+            color: #64748b;
+            font-weight: 400;
+            font-size: 0.75rem;
+            line-height: 1rem;
+          }
+
           table {
-            background-color: #eee6fa;
-            border: 2px solid black;
+            table-layout: fixed;
+
+            background: white;
             padding: 3px;
             margin: 3px;
+
+            border-collapse: collapse;
+            border-radius: 0.5rem;
+
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
           }
-          td {
-            padding: 4px;
-            border: 1px solid gray;
+          td, th {
+              border: solid #cbd5e1 1px;
+              padding-left: 5px;
+              padding-right: 5px;
+          }
+          th {
+              color: white;
+              background: #5842C3;
+              border-collapse: collapse;
+              border: none;
+          }
+          tr:first-child th:first-child {
+            border-top-left-radius: 0.5rem;
+          }
+          tr:last-child th:first-child {
+            border-bottom-left-radius: 0.5rem;
+          }
+          tr:first-child th:last-child {
+            border-top-right-radius: 0.5rem;
+          }
+          tr:last-child td {
+            border-bottom: none;
+          }
+
+          details summary {
+            color: #9E8CFC;
+            border: 1px solid #9E8CFC;
+
+            width: fit-content;
+            padding: 5px;
+
+            text-transform: lowercase;
+            border-radius: 0.5rem;
+            cursor: pointer;
+          }
+          details summary:hover {
+            opacity: 0.7;
+          }
+          details summary::marker {
+            display: none;
+            content: "";
+          }
+          summary::after {
+              content: ' ►';
+          }
+          details[open] summary:after {
+              content: " ▼";
+          }
+          
+          .main-svg {
+            border-radius: 1rem;
+            border: 1.5px solid #e2e8f0;
           }
         </style>
-    <title>Comparative report</title>
-    </head>
-    <body>
-      <h1>Comparative report</h1>
-      
-      
-      
-      
+      <title>Comparative report</title>
+      </head>
+      <body>
+        <h1>Comparative report</h1>
+        
+        
+        
+        
       <details>
         <summary>Show jobs details</summary>
         <table>
@@ -75,9 +155,9 @@
         </table>
       </details>
 
+        
       
-      
-      
+        
       
       <h2>time/op comparison</h2>
       <small>Error bars represent 90% confidence interval</small>
@@ -158,7 +238,7 @@
 
       
       
-      
+        
       
       <h2></h2>
       
@@ -492,7 +572,7 @@
 
       
       
-      
+        
       
       <h2>speed comparison</h2>
       <small>Error bars represent 90% confidence interval</small>
@@ -573,7 +653,7 @@
 
       
       
-      
+        
       
       <h2></h2>
       
