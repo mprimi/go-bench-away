@@ -15,7 +15,8 @@ import (
 
 type listCmd struct {
 	baseCommand
-	limit int
+	limit    int
+	altQueue string
 }
 
 func listCommand() subcommands.Command {
@@ -30,6 +31,7 @@ func listCommand() subcommands.Command {
 
 func (cmd *listCmd) SetFlags(f *flag.FlagSet) {
 	f.IntVar(&cmd.limit, "n", 10, "Maximum number of recent jobs to show (0 for unlimited)")
+	f.StringVar(&cmd.altQueue, "queue", "", "Read jobs from a non-default queue with the specified name")
 }
 
 func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -37,13 +39,21 @@ func (cmd *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
+	clientOpts := []client.Option{
+		client.Verbose(rootOptions.verbose),
+		client.InitJobsQueue(),
+		client.InitJobsRepository(),
+	}
+
+	if cmd.altQueue != "" {
+		clientOpts = append(clientOpts, client.WithAltQueue(cmd.altQueue))
+	}
+
 	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
-		client.InitJobsQueue(),
-		client.InitJobsRepository(),
-		client.Verbose(rootOptions.verbose),
+		clientOpts...,
 	)
 
 	if err != nil {

@@ -15,7 +15,7 @@ func (c *Client) DispatchJobs(ctx context.Context, handleJob func(*core.JobRecor
 	// Subscribe with durable pull consumer
 	consumerName := fmt.Sprintf(kJobsConsumerNameTmpl, c.options.namespace)
 	var subOpts = []nats.SubOpt{
-		nats.BindStream(c.options.jobsQueueName),
+		nats.BindStream(c.options.jobsQueueStreamName),
 	}
 	sub, err := c.js.PullSubscribe(
 		"",

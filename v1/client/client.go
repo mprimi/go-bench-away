@@ -16,18 +16,19 @@ const (
 )
 
 type Options struct {
-	serverUrl          string
-	credentials        string
-	namespace          string
-	clientName         string
-	jobsQueueName      string
-	jobsSubmitSubject  string
-	jobsRepositoryName string
-	artifactsStoreName string
-	initJobsRepository bool
-	initArtifactsStore bool
-	initJobsQueue      bool
-	verbose            bool
+	serverUrl           string
+	credentials         string
+	namespace           string
+	clientName          string
+	jobsQueueName       string
+	jobsQueueStreamName string
+	jobsSubmitSubject   string
+	jobsRepositoryName  string
+	artifactsStoreName  string
+	initJobsRepository  bool
+	initArtifactsStore  bool
+	initJobsQueue       bool
+	verbose             bool
 }
 
 type Option func(*Options) error
@@ -50,14 +51,15 @@ func NewClient(serverUrl, credentials, namespace string, opts ...Option) (*Clien
 
 	client := &Client{
 		options: Options{
-			serverUrl:          serverUrl,
-			credentials:        credentials,
-			namespace:          namespace,
-			jobsQueueName:      fmt.Sprintf("%s-jobs", namespace),
-			jobsSubmitSubject:  fmt.Sprintf("%s.jobs.submit", namespace),
-			jobsRepositoryName: fmt.Sprintf("%s-jobs", namespace),
-			artifactsStoreName: fmt.Sprintf("%s-artifacts", namespace),
-			clientName:         "go-bench-away CLI", //TODO add user@hostname
+			serverUrl:           serverUrl,
+			credentials:         credentials,
+			namespace:           namespace,
+			jobsQueueName:       namespace,
+			jobsQueueStreamName: fmt.Sprintf("%s-jobs", namespace),
+			jobsSubmitSubject:   fmt.Sprintf("%s.jobs.submit", namespace),
+			jobsRepositoryName:  fmt.Sprintf("%s-jobs", namespace),
+			artifactsStoreName:  fmt.Sprintf("%s-artifacts", namespace),
+			clientName:          "go-bench-away CLI", //TODO add user@hostname
 		},
 	}
 
@@ -110,9 +112,9 @@ func NewClient(serverUrl, credentials, namespace string, opts ...Option) (*Clien
 	// No way to bind a stream (unlike KV and Obj),
 	// but at least check it exists.
 	if options.initJobsQueue {
-		_, err := client.js.StreamInfo(options.jobsQueueName)
+		_, err := client.js.StreamInfo(options.jobsQueueStreamName)
 		if err == nats.ErrStreamNotFound {
-			return nil, fmt.Errorf("stream not found: %s (need to run init-schema?)", options.jobsQueueName)
+			return nil, fmt.Errorf("stream not found: %s (need to run init-schema?)", options.jobsQueueStreamName)
 		} else if err != nil {
 			return nil, err
 		}
@@ -172,6 +174,15 @@ func InitArtifactsStore() Option {
 func WithClientName(clientName string) Option {
 	return func(o *Options) error {
 		o.clientName = clientName
+		return nil
+	}
+}
+
+func WithAltQueue(queueName string) Option {
+	return func(o *Options) error {
+		o.jobsQueueName = queueName
+		o.jobsQueueStreamName = fmt.Sprintf("%s-jobs", queueName)
+		o.jobsSubmitSubject = fmt.Sprintf("%s.jobs.submit", queueName)
 		return nil
 	}
 }
