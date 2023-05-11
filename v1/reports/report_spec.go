@@ -59,6 +59,8 @@ func (spec *ReportSpec) ConfigureReport(reportCfg *ReportConfig) error {
 			metric = TimeOp
 		case string(Speed):
 			metric = Speed
+		case string(Throughput):
+			metric = Throughput
 		case string(OpsPerSec):
 			metric = OpsPerSec
 		case string(MsgPerSec):
