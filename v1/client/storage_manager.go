@@ -8,7 +8,7 @@ func (c *Client) CreateJobsQueue() error {
 	c.logDebug("Creating jobs queue %s", c.options.jobsQueueName)
 
 	cfg := nats.StreamConfig{
-		Name:        c.options.jobsQueueName,
+		Name:        c.options.jobsQueueStreamName,
 		Description: "Jobs queue", //TODO add namespace
 		Subjects:    []string{c.options.jobsSubmitSubject},
 	}
@@ -53,7 +53,7 @@ func (c *Client) CreateArtifactsStore() error {
 func (c *Client) DeleteJobsQueue() error {
 	c.logDebug("Deleting jobs queue %s", c.options.jobsQueueName)
 
-	err := c.js.DeleteStream(c.options.jobsQueueName)
+	err := c.js.DeleteStream(c.options.jobsQueueStreamName)
 	if err == nats.ErrStreamNotFound {
 		// noop
 	} else if err != nil {

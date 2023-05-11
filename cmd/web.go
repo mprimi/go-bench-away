@@ -16,7 +16,8 @@ import (
 
 type webCmd struct {
 	baseCommand
-	port int
+	port     int
+	altQueue string
 }
 
 func webCommand() subcommands.Command {
@@ -31,6 +32,8 @@ func webCommand() subcommands.Command {
 
 func (cmd *webCmd) SetFlags(f *flag.FlagSet) {
 	f.IntVar(&cmd.port, "port", 8888, "Port number")
+	f.StringVar(&cmd.altQueue, "queue", "", "Load jobs from a non-default queue with the specified name")
+
 }
 
 func (cmd *webCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -38,14 +41,22 @@ func (cmd *webCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{})
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
+	clientOpts := []client.Option{
+		client.Verbose(rootOptions.verbose),
+		client.InitJobsQueue(),
+		client.InitJobsRepository(),
+		client.InitArtifactsStore(),
+	}
+
+	if cmd.altQueue != "" {
+		clientOpts = append(clientOpts, client.WithAltQueue(cmd.altQueue))
+	}
+
 	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
-		client.InitJobsQueue(),
-		client.InitJobsRepository(),
-		client.InitArtifactsStore(),
-		client.Verbose(rootOptions.verbose),
+		clientOpts...,
 	)
 
 	if err != nil {

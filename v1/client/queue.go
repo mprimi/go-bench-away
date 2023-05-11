@@ -8,6 +8,10 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
+func (c *Client) QueueName() string {
+	return c.options.jobsQueueName
+}
+
 func (c *Client) SubmitJob(params core.JobParameters) (*core.JobRecord, error) {
 
 	// Create a job object from parameters
@@ -58,7 +62,7 @@ func (c *Client) CancelJob(jobId string) error {
 func (c *Client) LoadRecentJobs(limit int) ([]*core.JobRecord, error) {
 	jobs := []*core.JobRecord{}
 
-	lastSubmitMsg, err := c.js.GetLastMsg(c.options.jobsQueueName, c.options.jobsSubmitSubject)
+	lastSubmitMsg, err := c.js.GetLastMsg(c.options.jobsQueueStreamName, c.options.jobsSubmitSubject)
 	if err == nats.ErrMsgNotFound {
 		return []*core.JobRecord{}, nil
 	} else if err != nil {
@@ -74,7 +78,7 @@ func (c *Client) LoadRecentJobs(limit int) ([]*core.JobRecord, error) {
 			break
 		}
 
-		rawMsg, err := c.js.GetMsg(c.options.jobsQueueName, i)
+		rawMsg, err := c.js.GetMsg(c.options.jobsQueueStreamName, i)
 		if err != nil {
 			return nil, fmt.Errorf("Failed retrieve submit request %d: %v", i, err)
 		}
@@ -106,7 +110,7 @@ func (c *Client) LoadRecentJobs(limit int) ([]*core.JobRecord, error) {
 func (c *Client) GetQueueStatus() (*core.QueueStatus, error) {
 	qs := &core.QueueStatus{}
 
-	lastSubmitMsg, err := c.js.GetLastMsg(c.options.jobsQueueName, c.options.jobsSubmitSubject)
+	lastSubmitMsg, err := c.js.GetLastMsg(c.options.jobsQueueStreamName, c.options.jobsSubmitSubject)
 	if err == nats.ErrMsgNotFound {
 		return qs, nil
 	} else if err != nil {

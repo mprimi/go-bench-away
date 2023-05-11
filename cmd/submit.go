@@ -16,7 +16,8 @@ import (
 
 type submitCmd struct {
 	baseCommand
-	params core.JobParameters
+	params   core.JobParameters
+	altQueue string
 }
 
 func submitCommand() subcommands.Command {
@@ -40,6 +41,7 @@ func (cmd *submitCmd) SetFlags(f *flag.FlagSet) {
 	f.BoolVar(&cmd.params.SkipCleanup, "skip_cleanup", false, "Do not remove worker temporary directory after execution")
 	f.StringVar(&cmd.params.GoPath, "go_path", "", "Run using a custom Go (default looks for `go` in $PATH)")
 	f.StringVar(&cmd.params.CleanupCmd, "cleanup_command", "", "Command to execute after tests have run")
+	f.StringVar(&cmd.altQueue, "queue", "", "Publish job to a non-default queue with the specified name")
 }
 
 func (cmd *submitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -47,13 +49,21 @@ func (cmd *submitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
+	clientOpts := []client.Option{
+		client.Verbose(rootOptions.verbose),
+		client.InitJobsQueue(),
+		client.InitJobsRepository(),
+	}
+
+	if cmd.altQueue != "" {
+		clientOpts = append(clientOpts, client.WithAltQueue(cmd.altQueue))
+	}
+
 	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
-		client.InitJobsQueue(),
-		client.InitJobsRepository(),
-		client.Verbose(rootOptions.verbose),
+		clientOpts...,
 	)
 
 	if err != nil {

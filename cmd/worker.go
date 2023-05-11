@@ -14,7 +14,8 @@ import (
 
 type workerCmd struct {
 	baseCommand
-	jobsDir string
+	jobsDir  string
+	altQueue string
 }
 
 func workerCommand() subcommands.Command {
@@ -23,13 +24,13 @@ func workerCommand() subcommands.Command {
 			name:     "worker",
 			synopsis: "starts a benchmark worker",
 			usage:    "worker [options]\n",
-			setFlags: func(_ *flag.FlagSet) {},
 		},
 	}
 }
 
 func (cmd *workerCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.jobsDir, "jobs_dir", "", "Directory where jobs are staged (defaults to os.MkdirTemp)")
+	f.StringVar(&cmd.altQueue, "queue", "", "Consume job from a non-default queue with the specified name")
 }
 
 func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -37,15 +38,27 @@ func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interfa
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
-	c, err := client.NewClient(
-		rootOptions.natsServerUrl,
-		rootOptions.credentials,
-		rootOptions.namespace,
+	clientOpts := []client.Option{
 		client.Verbose(rootOptions.verbose),
 		client.InitJobsQueue(),
 		client.InitJobsRepository(),
 		client.InitArtifactsStore(),
 		client.WithClientName("go-bench-away Worker"),
+	}
+
+	if cmd.altQueue != "" {
+		clientOpts = append(
+			clientOpts,
+			client.WithAltQueue(cmd.altQueue),
+			client.WithClientName(fmt.Sprintf("go-bench-away Worker (queue: %s", cmd.altQueue)),
+		)
+	}
+
+	c, err := client.NewClient(
+		rootOptions.natsServerUrl,
+		rootOptions.credentials,
+		rootOptions.namespace,
+		clientOpts...,
 	)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)

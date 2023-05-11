@@ -91,9 +91,11 @@ func (h *handler) serveQueue(w http.ResponseWriter) error {
 	}
 
 	tv := struct {
-		Jobs []*core.JobRecord
+		QueueName string
+		Jobs      []*core.JobRecord
 	}{
-		Jobs: jobRecords,
+		QueueName: h.client.QueueName(),
+		Jobs:      jobRecords,
 	}
 	return h.queueTemplate.Execute(w, tv)
 }

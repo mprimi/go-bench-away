@@ -13,6 +13,7 @@ import (
 
 type wipeCmd struct {
 	baseCommand
+	altQueue string
 }
 
 func wipeCommand() subcommands.Command {
@@ -25,16 +26,28 @@ func wipeCommand() subcommands.Command {
 	}
 }
 
+func (cmd *wipeCmd) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&cmd.altQueue, "queue", "", "Wipe non-default queue with the specified name")
+}
+
 func (cmd *wipeCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 	if rootOptions.verbose {
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
+	}
+
+	clientOpts := []client.Option{
+		client.Verbose(rootOptions.verbose),
+	}
+
+	if cmd.altQueue != "" {
+		clientOpts = append(clientOpts, client.WithAltQueue(cmd.altQueue))
 	}
 
 	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
-		client.Verbose(rootOptions.verbose),
+		clientOpts...,
 	)
 
 	if err != nil {

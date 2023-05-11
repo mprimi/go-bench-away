@@ -13,6 +13,7 @@ import (
 
 type initCmd struct {
 	baseCommand
+	altQueue string
 }
 
 func initCommand() subcommands.Command {
@@ -20,9 +21,13 @@ func initCommand() subcommands.Command {
 		baseCommand: baseCommand{
 			name:     "init",
 			synopsis: "Initializes server schemas (Stream, KV store, Object store)",
-			usage:    "init\n",
+			usage:    "init [options]\n",
 		},
 	}
+}
+
+func (cmd *initCmd) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&cmd.altQueue, "queue", "", "Initialize non-default jobs queue with the given name")
 }
 
 func (cmd *initCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -30,11 +35,19 @@ func (cmd *initCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		fmt.Printf("%s args: %v\n", cmd.name, f.Args())
 	}
 
+	clientOpts := []client.Option{
+		client.Verbose(rootOptions.verbose),
+	}
+
+	if cmd.altQueue != "" {
+		clientOpts = append(clientOpts, client.WithAltQueue(cmd.altQueue))
+	}
+
 	c, err := client.NewClient(
 		rootOptions.natsServerUrl,
 		rootOptions.credentials,
 		rootOptions.namespace,
-		client.Verbose(rootOptions.verbose),
+		clientOpts...,
 	)
 
 	if err != nil {
