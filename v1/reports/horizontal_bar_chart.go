@@ -30,6 +30,8 @@ func (s *horizontalBarChartSection) fillData(dt *dataTableImpl) error {
 		table = dt.timeOpTable
 		s.XTitle = "Time/op (lower is better)"
 	case Speed:
+		fallthrough
+	case Throughput:
 		table = dt.speedTable
 		s.XTitle = "Throughput (higher is better)"
 	case OpsPerSec:

@@ -101,10 +101,10 @@
             border: 1.5px solid #e2e8f0;
           }
         </style>
-      <title>Trend report</title>
+      <title>Trend, bar and table report for metric msg/s</title>
       </head>
       <body>
-        <h1>Trend report</h1>
+        <h1>Trend, bar and table report for metric msg/s</h1>
         
         
         
@@ -159,8 +159,8 @@
       
         
       
-      <h2>time/op trend</h2>
-      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <h2>Trend chart: msg/s</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*KV/N=3.*(PUT|GET)&#39;</small>
       <div id="chart_1" class="chart"></div>
       <script>
       Plotly.newPlot(
@@ -168,48 +168,96 @@
         [ 
           
           {
-            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/CAS-16",
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/GET-16",
             "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
-            "y": [766268.0999999999,672285.9,837604.5],
-            "text": ["766µs ± 190µs","672µs ± 204µs","838µs ± 261µs"],
+            "y": [15737.211169706785,16286.861614909876,16835.076487787708],
+            "text": ["15.7k ± 1.7k","16.3k ± 2.9k","16.8k ± 1.7k"],
             "hoverinfo": "text",
             "mode": "lines+markers",
             "type": "scatter",
             "error_y": {
               "type": "data",
-              "array": [189874.90000000014,203696.09999999998,260765.5],
+              "array": [1677.7169066402603,2852.507113934551,1665.9886270424213],
               "visible": true,
               "symmetric": true
             }
           },
           
           {
-            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/CAS-16",
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/PUT-16",
             "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
-            "y": [268093.6666666666,502581,450409.3],
-            "text": ["268µs ± 58µs","503µs ± 261µs","450µs ± 199µs"],
+            "y": [5812.59845577807,3871.460825575637,6542.51703594154],
+            "text": ["5.81k ± 1.28k","3.87k ± 1.15k","6.54k ± 3.53k"],
             "hoverinfo": "text",
             "mode": "lines+markers",
             "type": "scatter",
             "error_y": {
               "type": "data",
-              "array": [58359.83333333337,261339,198521.7],
+              "array": [1280.0528482058717,1148.644697042449,3531.2227392125887],
               "visible": true,
               "symmetric": true
             }
           },
           
           {
-            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/CAS-16",
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/GET-16",
             "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
-            "y": [249792.4,619961.2000000001,362817.9],
-            "text": ["250µs ± 20µs","620µs ± 206µs","363µs ± 83µs"],
+            "y": [15143.397911170494,7496.996592498905,6751.576458967395],
+            "text": ["15.1k ± 1.1k","7.50k ± 4.29k","6.75k ± 2.94k"],
             "hoverinfo": "text",
             "mode": "lines+markers",
             "type": "scatter",
             "error_y": {
               "type": "data",
-              "array": [20112.600000000006,205972.79999999993,83099.09999999998],
+              "array": [1063.2695118073188,4289.765453293912,2944.8290834980135],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/PUT-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [7493.321417618167,6398.2142090417965,7367.524437801214],
+            "text": ["7.49k ± 0.60k","6.40k ± 1.04k","7.37k ± 0.75k"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [595.3956309707555,1043.5354951486534,747.2509452161839],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/GET-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [14915.32830008196,5243.5177278370775,9395.531032070741],
+            "text": ["14.9k ± 1.2k","5.24k ± 3.70k","9.40k ± 1.85k"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [1152.873175984072,3695.1096565417774,1852.1772473673227],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/PUT-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
+            "y": [7274.518156631268,6508.036065016558,7289.063148879422],
+            "text": ["7.27k ± 0.24k","6.51k ± 1.05k","7.29k ± 0.22k"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [241.8487322693136,1054.8302613211245,223.1818104042095],
               "visible": true,
               "symmetric": true
             }
@@ -218,140 +266,7 @@
         ],
         {
           yaxis: {
-            title: "time/op",
-          },
-          xaxis: {
-            title: "(lower is better)",
-            tickvals: ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
-            ticktext : ["v2.9.11","main","v2.9.15"],
-          }
-        }
-      );
-    </script>
-
-      
-      
-        
-      
-      <h2></h2>
-      
-      <details>
-        <summary>Show results table</summary>
-      
-      <table>
-        <tr>
-          <th></th>
-          
-          <th>v2.9.11</th>
-          
-          <th>main</th>
-          
-          <th>v2.9.15</th>
-          
-        </tr>
-        
-        <tr>
-          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
-          
-          <td>766µs ± 190µs</td>
-          
-          <td>672µs ± 204µs</td>
-          
-          <td>838µs ± 261µs</td>
-          
-        </tr>
-        
-        <tr>
-          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
-          
-          <td>268µs ± 58µs</td>
-          
-          <td>503µs ± 261µs</td>
-          
-          <td>450µs ± 199µs</td>
-          
-        </tr>
-        
-        <tr>
-          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
-          
-          <td>250µs ± 20µs</td>
-          
-          <td>620µs ± 206µs</td>
-          
-          <td>363µs ± 83µs</td>
-          
-        </tr>
-        
-      </table>
-      
-      </details>
-      
-
-      
-      
-        
-      
-      <h2>speed trend</h2>
-      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
-      <div id="chart_2" class="chart"></div>
-      <script>
-      Plotly.newPlot(
-        "chart_2", 
-        [ 
-          
-          {
-            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/CAS-16",
-            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
-            "y": [0.12444444444444444,0.17400000000000002,0.131],
-            "text": ["124kB/s ± 26kB/s","174kB/s ± 106kB/s","131kB/s ± 59kB/s"],
-            "hoverinfo": "text",
-            "mode": "lines+markers",
-            "type": "scatter",
-            "error_y": {
-              "type": "data",
-              "array": [0.025555555555555554,0.10600000000000001,0.059],
-              "visible": true,
-              "symmetric": true
-            }
-          },
-          
-          {
-            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/CAS-16",
-            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
-            "y": [0.36000000000000004,0.227,0.24399999999999997],
-            "text": ["360kB/s ± 80kB/s","227kB/s ± 103kB/s","244kB/s ± 106kB/s"],
-            "hoverinfo": "text",
-            "mode": "lines+markers",
-            "type": "scatter",
-            "error_y": {
-              "type": "data",
-              "array": [0.07999999999999996,0.10300000000000001,0.10600000000000001],
-              "visible": true,
-              "symmetric": true
-            }
-          },
-          
-          {
-            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/CAS-16",
-            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268","e98b2caa-df6d-4f12-815c-431db896a9f5"],
-            "y": [4.136,1.808,2.9890000000000003],
-            "text": ["4.14MB/s ± 0.49MB/s","1.81MB/s ± 0.61MB/s","2.99MB/s ± 0.83MB/s"],
-            "hoverinfo": "text",
-            "mode": "lines+markers",
-            "type": "scatter",
-            "error_y": {
-              "type": "data",
-              "array": [0.4939999999999998,0.6119999999999999,0.8309999999999995],
-              "visible": true,
-              "symmetric": true
-            }
-          },
-          
-        ],
-        {
-          yaxis: {
-            title: "bytes/s",
+            title: "messages/s",
           },
           xaxis: {
             title: "(higher is better)",
@@ -366,6 +281,87 @@
       
         
       
+      <h2>Bar chart: msg/s</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*KV/N=3.*(PUT|GET)&#39;</small>
+      <div id="chart_2" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_2",
+          [
+            
+            {
+              name: "v2.9.11",
+              y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16"],
+              x: [15737.211169706785,5812.59845577807,15143.397911170494,7493.321417618167,14915.32830008196,7274.518156631268],
+              text: ["15.7k ± 1.7k","5.81k ± 1.28k","15.1k ± 1.1k","7.49k ± 0.60k","14.9k ± 1.2k","7.27k ± 0.24k"],
+              hoverinfo: "name+text",
+              hovertext: ["15.7k ± 1.7k","5.81k ± 1.28k","15.1k ± 1.1k","7.49k ± 0.60k","14.9k ± 1.2k","7.27k ± 0.24k"],
+              error_x: {
+                type: 'data',
+                array: [1677.7169066402603,1280.0528482058717,1063.2695118073188,595.3956309707555,1152.873175984072,241.8487322693136],
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            
+            {
+              name: "main",
+              y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16"],
+              x: [16286.861614909876,3871.460825575637,7496.996592498905,6398.2142090417965,5243.5177278370775,6508.036065016558],
+              text: ["16.3k ± 2.9k","3.87k ± 1.15k","7.50k ± 4.29k","6.40k ± 1.04k","5.24k ± 3.70k","6.51k ± 1.05k"],
+              hoverinfo: "name+text",
+              hovertext: ["16.3k ± 2.9k","3.87k ± 1.15k","7.50k ± 4.29k","6.40k ± 1.04k","5.24k ± 3.70k","6.51k ± 1.05k"],
+              error_x: {
+                type: 'data',
+                array: [2852.507113934551,1148.644697042449,4289.765453293912,1043.5354951486534,3695.1096565417774,1054.8302613211245],
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            
+            {
+              name: "v2.9.15",
+              y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16"],
+              x: [16835.076487787708,6542.51703594154,6751.576458967395,7367.524437801214,9395.531032070741,7289.063148879422],
+              text: ["16.8k ± 1.7k","6.54k ± 3.53k","6.75k ± 2.94k","7.37k ± 0.75k","9.40k ± 1.85k","7.29k ± 0.22k"],
+              hoverinfo: "name+text",
+              hovertext: ["16.8k ± 1.7k","6.54k ± 3.53k","6.75k ± 2.94k","7.37k ± 0.75k","9.40k ± 1.85k","7.29k ± 0.22k"],
+              error_x: {
+                type: 'data',
+                array: [1665.9886270424213,3531.2227392125887,2944.8290834980135,747.2509452161839,1852.1772473673227,223.1818104042095],
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            
+          ],
+          {
+            barmode: 'group',
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Messages per second (higher is better)",
+            },
+            autosize: true,
+            height: ( 3  * 15) + ( 6  * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+        
+      
       <h2></h2>
       
       <details>
@@ -384,35 +380,68 @@
         </tr>
         
         <tr>
-          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/GET-16</th>
           
-          <td>124kB/s ± 26kB/s</td>
+          <td>15.7k ± 1.7k</td>
           
-          <td>174kB/s ± 106kB/s</td>
+          <td>16.3k ± 2.9k</td>
           
-          <td>131kB/s ± 59kB/s</td>
-          
-        </tr>
-        
-        <tr>
-          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
-          
-          <td>360kB/s ± 80kB/s</td>
-          
-          <td>227kB/s ± 103kB/s</td>
-          
-          <td>244kB/s ± 106kB/s</td>
+          <td>16.8k ± 1.7k</td>
           
         </tr>
         
         <tr>
-          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/PUT-16</th>
           
-          <td>4.14MB/s ± 0.49MB/s</td>
+          <td>5.81k ± 1.28k</td>
           
-          <td>1.81MB/s ± 0.61MB/s</td>
+          <td>3.87k ± 1.15k</td>
           
-          <td>2.99MB/s ± 0.83MB/s</td>
+          <td>6.54k ± 3.53k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/GET-16</th>
+          
+          <td>15.1k ± 1.1k</td>
+          
+          <td>7.50k ± 4.29k</td>
+          
+          <td>6.75k ± 2.94k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/PUT-16</th>
+          
+          <td>7.49k ± 0.60k</td>
+          
+          <td>6.40k ± 1.04k</td>
+          
+          <td>7.37k ± 0.75k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/GET-16</th>
+          
+          <td>14.9k ± 1.2k</td>
+          
+          <td>5.24k ± 3.70k</td>
+          
+          <td>9.40k ± 1.85k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/PUT-16</th>
+          
+          <td>7.27k ± 0.24k</td>
+          
+          <td>6.51k ± 1.05k</td>
+          
+          <td>7.29k ± 0.22k</td>
           
         </tr>
         

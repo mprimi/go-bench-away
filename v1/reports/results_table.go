@@ -26,6 +26,8 @@ func (s *resultsTableSection) fillData(dt *dataTableImpl) error {
 	case TimeOp:
 		table = dt.timeOpTable
 	case Speed:
+		fallthrough
+	case Throughput:
 		table = dt.speedTable
 	case OpsPerSec:
 		fallthrough

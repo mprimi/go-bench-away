@@ -73,27 +73,49 @@ func TestWriteEmptyReport(t *testing.T) {
 	)
 }
 
-func TestWriteTrendReport(t *testing.T) {
-	resetChartId()
-	cfg := &ReportConfig{
-		Title:   "Trend report",
-		verbose: true,
+func TestWriteTrendAndBarsReport(t *testing.T) {
+
+	testCases := []struct {
+		metric   Metric
+		filename string
+	}{
+		{TimeOp, "trend_and_bars_timeop.html"},
+		{Speed, "trend_and_bars_speed.html"},
+		{Throughput, "trend_and_bars_tput.html"},
+		{OpsPerSec, "trend_and_bars_opss.html"},
+		{MsgPerSec, "trend_and_bars_msgs.html"},
 	}
 
-	cfg.AddSections(
-		JobsTable(),
-		TrendChart("", TimeOp, ""),
-		ResultsTable(TimeOp, "", true),
-		TrendChart("", Speed, ""),
-		ResultsTable(Speed, "", true),
-	)
+	const filter = ".*KV/N=3.*(PUT|GET)"
 
-	writeReportAndCompareToExpected(
-		t,
-		[]string{job1, job2, job3},
-		cfg,
-		"trend.html",
-	)
+	for _, testCase := range testCases {
+		metricString := string(testCase.metric)
+		t.Run(
+			metricString,
+			func(t *testing.T) {
+				resetChartId()
+				cfg := &ReportConfig{
+					Title:   "Trend, bar and table report for metric " + metricString,
+					verbose: true,
+				}
+
+				cfg.AddSections(
+					JobsTable(),
+					TrendChart("Trend chart: "+metricString, testCase.metric, filter),
+					HorizontalBarChart("Bar chart: "+metricString, testCase.metric, filter),
+					ResultsTable(testCase.metric, filter, true),
+				)
+
+				writeReportAndCompareToExpected(
+					t,
+					[]string{job1, job2, job3},
+					cfg,
+					testCase.filename,
+				)
+
+			},
+		)
+	}
 }
 
 func TestWriteTrendReportFiltered(t *testing.T) {

@@ -29,10 +29,11 @@ type baseSection struct {
 type Metric string
 
 const (
-	TimeOp    = Metric("time/op")
-	Speed     = Metric("speed")
-	OpsPerSec = Metric("op/s")
-	MsgPerSec = Metric("msg/s")
+	TimeOp     = Metric("time/op")
+	Speed      = Metric("speed")
+	Throughput = Metric("throughput")
+	OpsPerSec  = Metric("op/s")
+	MsgPerSec  = Metric("msg/s")
 )
 
 type ReportConfig struct {

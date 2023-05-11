@@ -33,8 +33,10 @@ func (s *trendChartSection) fillData(dt *dataTableImpl) error {
 		s.YTitle = "time/op"
 		s.XTitle = "(lower is better)"
 	case Speed:
+		fallthrough
+	case Throughput:
 		table = dt.speedTable
-		s.YTitle = "throughput"
+		s.YTitle = "bytes/s"
 		s.XTitle = "(higher is better)"
 	case OpsPerSec:
 		table = invertTimeOpTable(dt.timeOpTable, s.Metric)
