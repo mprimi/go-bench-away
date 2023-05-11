@@ -16,5 +16,5 @@ coverage.html
 /dist
 .envrc
 
-# HTML reports
-*.html
+# Default HTML report
+report.html
