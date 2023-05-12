@@ -257,6 +257,44 @@ func TestWriteCustomReports(t *testing.T) {
 	}
 }
 
+func TestWriteCustomComparisonReports(t *testing.T) {
+	resetChartId()
+
+	tests := []string{
+		"compare1",
+	}
+
+	for _, test := range tests {
+		specName := test + ".json"
+		reportName := test + ".html"
+		t.Run(
+			"Custom report: "+specName+" -> "+reportName,
+			func(t *testing.T) {
+				specPath := filepath.Join("testconfig", specName)
+
+				var spec ReportSpec
+				err := spec.LoadFile(specPath)
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				cfg := &ReportConfig{}
+				err = spec.ConfigureReport(cfg)
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				writeReportAndCompareToExpected(
+					t,
+					[]string{job1, job2},
+					cfg,
+					reportName,
+				)
+			},
+		)
+	}
+}
+
 func writeReportAndCompareToExpected(t *testing.T, jobIds []string, reportConfig *ReportConfig, expectedReportName string) {
 	var err error
 

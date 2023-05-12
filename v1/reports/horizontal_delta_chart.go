@@ -25,9 +25,18 @@ func (s *horizontalDeltaChartSection) fillData(dt *dataTableImpl) error {
 		table = dt.timeOpTable
 		s.XTitle = "Δ% time/op (lower is better)"
 	case Speed:
+		fallthrough
+	case Throughput:
 		table = dt.speedTable
 		s.XTitle = "Δ% throughput (higher is better)"
 		speedupColor, slowdownColor = slowdownColor, speedupColor
+	case OpsPerSec:
+		fallthrough
+	case MsgPerSec:
+		table = invertTimeOpTable(dt.timeOpTable, s.Metric)
+		s.XTitle = "Δ% op/s (higher is better)"
+		speedupColor, slowdownColor = slowdownColor, speedupColor
+
 	default:
 		return fmt.Errorf("Unknow table metric: %s", s.Metric)
 	}
