@@ -1,0 +1,41 @@
+{
+  "title" : "Delta plots and tables",
+  "sections" : [
+    {
+      "title" : "Op/s Values",
+      "metric": "op/s",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Op/s Comparison",
+      "metric": "op/s",
+      "type": "horizontal_delta_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Throughput Values",
+      "metric": "throughput",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Throughput Comparison",
+      "metric": "throughput",
+      "type": "horizontal_delta_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Time/Op Values",
+      "metric": "time/op",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Time/Op Comparison",
+      "metric": "time/op",
+      "type": "horizontal_delta_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    }
+  ]
+}

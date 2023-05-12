@@ -145,9 +145,7 @@ func compileFilter(filterExpr string) *regexp.Regexp {
 }
 
 // Given a TimeOp table, construct and return a table with inverse values. e.g. 0.1 s/op -> 10 op/s
-// All table fields are copied as-is except for the metric, which is replaced with the metric passed as argument
-// (e.g., op/s or  msg/s). All rows values are assumed to be ns/op and converted to op/s.
-// TODO - this has been tested for value tables, but not for delta tables
+// All rows values are expected to be ns/op and converted to op/s.
 func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.Table {
 	if timeOpTable.Metric != string(TimeOp) {
 		panic(fmt.Sprintf("unexpected input metric: %s", timeOpTable.Metric))
@@ -188,10 +186,7 @@ func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.T
 			Group:     timeOpRow.Group,
 			Scaler:    nil,
 			Metrics:   make([]*benchstat.Metrics, len(timeOpRow.Metrics)),
-			PctDelta:  timeOpRow.PctDelta,
-			Delta:     timeOpRow.Delta,
 			Note:      timeOpRow.Note,
-			Change:    timeOpRow.Change,
 		}
 
 		for j, timeOpMetric := range timeOpRow.Metrics {
@@ -220,6 +215,28 @@ func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.T
 			}
 
 			opsPerSecondRow.Metrics[j] = opsPerSecondMetric
+		}
+
+		// For side-by-side comparison tables (2 result sets), recalculate percentage differences
+		if timeOpTable.OldNewDelta {
+			if len(opsPerSecondRow.Metrics) != 2 {
+				panic(fmt.Sprintf("unexpected number of metrics in comparison table: %d", len(opsPerSecondRow.Metrics)))
+			}
+
+			// `Change` values are -1, 0, 1, just flip the sign
+			opsPerSecondRow.Change = -timeOpRow.Change
+
+			// PctDelta needs to be re-calculated (can't just flip the sign)
+			// This is a simplified calculation using means, and assumes significance testing carries over
+			// from the time/op calculation. Not as precise, but it will do.
+			meanBefore, meanAfter := opsPerSecondRow.Metrics[0].Mean, opsPerSecondRow.Metrics[1].Mean
+			opsPerSecondRow.PctDelta = 100 * (meanAfter - meanBefore) / (meanBefore/2 + meanAfter/2)
+			if timeOpRow.Delta == "~" {
+				// Delta is not statistically significant
+				opsPerSecondRow.Delta = timeOpRow.Delta
+			} else {
+				opsPerSecondRow.Delta = fmt.Sprintf("%.1f%%", opsPerSecondRow.PctDelta)
+			}
 		}
 
 		opsPerSecondTable.Rows[i] = opsPerSecondRow
