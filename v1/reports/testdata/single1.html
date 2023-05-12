@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;900&display=swap');
+
+          * {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+          }
+          body {
+            background: #f1f5f9;
+            color: #444;
+            padding-left: 2rem;
+            padding-right: 2rem;
+          }
+          h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            line-height: 2.5rem;
+            text-transform: uppercase;
+          }
+          h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            line-height: 2rem;
+            text-transform: capitalize;
+          }
+          small {
+            color: #64748b;
+            font-weight: 400;
+            font-size: 0.75rem;
+            line-height: 1rem;
+          }
+
+          table {
+            table-layout: fixed;
+
+            background: white;
+            padding: 3px;
+            margin: 3px;
+
+            border-collapse: collapse;
+            border-radius: 0.5rem;
+
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+          }
+          td, th {
+              border: solid #cbd5e1 1px;
+              padding-left: 5px;
+              padding-right: 5px;
+          }
+          th {
+              color: white;
+              background: #5842C3;
+              border-collapse: collapse;
+              border: none;
+          }
+          tr:first-child th:first-child {
+            border-top-left-radius: 0.5rem;
+          }
+          tr:last-child th:first-child {
+            border-bottom-left-radius: 0.5rem;
+          }
+          tr:first-child th:last-child {
+            border-top-right-radius: 0.5rem;
+          }
+          tr:last-child td {
+            border-bottom: none;
+          }
+
+          details summary {
+            color: #9E8CFC;
+            border: 1px solid #9E8CFC;
+
+            width: fit-content;
+            padding: 5px;
+
+            text-transform: lowercase;
+            border-radius: 0.5rem;
+            cursor: pointer;
+          }
+          details summary:hover {
+            opacity: 0.7;
+          }
+          details summary::marker {
+            display: none;
+            content: "";
+          }
+          summary::after {
+              content: ' ►';
+          }
+          details[open] summary:after {
+              content: " ▼";
+          }
+          
+          .main-svg {
+            border-radius: 1rem;
+            border: 1.5px solid #e2e8f0;
+          }
+        </style>
+      <title>Single result set box plot</title>
+      </head>
+      <body>
+        <h1>Single result set box plot</h1>
+        
+        
+        
+        
+      <details>
+        <summary>Show jobs details</summary>
+        <table>
+          <tr>
+            <th>Job</th>
+            <th>Source</th>
+            <th>Filter</th>
+            <th>Repetitions</th>
+            <th>Go</th>
+            <th>Worker</th>
+            <th>Job Info</th>
+          </tr>
+          
+          <tr>
+            <td>067997a3-761e-475e-9559-f10d7400b835</td>
+            <td>v2.9.11<br>https://github.com/nats-io/nats-server.git<br>(23ffc16f95673efe4f7aa07d7fc4a5fb97679511)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 5s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:04:51 &#43;0000 UTC</td>
+          </tr>
+          
+        </table>
+      </details>
+
+        
+      
+        
+      
+      <h2>Time/Op</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_1" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_1",
+          [
+            
+            {
+              name: "v2.9.11",
+              y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16"],
+              x: [766268.0999999999,268093.6666666666,249792.4],
+              text: ["766µs ± 190µs","268µs ± 58µs","250µs ± 20µs"],
+              hoverinfo: "name+text",
+              hovertext: ["766µs ± 190µs","268µs ± 58µs","250µs ± 20µs"],
+              error_x: {
+                type: 'data',
+                array: [189874.90000000014,58359.83333333337,20112.600000000006],
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            
+          ],
+          {
+            barmode: 'group',
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Time/op (lower is better)",
+            },
+            autosize: true,
+            height: ( 1  * 15) + ( 3  * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>766µs ± 190µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>268µs ± 58µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>250µs ± 20µs</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+        
+      
+      <h2>Time/Op</h2>
+      <small>Filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_2" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_2", 
+          [ 
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16",
+              x: [689431,882720,956143,776137,884880,744590,699214,397152,651678,980736],
+              text: ["689µs","883µs","956µs","776µs","885µs","745µs","699µs","397µs","652µs","981µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16",
+              x: [325099,327808,215763,228961,305216,645961,229649,235338,300947,244062],
+              text: ["325µs","328µs","216µs","229µs","305µs","646µs","230µs","235µs","301µs","244µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16",
+              x: [221136,269905,262960,218950,232611,229801,296222,259091,267534,239714],
+              text: ["221µs","270µs","263µs","219µs","233µs","230µs","296µs","259µs","268µs","240µs"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+          ],
+          { 
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Time/op (lower is better)",
+            },
+            autosize: true,
+            height: ( 2  * 15) + (  3   * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>766µs ± 190µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>268µs ± 58µs</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>250µs ± 20µs</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+        
+      
+      <h2>Throughput</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_3" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_3",
+          [
+            
+            {
+              name: "v2.9.11",
+              y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16"],
+              x: [0.12444444444444444,0.36000000000000004,4.136],
+              text: ["124kB/s ± 26kB/s","360kB/s ± 80kB/s","4.14MB/s ± 0.49MB/s"],
+              hoverinfo: "name+text",
+              hovertext: ["124kB/s ± 26kB/s","360kB/s ± 80kB/s","4.14MB/s ± 0.49MB/s"],
+              error_x: {
+                type: 'data',
+                array: [0.025555555555555554,0.07999999999999996,0.4939999999999998],
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            
+          ],
+          {
+            barmode: 'group',
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Throughput (higher is better)",
+            },
+            autosize: true,
+            height: ( 1  * 15) + ( 3  * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>124kB/s ± 26kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>360kB/s ± 80kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.14MB/s ± 0.49MB/s</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+        
+      
+      <h2>Throughput</h2>
+      <small>Filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_4" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_4", 
+          [ 
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16",
+              x: [0.15,0.11,0.1,0.13,0.11,0.13,0.14,0.25,0.15,0.1],
+              text: ["150kB/s","110kB/s","100kB/s","130kB/s","110kB/s","130kB/s","140kB/s","250kB/s","150kB/s","100kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16",
+              x: [0.31,0.31,0.46,0.44,0.33,0.15,0.44,0.42,0.33,0.41],
+              text: ["310kB/s","310kB/s","460kB/s","440kB/s","330kB/s","150kB/s","440kB/s","420kB/s","330kB/s","410kB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16",
+              x: [4.63,3.79,3.89,4.68,4.4,4.46,3.46,3.95,3.83,4.27],
+              text: ["4.63MB/s","3.79MB/s","3.89MB/s","4.68MB/s","4.40MB/s","4.46MB/s","3.46MB/s","3.95MB/s","3.83MB/s","4.27MB/s"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+          ],
+          { 
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Throughput (higher is better)",
+            },
+            autosize: true,
+            height: ( 2  * 15) + (  3   * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>124kB/s ± 26kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>360kB/s ± 80kB/s</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.14MB/s ± 0.49MB/s</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+        
+      
+      <h2>Op/s</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_5" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_5",
+          [
+            
+            {
+              name: "v2.9.11",
+              y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16"],
+              x: [1389.299977030429,3825.4482373613737,4039.281269859099],
+              text: ["1.39k ± 0.15k","3.83k ± 0.68k","4.04k ± 0.48k"],
+              hoverinfo: "name+text",
+              hovertext: ["1.39k ± 0.15k","3.83k ± 0.68k","4.04k ± 0.48k"],
+              error_x: {
+                type: 'data',
+                array: [145.20019023008922,675.687256898861,482.82277471075804],
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            
+          ],
+          {
+            barmode: 'group',
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Operations per second (higher is better)",
+            },
+            autosize: true,
+            height: ( 1  * 15) + ( 3  * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>1.39k ± 0.15k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>3.83k ± 0.68k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.04k ± 0.48k</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+        
+      
+      <h2>Op/s</h2>
+      <small>Filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_6" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_6", 
+          [ 
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16",
+              x: [1450.4714757531935,1132.8620627152438,1045.8686619051753,1288.432325736307,1130.0967362806257,1343.0209914180957,1430.1773133833133,2517.927644831198,1534.5001672605183,1019.6423910206213],
+              text: ["1.45k","1.13k","1.05k","1.29k","1.13k","1.34k","1.43k","2.52k","1.53k","1.02k"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16",
+              x: [3075.986084238955,3050.5661850839515,4634.714941857501,4367.556046662969,3276.368211365066,1548.0810761021178,4354.471388945739,4249.207522796999,3322.8442217400407,4097.319533561144],
+              text: ["3.08k","3.05k","4.63k","4.37k","3.28k","1.55k","4.35k","4.25k","3.32k","4.10k"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+            {
+              name: "JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16",
+              x: [4522.104044569857,3705.007317389452,3802.8597505324005,4567.252797442338,4299.022832110261,4351.591159307401,3375.846493508247,3859.647768544643,3737.842666726472,4171.637868459915],
+              text: ["4.52k","3.71k","3.80k","4.57k","4.30k","4.35k","3.38k","3.86k","3.74k","4.17k"],
+              type: 'box',
+              jitter: 0.5,
+              pointpos: 0.0,
+              boxpoints: 'all',
+              showlegend: false,
+              hoverinfo: "text",
+            },
+            
+          ],
+          { 
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Operations per second (higher is better)",
+            },
+            autosize: true,
+            height: ( 2  * 15) + (  3   * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>v2.9.11</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>1.39k ± 0.15k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>3.83k ± 0.68k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.04k ± 0.48k</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
