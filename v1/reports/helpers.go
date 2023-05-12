@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"regexp"
+	"time"
 
 	"github.com/montanaflynn/stats"
 	"github.com/mprimi/go-bench-away/v1/core"
@@ -153,7 +154,7 @@ func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.T
 	}
 
 	nsOpToMsgPerSec := func(v float64) float64 {
-		return 1 / v * 1_000_000_000
+		return 1 / v * float64(time.Second)
 	}
 
 	// N.B. benchstat calculates geometric mean differently see GeomMean:
@@ -173,7 +174,7 @@ func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.T
 		return m / float64(len(vs))
 	}
 
-	msgPerSecTable := &benchstat.Table{
+	opsPerSecondTable := &benchstat.Table{
 		Metric:      string(metric),
 		OldNewDelta: timeOpTable.OldNewDelta,
 		Configs:     timeOpTable.Configs,
@@ -182,7 +183,7 @@ func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.T
 	}
 
 	for i, timeOpRow := range timeOpTable.Rows {
-		msgPerSecRow := &benchstat.Row{
+		opsPerSecondRow := &benchstat.Row{
 			Benchmark: timeOpRow.Benchmark,
 			Group:     timeOpRow.Group,
 			Scaler:    nil,
@@ -196,13 +197,13 @@ func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.T
 		for j, timeOpMetric := range timeOpRow.Metrics {
 			if len(timeOpMetric.Values) == 0 {
 				// empty row, copy as-is
-				msgPerSecRow.Metrics[j] = timeOpMetric
+				opsPerSecondRow.Metrics[j] = timeOpMetric
 				continue
 			}
 			if timeOpMetric.Unit != "ns/op" {
 				panic(fmt.Sprintf("unexpected unit: %s", timeOpMetric.Unit))
 			}
-			msgPerSecMetric := &benchstat.Metrics{
+			opsPerSecondMetric := &benchstat.Metrics{
 				Unit:    string(metric),
 				Values:  make([]float64, len(timeOpMetric.Values)),
 				RValues: make([]float64, len(timeOpMetric.RValues)),
@@ -212,17 +213,17 @@ func invertTimeOpTable(timeOpTable *benchstat.Table, metric Metric) *benchstat.T
 			}
 
 			for k, value := range timeOpMetric.Values {
-				msgPerSecMetric.Values[k] = nsOpToMsgPerSec(value)
+				opsPerSecondMetric.Values[k] = nsOpToMsgPerSec(value)
 			}
 			for k, value := range timeOpMetric.RValues {
-				msgPerSecMetric.RValues[k] = nsOpToMsgPerSec(value)
+				opsPerSecondMetric.RValues[k] = nsOpToMsgPerSec(value)
 			}
 
-			msgPerSecRow.Metrics[j] = msgPerSecMetric
+			opsPerSecondRow.Metrics[j] = opsPerSecondMetric
 		}
 
-		msgPerSecTable.Rows[i] = msgPerSecRow
+		opsPerSecondTable.Rows[i] = opsPerSecondRow
 	}
 
-	return msgPerSecTable
+	return opsPerSecondTable
 }
