@@ -80,6 +80,9 @@ func (spec *ReportSpec) ConfigureReport(reportCfg *ReportConfig) error {
 		case "horizontal_bar_chart":
 			section = HorizontalBarChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr)
 
+		case "horizontal_box_chart":
+			section = HorizontalBoxChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr)
+
 		case "horizontal_delta_chart":
 			section = HorizontalDeltaChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr)
 			isDelta = true

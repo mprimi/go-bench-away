@@ -73,6 +73,44 @@ func TestWriteEmptyReport(t *testing.T) {
 	)
 }
 
+func TestWriteSingleResultSetReport(t *testing.T) {
+	resetChartId()
+
+	tests := []string{
+		"single1",
+	}
+
+	for _, test := range tests {
+		specName := test + ".json"
+		reportName := test + ".html"
+		t.Run(
+			"Custom report: "+specName+" -> "+reportName,
+			func(t *testing.T) {
+				specPath := filepath.Join("testconfig", specName)
+
+				var spec ReportSpec
+				err := spec.LoadFile(specPath)
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				cfg := &ReportConfig{}
+				err = spec.ConfigureReport(cfg)
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				writeReportAndCompareToExpected(
+					t,
+					[]string{job1},
+					cfg,
+					reportName,
+				)
+			},
+		)
+	}
+}
+
 func TestWriteTrendAndBarsReport(t *testing.T) {
 
 	testCases := []struct {
@@ -190,31 +228,6 @@ func TestWriteCompareReport(t *testing.T) {
 		[]string{job1, job2},
 		cfg,
 		"compare.html",
-	)
-}
-
-func TestWriteSingleReport(t *testing.T) {
-	resetChartId()
-	cfg := &ReportConfig{
-		Title:   "Single results set report",
-		verbose: true,
-	}
-
-	filter := ""
-
-	cfg.AddSections(
-		JobsTable(),
-		HorizontalBoxChart("", TimeOp, filter),
-		ResultsTable(TimeOp, filter, true),
-		HorizontalBoxChart("", Speed, filter),
-		ResultsTable(Speed, filter, true),
-	)
-
-	writeReportAndCompareToExpected(
-		t,
-		[]string{job1},
-		cfg,
-		"single.html",
 	)
 }
 
@@ -355,7 +368,7 @@ func assertReportEqual(t *testing.T, reportPath string, expectedReportPath strin
 		// Set to true to copy the produced report over the expected report in the test data directory.
 		// Useful to update the reports after a code change, assuming the new output is valid after being reviewed
 		// via git diff.
-		const overwriteTestData = false
+		const overwriteTestData = true
 		if overwriteTestData {
 			err := os.Rename(reportPath, expectedReportPath)
 			if err != nil {

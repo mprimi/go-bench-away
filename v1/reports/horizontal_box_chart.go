@@ -27,6 +27,8 @@ func (s *horizontalBoxChartSection) fillData(dt *dataTableImpl) error {
 		table = dt.timeOpTable
 		s.XTitle = "Time/op (lower is better)"
 	case Speed:
+		fallthrough
+	case Throughput:
 		table = dt.speedTable
 		s.XTitle = "Throughput (higher is better)"
 	case OpsPerSec:
@@ -52,9 +54,9 @@ func (s *horizontalBoxChartSection) fillData(dt *dataTableImpl) error {
 			Values: metrics.Values,
 			Labels: make([]string, len(metrics.Values)),
 		}
-
+		scaler := benchstat.NewScaler(metrics.Mean, metrics.Unit)
 		for j, value := range metrics.Values {
-			s.Experiments[i].Labels[j] = row.Scaler(value)
+			s.Experiments[i].Labels[j] = scaler(value)
 		}
 	}
 	return nil

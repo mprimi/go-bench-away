@@ -1,0 +1,41 @@
+{
+  "title" : "Single result set box plot",
+  "sections" : [
+    {
+      "title" : "Time/Op",
+      "metric": "time/op",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Time/Op",
+      "metric": "time/op",
+      "type": "horizontal_box_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Throughput",
+      "metric": "throughput",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Throughput",
+      "metric": "throughput",
+      "type": "horizontal_box_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Op/s",
+      "metric": "op/s",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Op/s",
+      "metric": "op/s",
+      "type": "horizontal_box_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    }
+  ]
+}
