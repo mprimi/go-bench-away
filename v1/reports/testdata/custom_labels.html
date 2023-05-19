@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;900&display=swap');
+
+          * {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+          }
+          body {
+            background: #f1f5f9;
+            color: #444;
+            padding-left: 2rem;
+            padding-right: 2rem;
+          }
+          h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            line-height: 2.5rem;
+            text-transform: uppercase;
+          }
+          h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            line-height: 2rem;
+            text-transform: capitalize;
+          }
+          small {
+            color: #64748b;
+            font-weight: 400;
+            font-size: 0.75rem;
+            line-height: 1rem;
+          }
+
+          table {
+            table-layout: fixed;
+
+            background: white;
+            padding: 3px;
+            margin: 3px;
+
+            border-collapse: collapse;
+            border-radius: 0.5rem;
+
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+          }
+          td, th {
+              border: solid #cbd5e1 1px;
+              padding-left: 5px;
+              padding-right: 5px;
+          }
+          th {
+              color: white;
+              background: #5842C3;
+              border-collapse: collapse;
+              border: none;
+          }
+          tr:first-child th:first-child {
+            border-top-left-radius: 0.5rem;
+          }
+          tr:last-child th:first-child {
+            border-bottom-left-radius: 0.5rem;
+          }
+          tr:first-child th:last-child {
+            border-top-right-radius: 0.5rem;
+          }
+          tr:last-child td {
+            border-bottom: none;
+          }
+
+          details summary {
+            color: #9E8CFC;
+            border: 1px solid #9E8CFC;
+
+            width: fit-content;
+            padding: 5px;
+
+            text-transform: lowercase;
+            border-radius: 0.5rem;
+            cursor: pointer;
+          }
+          details summary:hover {
+            opacity: 0.7;
+          }
+          details summary::marker {
+            display: none;
+            content: "";
+          }
+          summary::after {
+              content: ' ►';
+          }
+          details[open] summary:after {
+              content: " ▼";
+          }
+          
+          .main-svg {
+            border-radius: 1rem;
+            border: 1.5px solid #e2e8f0;
+          }
+        </style>
+      <title>Trends with filters</title>
+      </head>
+      <body>
+        <h1>Trends with filters</h1>
+        
+        
+        
+        
+      <details>
+        <summary>Show jobs details</summary>
+        <table>
+          <tr>
+            <th>Job</th>
+            <th>Source</th>
+            <th>Filter</th>
+            <th>Repetitions</th>
+            <th>Go</th>
+            <th>Worker</th>
+            <th>Job Info</th>
+          </tr>
+          
+          <tr>
+            <td>067997a3-761e-475e-9559-f10d7400b835</td>
+            <td>v2.9.11<br>https://github.com/nats-io/nats-server.git<br>(23ffc16f95673efe4f7aa07d7fc4a5fb97679511)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 5s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:04:51 &#43;0000 UTC</td>
+          </tr>
+          
+          <tr>
+            <td>dd146049-0137-4ba0-89b1-0a2f8d0a2268</td>
+            <td>main<br>https://github.com/nats-io/nats-server.git<br>(d14968cb4face7aba66b225a172b2bc6f6784ffb)</td>
+            <td>BenchmarkJetStream.*/.*R=3.*</td>
+            <td>10 x 3s</td>
+            <td>go version go1.19.3 linux/amd64<br>(/usr/local/go1.19.3/bin/go)</td>
+            <td>0.2.3 (a0af6ac)<br>benchmark.example.com<br>Linux_5.15.0-56-generic-x86_64</td>
+            <td>Submitted by benchmark-bot at 2023-04-05 01:27:45 &#43;0000 UTC</td>
+          </tr>
+          
+        </table>
+      </details>
+
+        
+      
+        
+      
+      <h2>Op/s Trend</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_1" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        "chart_1", 
+        [ 
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=1,K=100,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268"],
+            "y": [1389.299977030429,1739.686310017627],
+            "text": ["1.39k ± 0.15k","1.74k ± 1.07k"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [145.20019023008922,1066.480522212883],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=100b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268"],
+            "y": [3825.4482373613737,2270.54672110663],
+            "text": ["3.83k ± 0.68k","2.27k ± 1.01k"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [675.687256898861,1009.2171358956662],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+          {
+            "name": "JetStreamKV\/N=3,R=3,B=10,K=1000,ValSz=1024b\/CAS-16",
+            "x": ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268"],
+            "y": [4039.281269859099,1765.2895794656165],
+            "text": ["4.04k ± 0.48k","1.77k ± 0.60k"],
+            "hoverinfo": "text",
+            "mode": "lines+markers",
+            "type": "scatter",
+            "error_y": {
+              "type": "data",
+              "array": [482.82277471075804,598.2178655828357],
+              "visible": true,
+              "symmetric": true
+            }
+          },
+          
+        ],
+        {
+          yaxis: {
+            title: "operations/s",
+          },
+          xaxis: {
+            title: "(higher is better)",
+            tickvals: ["067997a3-761e-475e-9559-f10d7400b835","dd146049-0137-4ba0-89b1-0a2f8d0a2268"],
+            ticktext : ["Apples","Oranges"],
+          }
+        }
+      );
+    </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>Apples</th>
+          
+          <th>Oranges</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>1.39k ± 0.15k</td>
+          
+          <td>1.74k ± 1.07k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>3.83k ± 0.68k</td>
+          
+          <td>2.27k ± 1.01k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.04k ± 0.48k</td>
+          
+          <td>1.77k ± 0.60k</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+        
+      
+      <h2>Op/s Bars</h2>
+      <small>Error bars represent 90% confidence interval, benchmarks filter: &#39;.*JetStreamKV/.*/CAS&#39;</small>
+      <div id="chart_2" class="chart"></div>
+      <script>
+        Plotly.newPlot(
+          "chart_2",
+          [
+            
+            {
+              name: "Apples",
+              y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16"],
+              x: [1389.299977030429,3825.4482373613737,4039.281269859099],
+              text: ["1.39k ± 0.15k","3.83k ± 0.68k","4.04k ± 0.48k"],
+              hoverinfo: "name+text",
+              hovertext: ["1.39k ± 0.15k","3.83k ± 0.68k","4.04k ± 0.48k"],
+              error_x: {
+                type: 'data',
+                array: [145.20019023008922,675.687256898861,482.82277471075804],
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            
+            {
+              name: "Oranges",
+              y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16"],
+              x: [1739.686310017627,2270.54672110663,1765.2895794656165],
+              text: ["1.74k ± 1.07k","2.27k ± 1.01k","1.77k ± 0.60k"],
+              hoverinfo: "name+text",
+              hovertext: ["1.74k ± 1.07k","2.27k ± 1.01k","1.77k ± 0.60k"],
+              error_x: {
+                type: 'data',
+                array: [1066.480522212883,1009.2171358956662,598.2178655828357],
+                visible: true
+              },
+              type: 'bar',
+              orientation: 'h',
+            },
+            
+          ],
+          {
+            barmode: 'group',
+            yaxis: {
+              title: "",
+              ticklabelposition: "inside",
+              autorange: "reversed",
+            },
+            xaxis: {
+              title: "Operations per second (higher is better)",
+            },
+            autosize: true,
+            height: ( 2  * 15) + ( 3  * 80) + 50,
+            margin: {
+              t: 20,
+              b: 30,
+            },
+          }
+        );
+      </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>Apples</th>
+          
+          <th>Oranges</th>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>1.39k ± 0.15k</td>
+          
+          <td>1.74k ± 1.07k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>3.83k ± 0.68k</td>
+          
+          <td>2.27k ± 1.01k</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.04k ± 0.48k</td>
+          
+          <td>1.77k ± 0.60k</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+        
+      
+      <h2>Op/s Delta</h2>
+      <small></small>
+      <div id="chart_3" class="chart"></div>
+      <script>
+      Plotly.newPlot(
+        "chart_3",
+        [{
+          type: 'bar',
+          y: ["JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16","JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16"],
+          x: [22.39615650842362,-51.013871463092855,-78.35175930906351],
+          text: ["+22.4%","-51.0%","-78.4%"],
+          marker: {
+            color: ["green","red","red"]
+          },
+          orientation: 'h'
+        }],
+        {
+          xaxis: {
+            title: "Δ% op/s (higher is better)",
+            ticksuffix: "%",
+            zeroline: true,
+            zerolinewidth: 3,
+          },
+          yaxis: {
+            ticklabelposition: "inside",
+            automargin: true,
+            dtick: 1,
+            autorange: "reversed",
+          },
+          autosize: true,
+          height: ( 3  * 50) + 50,
+          margin: {
+            t: 20,
+            b: 30,
+          }
+        }
+      );
+      </script>
+
+      
+      
+        
+      
+      <h2></h2>
+      
+      <details>
+        <summary>Show results table</summary>
+      
+      <table>
+        <tr>
+          <th></th>
+          
+          <th>Apples</th>
+          
+          <th>Oranges</th>
+          
+          <th>Δ%</th>
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=1,K=100,ValSz=100b/CAS-16</th>
+          
+          <td>1.39k ± 0.15k</td>
+          
+          <td>1.74k ± 1.07k</td>
+          
+          <td>&#43;22.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=100b/CAS-16</th>
+          
+          <td>3.83k ± 0.68k</td>
+          
+          <td>2.27k ± 1.01k</td>
+          
+          <td>-51.0%</td>
+          
+        </tr>
+        
+        <tr>
+          <th>JetStreamKV/N=3,R=3,B=10,K=1000,ValSz=1024b/CAS-16</th>
+          
+          <td>4.04k ± 0.48k</td>
+          
+          <td>1.77k ± 0.60k</td>
+          
+          <td>-78.4%</td>
+          
+        </tr>
+        
+      </table>
+      
+      </details>
+      
+
+      
+      
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,6 +10,7 @@ import (
 type ReportSpec struct {
 	Title    string              `json:"title"`
 	Sections []ReportSectionSpec `json:"sections"`
+	Labels   []string            `json:"labels"`
 }
 
 type ReportSectionSpec struct {
@@ -49,6 +50,11 @@ func (spec *ReportSpec) ConfigureReport(reportCfg *ReportConfig) error {
 	reportCfg.AddSections(
 		JobsTable(),
 	)
+
+	// Set custom labels, if present
+	if spec.Labels != nil && len(spec.Labels) > 0 {
+		reportCfg.SetCustomLabels(spec.Labels)
+	}
 
 	for _, sectionSpec := range spec.Sections {
 

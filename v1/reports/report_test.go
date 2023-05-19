@@ -65,12 +65,7 @@ func TestWriteEmptyReport(t *testing.T) {
 		verbose: true,
 	}
 
-	writeReportAndCompareToExpected(
-		t,
-		[]string{job1, job2, job3},
-		&cfg,
-		"empty.html",
-	)
+	writeReportAndCompareToExpected(t, []string{job1, job2, job3}, &cfg, "empty.html")
 }
 
 func TestWriteSingleResultSetReport(t *testing.T) {
@@ -100,12 +95,7 @@ func TestWriteSingleResultSetReport(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				writeReportAndCompareToExpected(
-					t,
-					[]string{job1},
-					cfg,
-					reportName,
-				)
+				writeReportAndCompareToExpected(t, []string{job1}, cfg, reportName)
 			},
 		)
 	}
@@ -144,12 +134,7 @@ func TestWriteTrendAndBarsReport(t *testing.T) {
 					ResultsTable(testCase.metric, filter, true),
 				)
 
-				writeReportAndCompareToExpected(
-					t,
-					[]string{job1, job2, job3},
-					cfg,
-					testCase.filename,
-				)
+				writeReportAndCompareToExpected(t, []string{job1, job2, job3}, cfg, testCase.filename)
 
 			},
 		)
@@ -173,12 +158,7 @@ func TestWriteTrendReportFiltered(t *testing.T) {
 		ResultsTable(Speed, filter, true),
 	)
 
-	writeReportAndCompareToExpected(
-		t,
-		[]string{job1, job2, job3},
-		cfg,
-		"trend_filtered.html",
-	)
+	writeReportAndCompareToExpected(t, []string{job1, job2, job3}, cfg, "trend_filtered.html")
 }
 
 func TestWriteCompareNReport(t *testing.T) {
@@ -198,12 +178,7 @@ func TestWriteCompareNReport(t *testing.T) {
 		ResultsTable(Speed, filter, true),
 	)
 
-	writeReportAndCompareToExpected(
-		t,
-		[]string{job1, job2, job3},
-		cfg,
-		"compare_n.html",
-	)
+	writeReportAndCompareToExpected(t, []string{job1, job2, job3}, cfg, "compare_n.html")
 }
 
 func TestWriteCompareReport(t *testing.T) {
@@ -223,29 +198,31 @@ func TestWriteCompareReport(t *testing.T) {
 		ResultsDeltaTable(Speed, filter, true),
 	)
 
-	writeReportAndCompareToExpected(
-		t,
-		[]string{job1, job2},
-		cfg,
-		"compare.html",
-	)
+	writeReportAndCompareToExpected(t, []string{job1, job2}, cfg, "compare.html")
 }
 
 func TestWriteCustomReports(t *testing.T) {
 	resetChartId()
 
-	tests := []string{
-		"custom1",
-		"custom2",
+	tests := []struct {
+		name string
+		jobs []string
+	}{
+		{name: "custom1", jobs: []string{job1, job2, job3}},
+		{name: "custom2", jobs: []string{job1, job2, job3}},
+		{name: "custom_labels", jobs: []string{job1, job2}},
+		{name: "compare1", jobs: []string{job1, job2}},
 	}
 
 	for _, test := range tests {
-		specName := test + ".json"
-		reportName := test + ".html"
+		specName := test.name + ".json"
+		reportName := test.name + ".html"
 		t.Run(
 			"Custom report: "+specName+" -> "+reportName,
 			func(t *testing.T) {
 				specPath := filepath.Join("testconfig", specName)
+
+				resetChartId()
 
 				var spec ReportSpec
 				err := spec.LoadFile(specPath)
@@ -259,50 +236,7 @@ func TestWriteCustomReports(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				writeReportAndCompareToExpected(
-					t,
-					[]string{job1, job2, job3},
-					cfg,
-					reportName,
-				)
-			},
-		)
-	}
-}
-
-func TestWriteCustomComparisonReports(t *testing.T) {
-	resetChartId()
-
-	tests := []string{
-		"compare1",
-	}
-
-	for _, test := range tests {
-		specName := test + ".json"
-		reportName := test + ".html"
-		t.Run(
-			"Custom report: "+specName+" -> "+reportName,
-			func(t *testing.T) {
-				specPath := filepath.Join("testconfig", specName)
-
-				var spec ReportSpec
-				err := spec.LoadFile(specPath)
-				if err != nil {
-					t.Fatal(err)
-				}
-
-				cfg := &ReportConfig{}
-				err = spec.ConfigureReport(cfg)
-				if err != nil {
-					t.Fatal(err)
-				}
-
-				writeReportAndCompareToExpected(
-					t,
-					[]string{job1, job2},
-					cfg,
-					reportName,
-				)
+				writeReportAndCompareToExpected(t, test.jobs, cfg, reportName)
 			},
 		)
 	}

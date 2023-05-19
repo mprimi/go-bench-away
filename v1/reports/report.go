@@ -37,9 +37,10 @@ const (
 )
 
 type ReportConfig struct {
-	Title    string
-	sections []SectionConfig
-	verbose  bool
+	Title        string
+	sections     []SectionConfig
+	verbose      bool
+	customLabels []string
 }
 
 func (r *ReportConfig) AddSections(sections ...SectionConfig) *ReportConfig {
@@ -58,9 +59,25 @@ func (r *ReportConfig) Log(format string, args ...any) {
 	}
 }
 
+func (r *ReportConfig) SetCustomLabels(customLabels []string) {
+	r.customLabels = customLabels
+}
+
 func WriteReport(cfg *ReportConfig, dataTable DataTable, writer io.Writer) error {
 	dt := dataTable.(*dataTableImpl)
 	title := cfg.Title
+	if cfg.customLabels != nil || len(cfg.customLabels) > 0 {
+		if len(cfg.customLabels) != len(dt.jobs) {
+			panic(
+				fmt.Sprintf(
+					"Wrong number of custom labels, %d given for %d jobs",
+					len(cfg.customLabels),
+					len(dt.jobs),
+				),
+			)
+		}
+		dt.jobLabels = cfg.customLabels
+	}
 	if title == "" {
 		title = fmt.Sprintf("Performance report (%d result sets)", len(dt.jobs))
 	}

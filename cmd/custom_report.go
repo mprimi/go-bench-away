@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/mprimi/go-bench-away/v1/client"
 	"github.com/mprimi/go-bench-away/v1/reports"
@@ -14,9 +15,10 @@ import (
 
 type customReportCmd struct {
 	baseCommand
-	outputPath string
-	reportCfg  reports.ReportConfig
-	specPath   string
+	outputPath   string
+	reportCfg    reports.ReportConfig
+	specPath     string
+	customLabels string
 }
 
 func customReportCommand() subcommands.Command {
@@ -32,6 +34,7 @@ func customReportCommand() subcommands.Command {
 func (cmd *customReportCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.outputPath, "output", "report.html", "Output report (HTML)")
 	f.StringVar(&cmd.specPath, "spec", "spec.json", "Report configuration (JSON)")
+	f.StringVar(&cmd.customLabels, "labels", "", "Use custom labels (comma separated, no spaces, e.g.: \"a,b,c\")")
 }
 
 func (cmd *customReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -80,6 +83,10 @@ func (cmd *customReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...int
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to configure report: %v\n", err)
 		return subcommands.ExitFailure
+	}
+
+	if cmd.customLabels != "" {
+		cmd.reportCfg.SetCustomLabels(strings.Split(cmd.customLabels, ","))
 	}
 
 	file, err := os.Create(cmd.outputPath)
