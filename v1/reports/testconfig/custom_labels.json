@@ -1,0 +1,25 @@
+{
+  "title" : "Trends with filters",
+  "labels" : ["Apples", "Oranges"],
+  "sections" : [
+    {
+      "title" : "Op/s Trend",
+      "metric": "op/s",
+      "type": "trend_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Op/s Bars",
+      "metric": "op/s",
+      "type": "horizontal_bar_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Op/s Delta",
+      "metric": "op/s",
+      "type": "horizontal_delta_chart",
+      "filter": ".*JetStreamKV/.*/CAS"
+    }
+
+  ]
+}

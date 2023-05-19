@@ -20,6 +20,8 @@ type comparativeReportCmd struct {
 	hiddenResultsTable  bool
 	outputPath          string
 	reportCfg           reports.ReportConfig
+	beforeLabel         string
+	afterLabel          string
 }
 
 func comparativeReportCommand() subcommands.Command {
@@ -39,6 +41,8 @@ func (cmd *comparativeReportCmd) SetFlags(f *flag.FlagSet) {
 	f.BoolVar(&cmd.skipSpeed, "no_speed", false, "Do not include speed graph and table")
 	f.StringVar(&cmd.benchmarkFilterExpr, "benchmark_filter", "", "Regular expression to filter experiments based on benchmark name")
 	f.BoolVar(&cmd.hiddenResultsTable, "hide_table", true, "Hide the results table by default")
+	f.StringVar(&cmd.beforeLabel, "label_before", "Before", "Alternative label for the before/left side of the comparison")
+	f.StringVar(&cmd.afterLabel, "label_after", "After", "Alternative label for the after/right side of the comparison")
 }
 
 func (cmd *comparativeReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -72,6 +76,8 @@ func (cmd *comparativeReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ .
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure
 	}
+
+	cmd.reportCfg.SetCustomLabels([]string{cmd.beforeLabel, cmd.afterLabel})
 
 	if rootOptions.verbose {
 		cmd.reportCfg.Verbose()

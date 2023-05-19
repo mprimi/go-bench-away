@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/mprimi/go-bench-away/v1/client"
 	"github.com/mprimi/go-bench-away/v1/reports"
@@ -20,6 +21,7 @@ type trendReportCmd struct {
 	hiddenResultsTable  bool
 	outputPath          string
 	reportCfg           reports.ReportConfig
+	customLabels        string
 }
 
 func trendReportCommand() subcommands.Command {
@@ -39,6 +41,7 @@ func (cmd *trendReportCmd) SetFlags(f *flag.FlagSet) {
 	f.BoolVar(&cmd.skipSpeed, "no_speed", false, "Do not include speed graph and table")
 	f.StringVar(&cmd.benchmarkFilterExpr, "benchmark_filter", "", "Regular expression to filter experiments based on benchmark name")
 	f.BoolVar(&cmd.hiddenResultsTable, "hide_table", false, "Hide the results table by default")
+	f.StringVar(&cmd.customLabels, "labels", "", "Use custom labels (comma separated, no spaces, e.g.: \"a,b,c\")")
 }
 
 func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -75,6 +78,10 @@ func (cmd *trendReportCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...inte
 
 	if rootOptions.verbose {
 		cmd.reportCfg.Verbose()
+	}
+
+	if cmd.customLabels != "" {
+		cmd.reportCfg.SetCustomLabels(strings.Split(cmd.customLabels, ","))
 	}
 
 	cmd.reportCfg.AddSections(
