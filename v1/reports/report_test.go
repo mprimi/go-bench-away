@@ -368,7 +368,7 @@ func assertReportEqual(t *testing.T, reportPath string, expectedReportPath strin
 		// Set to true to copy the produced report over the expected report in the test data directory.
 		// Useful to update the reports after a code change, assuming the new output is valid after being reviewed
 		// via git diff.
-		const overwriteTestData = true
+		const overwriteTestData = false
 		if overwriteTestData {
 			err := os.Rename(reportPath, expectedReportPath)
 			if err != nil {
