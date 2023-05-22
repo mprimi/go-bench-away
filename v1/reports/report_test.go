@@ -212,6 +212,7 @@ func TestWriteCustomReports(t *testing.T) {
 		{name: "custom2", jobs: []string{job1, job2, job3}},
 		{name: "custom_labels", jobs: []string{job1, job2}},
 		{name: "compare1", jobs: []string{job1, job2}},
+		{name: "compare2", jobs: []string{job1, job2}},
 	}
 
 	for _, test := range tests {
