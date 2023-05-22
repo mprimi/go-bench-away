@@ -77,20 +77,25 @@ func (spec *ReportSpec) ConfigureReport(reportCfg *ReportConfig) error {
 		}
 
 		// Parse section (plot type)
-		var section SectionConfig
+		var sections []SectionConfig
 		var isDelta bool
 		switch sectionSpec.Type {
 		case "trend_chart":
-			section = TrendChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr)
+			sections = append(sections, TrendChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr))
 
 		case "horizontal_bar_chart":
-			section = HorizontalBarChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr)
+			sections = append(sections, HorizontalBarChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr))
+
+		case "horizontal_bar_chart_with_delta":
+			sections = append(sections, HorizontalBarChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr))
+			sections = append(sections, HorizontalDeltaChart(" ", metric, sectionSpec.BenchmarkFilterExpr))
+			isDelta = true
 
 		case "horizontal_box_chart":
-			section = HorizontalBoxChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr)
+			sections = append(sections, HorizontalBoxChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr))
 
 		case "horizontal_delta_chart":
-			section = HorizontalDeltaChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr)
+			sections = append(sections, HorizontalDeltaChart(sectionSpec.Title, metric, sectionSpec.BenchmarkFilterExpr))
 			isDelta = true
 
 		default:
@@ -98,7 +103,7 @@ func (spec *ReportSpec) ConfigureReport(reportCfg *ReportConfig) error {
 		}
 
 		// Add plot to report
-		reportCfg.AddSections(section)
+		reportCfg.AddSections(sections...)
 
 		// Add table to report (always hidden)
 		// TODO allow configuring hidden or not

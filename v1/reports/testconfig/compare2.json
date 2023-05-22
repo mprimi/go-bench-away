@@ -1,0 +1,30 @@
+{
+  "title" : "Bar charts with filters and deltas",
+  "labels" : ["latest release", "latest main"],
+  "sections" : [
+    {
+      "title" : "Time/Op Bar Chart",
+      "metric": "time/op",
+      "type": "horizontal_bar_chart_with_delta",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Op/s Bar Chart",
+      "metric": "op/s",
+      "type": "horizontal_bar_chart_with_delta",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Msg/s Bar Chart",
+      "metric": "msg/s",
+      "type": "horizontal_bar_chart_with_delta",
+      "filter": ".*JetStreamKV/.*/CAS"
+    },
+    {
+      "title" : "Speed Bar Chart",
+      "metric": "speed",
+      "type": "horizontal_bar_chart_with_delta",
+      "filter": ".*JetStreamKV/.*/CAS"
+    }
+  ]
+}
