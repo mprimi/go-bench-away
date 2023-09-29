@@ -14,8 +14,9 @@ import (
 
 type workerCmd struct {
 	baseCommand
-	jobsDir  string
-	altQueue string
+	jobsDir             string
+	altQueue            string
+	gitRemoteFilterExpr string
 }
 
 func workerCommand() subcommands.Command {
@@ -31,6 +32,7 @@ func workerCommand() subcommands.Command {
 func (cmd *workerCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.jobsDir, "jobs_dir", "", "Directory where jobs are staged (defaults to os.MkdirTemp)")
 	f.StringVar(&cmd.altQueue, "queue", "", "Consume job from a non-default queue with the specified name")
+	f.StringVar(&cmd.gitRemoteFilterExpr, "gitRemoteFilterExpr", "", "Regex to restrict which git remotes can be targeted")
 }
 
 func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -74,7 +76,14 @@ func (cmd *workerCmd) Execute(ctx context.Context, f *flag.FlagSet, _ ...interfa
 		}
 	}
 
-	w, err := worker.NewWorker(c, cmd.jobsDir)
+	var allowedGitRemoteExpr []string
+	if cmd.gitRemoteFilterExpr != "" {
+		allowedGitRemoteExpr = []string{
+			cmd.gitRemoteFilterExpr,
+		}
+	}
+
+	w, err := worker.NewWorker(c, cmd.jobsDir, allowedGitRemoteExpr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return subcommands.ExitFailure

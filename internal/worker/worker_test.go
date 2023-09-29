@@ -48,7 +48,7 @@ func TestProcessJob(t *testing.T) {
 	var client WorkerClient = newMockClient()
 	jobsDir := t.TempDir()
 
-	w, err := NewWorker(client, jobsDir)
+	w, err := NewWorker(client, jobsDir, nil)
 	if w == nil {
 		t.Fatalf("Client is nil")
 	} else if err != nil {
@@ -86,4 +86,85 @@ func TestProcessJob(t *testing.T) {
 		t.Fatalf("Failed to open: %v", err)
 	}
 	f.Close()
+}
+
+func TestFilterDisallowedJobs(t *testing.T) {
+
+	var client = newMockClient()
+	jobsDir := t.TempDir()
+
+	allowedGitRemotes := []string{
+		".*://github\\.com/(mprimi|ReubenMathew)/.*",
+		".*://github\\.com/SomeOrg/SomeProject.git$",
+	}
+
+	w, err := NewWorker(client, jobsDir, allowedGitRemotes)
+	if w == nil {
+		t.Fatalf("Client is nil")
+	} else if err != nil {
+		t.Fatalf("Client init failed: %v", err)
+	}
+
+	wi := w.(*workerImpl)
+	wi.testSkipRun = true
+
+	testCases := []struct {
+		GitRemote      string
+		ExpectedStatus core.JobStatus
+	}{
+		{
+			"https://github.com/mprimi/go-bench-away.git",
+			core.Succeeded,
+		},
+		{
+			"https://github.com/ReubenMathew/go-bench-away.git",
+			core.Succeeded,
+		},
+		{
+			"https://github.com/EveEvil/go-bench-away.git",
+			core.Failed,
+		},
+		{
+			"https://github.com/SomeOrg/SomeProject.git",
+			core.Succeeded,
+		},
+		{
+			"https://github.com/EvilOrg/SomeProject.git",
+			core.Failed,
+		},
+		{
+			"https://github.com/SomeOrg/SomeProject.git.git",
+			core.Failed,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(
+			testCase.GitRemote,
+			func(t *testing.T) {
+
+				jobParams := core.JobParameters{
+					GitRemote:       testCase.GitRemote,
+					GitRef:          "main",
+					TestsSubDir:     "internal/core",
+					TestsFilterExpr: ".*",
+					Reps:            3,
+					TestMinRuntime:  1 * time.Second,
+					Timeout:         5 * time.Minute,
+					Username:        "test",
+				}
+
+				job := core.NewJob(jobParams)
+				retry, _ := wi.processJob(job, 1)
+
+				if retry {
+					t.Fatalf("Unexpected retry: %v", retry)
+				}
+
+				if job.Status != testCase.ExpectedStatus {
+					t.Fatalf("Expected status: %s, got %s", testCase.ExpectedStatus, job.Status)
+				}
+			},
+		)
+	}
 }

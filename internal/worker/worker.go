@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"text/template"
 
@@ -31,13 +32,15 @@ type Worker interface {
 }
 
 type workerImpl struct {
-	c              WorkerClient
-	jobsDir        string
-	workerInfo     core.WorkerInfo
-	scriptTemplate *template.Template
+	c                       WorkerClient
+	jobsDir                 string
+	workerInfo              core.WorkerInfo
+	scriptTemplate          *template.Template
+	testSkipRun             bool
+	allowedGitRemoteRegexes []*regexp.Regexp
 }
 
-func NewWorker(c WorkerClient, jobsDir string) (Worker, error) {
+func NewWorker(c WorkerClient, jobsDir string, allowedGitRemoteExpr []string) (Worker, error) {
 	// Utsname byte arrays are filled with string termination characters,
 	// and naive string conversion preserves them.
 	bts := func(buf []byte) string {
@@ -52,6 +55,18 @@ func NewWorker(c WorkerClient, jobsDir string) (Worker, error) {
 		return nil, err
 	}
 
+	var allowedGitRemoteRegexes []*regexp.Regexp
+	if len(allowedGitRemoteExpr) > 0 {
+		allowedGitRemoteRegexes = make([]*regexp.Regexp, 0, len(allowedGitRemoteExpr))
+		for _, expr := range allowedGitRemoteExpr {
+			regex, err := regexp.Compile(expr)
+			if err != nil {
+				return nil, fmt.Errorf("invalid git remote regex: %s: %w", regex, err)
+			}
+			allowedGitRemoteRegexes = append(allowedGitRemoteRegexes, regex)
+		}
+	}
+
 	return &workerImpl{
 		c:       c,
 		jobsDir: jobsDir,
@@ -60,7 +75,8 @@ func NewWorker(c WorkerClient, jobsDir string) (Worker, error) {
 			Uname:    fmt.Sprintf("%s_%s-%s", bts(buf.Sysname[:]), bts(buf.Release[:]), bts(buf.Machine[:])),
 			Version:  fmt.Sprintf("%s (%s)", core.Version, core.SHA),
 		},
-		scriptTemplate: template.Must(template.New("benchmark_script").Parse(runScriptTmpl)),
+		scriptTemplate:          template.Must(template.New("benchmark_script").Parse(runScriptTmpl)),
+		allowedGitRemoteRegexes: allowedGitRemoteRegexes,
 	}, nil
 }
 
@@ -90,27 +106,37 @@ func (w *workerImpl) processJob(job *core.JobRecord, revision uint64) (bool, err
 
 	fmt.Printf("⚙️  Processing job %s\n", job.Id)
 
-	jobTempDir, runErr := w.runJob(job)
-
-	// Update job status to final
-	if runErr != nil {
+	if allowed, denyReasonErr := w.isAllowed(job); !allowed {
+		fmt.Fprintf(os.Stderr, "Job %s is not allowed to run: %v\n", job.Id, denyReasonErr)
 		job.SetFinalStatus(core.Failed)
-	} else {
-		job.SetFinalStatus(core.Succeeded)
+		goto finalStatusUpdate
 	}
 
-	// Upload artifacts
-	uploadErr := w.uploadArtifacts(job, jobTempDir)
-	if uploadErr != nil {
-		fmt.Fprintf(os.Stderr, "Job %s artifacts upload failed: %v\n", job.Id, uploadErr)
-		job.Status = core.Failed
+	// Run the job
+	{
+		jobTempDir, runErr := w.runJob(job)
+
+		// Update job status to final
+		if runErr != nil {
+			job.SetFinalStatus(core.Failed)
+		} else {
+			job.SetFinalStatus(core.Succeeded)
+		}
+
+		// Upload artifacts
+		uploadErr := w.uploadArtifacts(job, jobTempDir)
+		if uploadErr != nil {
+			fmt.Fprintf(os.Stderr, "Job %s artifacts upload failed: %v\n", job.Id, uploadErr)
+			job.Status = core.Failed
+		}
+
+		// Remove job directory
+		if jobTempDir != "" && !job.Parameters.SkipCleanup {
+			defer os.RemoveAll(jobTempDir)
+		}
 	}
 
-	// Remove job directory
-	if jobTempDir != "" && !job.Parameters.SkipCleanup {
-		defer os.RemoveAll(jobTempDir)
-	}
-
+finalStatusUpdate:
 	fmt.Printf("⚙️  Completed job %s, updating status to: %s\n", job.Id, job.Status)
 	_, finalUpdateErr := w.c.UpdateJob(job, newRevision)
 	if finalUpdateErr != nil {
@@ -126,6 +152,10 @@ func (w *workerImpl) runJob(job *core.JobRecord) (string, error) {
 	jobTempDir, err := os.MkdirTemp(w.jobsDir, fmt.Sprintf("go-bench-away-job-%s-", job.Id))
 	if err != nil {
 		return "", fmt.Errorf("Failed to create job directory: %v", err)
+	}
+
+	if w.testSkipRun {
+		return jobTempDir, nil
 	}
 
 	scriptPath := filepath.Join(jobTempDir, kScriptFilename)
@@ -256,4 +286,22 @@ func (w *workerImpl) uploadArtifacts(job *core.JobRecord, jobDirPath string) err
 	}
 
 	return nil
+}
+
+func (w *workerImpl) isAllowed(job *core.JobRecord) (bool, error) {
+
+	if w.allowedGitRemoteRegexes != nil && len(w.allowedGitRemoteRegexes) > 0 {
+		for _, regex := range w.allowedGitRemoteRegexes {
+			if regex.MatchString(job.Parameters.GitRemote) {
+				// Matches regex from list, allow
+				return true, nil
+			}
+		}
+
+		// No match, deny
+		return false, fmt.Errorf("job git remote does not match any filter rules")
+	}
+
+	// No filtering, allow everything
+	return true, nil
 }
